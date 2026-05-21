@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/cta-section",
+	"title": "CTA Section",
+	"category": "smart-blocks",
+	"icon": "megaphone",
+	"description": "Bold call-to-action band with dual buttons.",
+	"keywords": [ "cta", "call to action" ],
+	"textdomain": "smart-blocks",
+	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
+	"attributes": {
+		"heading":   { "type": "string", "default": "Got a WordPress build that needs a senior pair of hands?" },
+		"dek":       { "type": "string", "default": "Let's talk about your roadmap, your existing stack, and the constraints that make your project actually hard. I'll come back with a clear plan and a realistic estimate." },
+		"primaryText": { "type": "string", "default": "Book a discovery call" },
+		"primaryUrl":  { "type": "string", "default": "#contact" },
+		"secondaryText": { "type": "string", "default": "Email me directly" },
+		"secondaryUrl":  { "type": "string", "default": "mailto:hello@sachinsuthar.dev" }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"viewScript":   "smart-blocks-reveal"
+}

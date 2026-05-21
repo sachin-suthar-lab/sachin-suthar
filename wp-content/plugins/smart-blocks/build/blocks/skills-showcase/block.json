@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "smart-blocks/skills-showcase",
+  "title": "Skills Showcase",
+  "category": "smart-blocks",
+  "icon": "chart-bar",
+  "description": "Section heading + grid of editable Skill cards with proficiency bars.",
+  "keywords": [
+    "skills",
+    "proficiency"
+  ],
+  "textdomain": "smart-blocks",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "anchor": true,
+    "reusable": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Toolkit"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Skills sharpened by 8 years of shipping."
+    },
+    "dek": {
+      "type": "string",
+      "default": "A focused stack centred on WordPress, modern JavaScript, and the surrounding infrastructure that makes products durable."
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": [
+    "smart-blocks-shared",
+    "file:./style-index.css"
+  ],
+  "viewScript": "smart-blocks-reveal"
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "smart-blocks/experience-timeline",
+  "title": "Experience Timeline",
+  "category": "smart-blocks",
+  "icon": "businessperson",
+  "description": "Section heading + vertical timeline of editable items.",
+  "keywords": [
+    "timeline",
+    "experience",
+    "career"
+  ],
+  "textdomain": "smart-blocks",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "anchor": true,
+    "reusable": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Experience"
+    },
+    "heading": {
+      "type": "string",
+      "default": "A practical journey through the WordPress ecosystem."
+    },
+    "dek": {
+      "type": "string",
+      "default": "Eight years of building WordPress products across SaaS, agencies, e-commerce, and enterprise CMS programmes."
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": [
+    "smart-blocks-shared",
+    "file:./style-index.css"
+  ],
+  "viewScript": "smart-blocks-reveal"
+}

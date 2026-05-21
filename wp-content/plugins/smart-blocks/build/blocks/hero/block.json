@@ -1,0 +1,90 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "smart-blocks/hero",
+  "title": "Hero",
+  "category": "smart-blocks",
+  "icon": "format-status",
+  "description": "Hero section with badge, headline, lede, dual CTAs, and metric cards.",
+  "keywords": [
+    "hero",
+    "headline",
+    "intro"
+  ],
+  "textdomain": "smart-blocks",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "anchor": true,
+    "reusable": true
+  },
+  "attributes": {
+    "badge": {
+      "type": "string",
+      "default": "Senior WordPress Developer · 8+ years"
+    },
+    "badgeDot": {
+      "type": "boolean",
+      "default": true
+    },
+    "headline": {
+      "type": "string",
+      "default": "WordPress development that feels"
+    },
+    "highlight": {
+      "type": "string",
+      "default": "engineered, not assembled."
+    },
+    "lede": {
+      "type": "string",
+      "default": "I'm Sachin Suthar — a senior WordPress developer specialising in custom themes, Gutenberg block development, WooCommerce, and headless architectures. I help teams ship fast, accessible, and maintainable WordPress products."
+    },
+    "ctaText": {
+      "type": "string",
+      "default": "Start a project"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "#contact"
+    },
+    "ctaSecondaryText": {
+      "type": "string",
+      "default": "View selected work"
+    },
+    "ctaSecondaryUrl": {
+      "type": "string",
+      "default": "#work"
+    },
+    "metrics": {
+      "type": "array",
+      "default": [
+        {
+          "value": "8+",
+          "label": "Years building scalable WordPress"
+        },
+        {
+          "value": "120+",
+          "label": "Custom themes & plugins shipped"
+        },
+        {
+          "value": "40+",
+          "label": "Gutenberg blocks engineered"
+        },
+        {
+          "value": "99",
+          "label": "Median Lighthouse performance"
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": [
+    "smart-blocks-shared",
+    "file:./style-index.css"
+  ],
+  "viewScript": "smart-blocks-reveal",
+  "render": "file:./render.php"
+}

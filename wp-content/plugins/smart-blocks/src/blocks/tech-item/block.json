@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/tech-item",
+	"title": "Tech Item",
+	"category": "smart-blocks",
+	"icon": "admin-tools",
+	"description": "Single technology card. Used inside Tech Stack.",
+	"parent": [ "smart-blocks/tech-stack" ],
+	"textdomain": "smart-blocks",
+	"supports": { "html": false, "reusable": false },
+	"attributes": {
+		"icon": { "type": "string", "default": "spark" },
+		"name": { "type": "string", "default": "" }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"render":       "file:./render.php"
+}
