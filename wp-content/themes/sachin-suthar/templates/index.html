@@ -1,0 +1,39 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","align":"full","style":{"spacing":{"padding":{"top":"4rem","bottom":"6rem"},"blockGap":"4rem"}},"layout":{"type":"constrained","contentSize":"1080px"}} -->
+<main class="wp-block-group alignfull" style="padding-top:4rem;padding-bottom:6rem">
+
+	<!-- wp:heading {"level":1,"textAlign":"center"} -->
+	<h1 class="wp-block-heading has-text-align-center">Journal</h1>
+	<!-- /wp:heading -->
+
+	<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":true}} -->
+	<div class="wp-block-query">
+		<!-- wp:post-template -->
+			<!-- wp:group {"style":{"border":{"radius":"18px","color":"var:preset|color|border","width":"1px"},"spacing":{"padding":"2rem","blockGap":"1rem"}},"backgroundColor":"surface","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-surface-background-color has-background" style="border:1px solid var(--wp--preset--color--border);border-radius:18px;padding:2rem">
+				<!-- wp:post-title {"isLink":true,"level":2,"fontSize":"xl"} /-->
+				<!-- wp:post-date {"fontSize":"xs","textColor":"muted"} /-->
+				<!-- wp:post-excerpt {"fontSize":"sm","textColor":"muted"} /-->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-no-results -->
+			<!-- wp:paragraph {"align":"center","textColor":"muted"} -->
+			<p class="has-text-align-center has-muted-color has-text-color">Nothing here yet. Check back soon.</p>
+			<!-- /wp:paragraph -->
+		<!-- /wp:query-no-results -->
+
+		<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+			<!-- wp:query-pagination-previous /-->
+			<!-- wp:query-pagination-numbers /-->
+			<!-- wp:query-pagination-next /-->
+		<!-- /wp:query-pagination -->
+	</div>
+	<!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
