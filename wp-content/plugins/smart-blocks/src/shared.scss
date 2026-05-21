@@ -38,16 +38,21 @@
 	--sb-gutter:      clamp(1.25rem, 4vw, 2.5rem);
 }
 
-/* ---------- Reveal-on-scroll ---------- */
-.sb-reveal {
+/* ---------- Reveal-on-scroll ----------
+   Gated on `html.sb-anim-ready` so that if the reveal script never runs
+   (ad-blocker, slow CDN, JS disabled) the content is visible by default.
+   The script adds the class to <html> before observing, then sections
+   fade-and-rise in via .is-visible. */
+html.sb-anim-ready .sb-reveal {
 	opacity: 0;
 	transform: translateY(18px);
 	transition: opacity .9s var(--sb-ease), transform .9s var(--sb-ease);
 	will-change: opacity, transform;
-	&.is-visible { opacity: 1; transform: translateY(0); }
 }
+html.sb-anim-ready .sb-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
 @media (prefers-reduced-motion: reduce) {
-	.sb-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+	html.sb-anim-ready .sb-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* ============================================================

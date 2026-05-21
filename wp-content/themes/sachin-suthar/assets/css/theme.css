@@ -19,19 +19,21 @@
 }
 ::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
 
-/* Reveal on scroll */
-.ss-reveal,
-.sb-reveal {
+/* Reveal on scroll — gated on html.sb-anim-ready (set by reveal.js).
+   Without JS, no gate class → content stays fully visible. */
+html.sb-anim-ready .ss-reveal,
+html.sb-anim-ready .sb-reveal {
 	opacity: 0;
 	transform: translateY(18px);
 	transition: opacity .9s var(--ss-ease), transform .9s var(--ss-ease);
 	will-change: opacity, transform;
 }
-.ss-reveal.is-visible,
-.sb-reveal.is-visible { opacity: 1; transform: translateY(0); }
+html.sb-anim-ready .ss-reveal.is-visible,
+html.sb-anim-ready .sb-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 @media (prefers-reduced-motion: reduce) {
-	.ss-reveal, .sb-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+	html.sb-anim-ready .ss-reveal,
+	html.sb-anim-ready .sb-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 	html { scroll-behavior: auto; }
 }
 
