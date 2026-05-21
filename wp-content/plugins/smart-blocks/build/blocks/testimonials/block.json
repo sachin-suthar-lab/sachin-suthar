@@ -40,5 +40,5 @@
     "smart-blocks-shared",
     "file:./style-index.css"
   ],
-  "viewScript": "file:./view.js"
+  "viewScript": "smart-blocks-carousel"
 }

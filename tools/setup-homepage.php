@@ -211,8 +211,11 @@ function sb_hero(): string {
 		[ 'value' => '50+',    'label' => 'Custom themes & plugins built' ],
 		[ 'value' => '30–50%', 'label' => 'Median performance gains' ],
 	];
+	$chips = [ 'WordPress VIP', 'Gutenberg', 'WooCommerce', 'ACF Pro', 'Headless WP', 'Performance' ];
 	$m = '';
 	foreach ( $metrics as $x ) $m .= '<div class="sb-metric" role="listitem"><strong>' . esc_html( $x['value'] ) . '</strong><span>' . esc_html( $x['label'] ) . '</span></div>';
+	$c = '';
+	foreach ( $chips as $x )   $c .= '<span class="sb-hero__chips-item">' . esc_html( $x ) . '</span>';
 
 	$inner = '<section class="wp-block-smart-blocks-hero sb-section sb-hero sb-reveal">'
 		. '<div class="sb-container">'
@@ -221,14 +224,39 @@ function sb_hero(): string {
 					. '<span class="sb-hero__badge"><span class="dot" aria-hidden="true"></span><span>Senior WordPress Developer · 7+ years</span></span>'
 					. '<h1><span>WordPress engineering, built for</span> <span class="sb-gradient">long-term performance.</span></h1>'
 					. '<p class="sb-hero__lede">I\'m Sachin Suthar — a Senior WordPress Developer from Ahmedabad with 7+ years of hands-on experience across 70+ projects. I build custom themes, plugins, ACF and Gutenberg blocks, and performance-tuned WooCommerce stores for agencies, startups, and enterprise clients.</p>'
+					. '<div class="sb-hero__currently"><span class="bullet" aria-hidden="true"></span><span>Currently leading WP engineering at <strong>NineGravity</strong></span></div>'
 					. '<div class="sb-hero__cta"><a class="sb-btn sb-btn--primary" href="#contact">Start a project</a><a class="sb-btn sb-btn--ghost" href="#work">View selected work</a></div>'
+					. '<div class="sb-hero__chips">' . $c . '</div>'
 				. '</div>'
 				. '<div class="sb-hero__visual"><div class="sb-image-slot"><span class="sb-image-slot__label">Image goes here</span></div></div>'
 			. '</div>'
 			. '<div class="sb-hero__metrics" role="list">' . $m . '</div>'
 		. '</div>'
 	. '</section>';
-	return sb_wrap( 'smart-blocks/hero', [], $inner );
+	return sb_wrap( 'smart-blocks/hero', [
+		'currentlyText'   => 'Currently leading WP engineering at',
+		'currentlyTarget' => 'NineGravity',
+		'chips'           => $chips,
+	], $inner );
+}
+
+/* Marquee block — auto-scrolling tech keywords */
+function sb_marquee( string $items_csv ): string {
+	$parts = array_filter( array_map( 'trim', explode( ',', $items_csv ) ) );
+	// Duplicate for seamless loop, matching the React save() output.
+	$doubled = array_merge( $parts, $parts );
+	$track = '<div class="sb-marquee__track">';
+	foreach ( $doubled as $label ) {
+		$track .= '<span class="sb-marquee__item"><span class="dot" aria-hidden="true"></span>' . esc_html( $label ) . '</span>';
+	}
+	$track .= '</div>';
+	$inner = '<div class="wp-block-smart-blocks-marquee sb-marquee">' . $track . '</div>';
+	return sb_wrap( 'smart-blocks/marquee', [ 'items' => $items_csv ], $inner );
+}
+
+/* Blog Slider — dynamic, only marker emitted (PHP queries posts at render time) */
+function sb_blog_slider(): string {
+	return "<!-- wp:smart-blocks/blog-slider /-->\n\n";
 }
 
 function sb_about(): string {
@@ -314,8 +342,59 @@ function sb_contact(): string {
 	return sb_wrap( 'smart-blocks/contact-section', [], $inner );
 }
 
+/* ---------- Seed sample blog posts if none exist ---------- */
+$existing_posts = wp_count_posts( 'post' );
+if ( ( $existing_posts->publish ?? 0 ) < 4 ) {
+	$samples = [
+		[
+			'title'    => 'Shipping Gutenberg blocks the WordPress VIP way',
+			'excerpt'  => 'How we structure custom blocks for editor-parity, accessibility, and zero deprecation pain across major WP releases.',
+			'category' => 'Gutenberg',
+		],
+		[
+			'title'    => 'Cutting LCP from 4.8s to 1.2s on a real WooCommerce store',
+			'excerpt'  => 'A practical playbook: critical CSS, image strategy, MySQL query refactor, and edge caching that actually moves the needle.',
+			'category' => 'Performance',
+		],
+		[
+			'title'    => 'Building an ACF block library shared across 30+ client sites',
+			'excerpt'  => 'Design tokens, versioning strategy, and a release process that lets you ship one fix to every site without breaking content.',
+			'category' => 'Architecture',
+		],
+		[
+			'title'    => 'WP-CLI scripts every senior developer should write',
+			'excerpt'  => 'Idempotent migrations, content imports, environment bootstrapping, and CI-friendly deploy commands.',
+			'category' => 'WP-CLI',
+		],
+		[
+			'title'    => 'Headless WordPress with Next.js: where it shines, where it bites',
+			'excerpt'  => 'Two years of running headless WP in production — auth, ISR, preview, image handling, and the editor experience trade-offs.',
+			'category' => 'Headless',
+		],
+	];
+	$created = 0;
+	foreach ( $samples as $i => $s ) {
+		// Avoid duplicating if a similarly-titled post already exists.
+		if ( get_page_by_title( $s['title'], OBJECT, 'post' ) ) continue;
+		$cat_id = wp_create_category( $s['category'] );
+		$post_id = wp_insert_post( [
+			'post_type'     => 'post',
+			'post_status'   => 'publish',
+			'post_title'    => $s['title'],
+			'post_excerpt'  => $s['excerpt'],
+			'post_content'  => '<!-- wp:paragraph --><p>' . esc_html( $s['excerpt'] ) . '</p><!-- /wp:paragraph -->',
+			'post_author'   => 1,
+			'post_date'     => date( 'Y-m-d H:i:s', strtotime( "-{$i} days" ) ),
+			'post_category' => $cat_id ? [ $cat_id ] : [],
+		], true );
+		if ( ! is_wp_error( $post_id ) ) $created++;
+	}
+	if ( $created ) WP_CLI::log( "✓ Seeded {$created} sample blog posts" );
+}
+
 /* ---------- Build the page content ---------- */
 $out  = sb_hero();
+$out .= sb_marquee( 'WordPress, ACF Pro, Gutenberg, WooCommerce, React, REST API, MySQL, WP-CLI, PHP 8, Performance, Multisite, Headless, Custom Plugins, Code Review, Team Lead' );
 $out .= sb_about();
 
 // SERVICES
@@ -331,7 +410,7 @@ $services = [
 	[ 'icon' => 'spark',    'title' => 'AI-assisted Development',       'desc' => 'n8n, Claude Code, OpenAI Codex, ChatGPT, Antigravity, Cursor — modern tooling to ship faster without compromising code quality.', 'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 85 ],
 ];
 $out .= sb_parent( 'smart-blocks/services-grid', 'sb-services', [
-	'eyebrow' => 'What I do',
+	'eyebrow' => '01 · What I do',
 	'heading' => 'Services tuned for ambitious WordPress products.',
 	'dek'     => 'Specialist services across the modern WordPress stack — from custom block development to performance engineering and CI-friendly deployments.',
 ], 'div', 'sb-services__grid', implode( '', array_map( 'sb_service_block', $services ) ) );
@@ -352,7 +431,7 @@ $skills = [
 	[ 'icon' => 'gauge',    'name' => 'Core Web Vitals',     'proficiency' => 88 ],
 ];
 $out .= sb_parent( 'smart-blocks/skills-showcase', 'sb-skills', [
-	'eyebrow' => 'Toolkit',
+	'eyebrow' => '02 · Toolkit',
 	'heading' => 'Skills sharpened by 7+ years of shipping.',
 	'dek'     => 'A focused stack centred on WordPress, ACF, and the infrastructure that keeps enterprise products durable.',
 ], 'div', 'sb-skills__grid', implode( '', array_map( 'sb_skill_block', $skills ) ), 'sb-section--alt' );
@@ -364,7 +443,7 @@ $experience = [
 	[ 'period' => '2017 — 2018',    'role' => 'PHP Developer · Software Support Engineer', 'org' => 'BlueMax Services — Mehsana, India',   'desc' => 'Supported government software platforms where uptime and reliability were critical. Fixed server-side and application bugs, documented long-term solutions, built and maintained PHP modules, assisted with deployments, upgrades, and technical documentation.', 'tags' => [ 'PHP', 'Bug Fixing', 'Documentation', 'Deployments' ] ],
 ];
 $out .= sb_parent( 'smart-blocks/experience-timeline', 'sb-experience', [
-	'eyebrow' => 'Experience',
+	'eyebrow' => '03 · Experience',
 	'heading' => 'A practical journey through the WordPress ecosystem.',
 	'dek'     => '7+ years of building WordPress products across agencies, SaaS, eCommerce, LMS, and government platforms.',
 ], 'ol', 'sb-timeline', implode( '', array_map( 'sb_timeline_block', $experience ) ) );
@@ -385,7 +464,7 @@ $stack = [
 	[ 'icon' => 'linux',    'name' => 'Linux',        'meta' => 'Server ops, deployments' ],
 ];
 $out .= sb_parent( 'smart-blocks/tech-stack', 'sb-tech', [
-	'eyebrow' => 'Tech stack',
+	'eyebrow' => '04 · Tech stack',
 	'heading' => 'A focused stack — not a buzzword soup.',
 	'dek'     => 'Tools I use daily, picked for stability, ecosystem health, and team velocity.',
 ], 'div', 'sb-tech__grid', implode( '', array_map( 'sb_techitem_block', $stack ) ) );
@@ -399,7 +478,7 @@ $certs = [
 	[ 'title' => 'Enterprise WordPress Security',        'issuer' => 'WordPress VIP' ],
 ];
 $out .= sb_parent( 'smart-blocks/certifications', 'sb-certifications', [
-	'eyebrow' => 'Credentials',
+	'eyebrow' => '05 · Credentials',
 	'heading' => 'Certifications.',
 	'dek'     => 'Continuing education aligned with WordPress VIP and enterprise-grade practice. Upload badge images per certification from the editor.',
 ], 'div', 'sb-certifications__grid', implode( '', array_map( 'sb_cert_block', $certs ) ) );
@@ -414,7 +493,7 @@ $projects = [
 	[ 'cat' => 'Enterprise CMS',  'title' => 'Corporate multisite migration',           'desc' => 'Migrated multiple country sites into a unified multisite network with shared theme.json, automated WP-CLI deploys, editorial workflow.','glyph' => 'MS', 'gradient' => 'linear-gradient(135deg, #4c1d95 0%, #a78bfa 100%)', 'tags' => [ 'Multisite', 'WP-CLI', 'i18n' ] ],
 ];
 $out .= sb_parent( 'smart-blocks/portfolio-projects', 'sb-projects', [
-	'eyebrow' => 'Selected work',
+	'eyebrow' => '06 · Selected work',
 	'heading' => 'Selected work that shipped.',
 	'dek'     => 'A snapshot of recent projects across eCommerce, LMS, custom plugins, and performance engineering. 70+ projects delivered overall.',
 ], 'div', 'sb-projects__grid', implode( '', array_map( 'sb_project_block', $projects ) ) );
@@ -429,11 +508,13 @@ $tests = [
 	[ 'quote' => 'Migrated multiple country sites into one multisite network with zero downtime and a faster editorial workflow on the other side. Quiet, calm, and exact.',               'name' => 'Jonas Berg',     'role' => 'Director of Web · Enterprise' ],
 ];
 $out .= sb_testimonials_parent( [
-	'eyebrow' => 'Testimonials',
+	'eyebrow' => '07 · Testimonials',
 	'heading' => 'What collaborators say.',
 	'dek'     => 'Feedback from the people I have shipped with — founders, engineering leaders, and product teams.',
 ], implode( '', array_map( 'sb_testimonial_block', $tests ) ) );
 
+$out .= sb_marquee( 'PHP 8, MySQL, Redis, Object Cache, Edge Caching, CI/CD, GitLab, GitHub Actions, n8n, Claude Code, OpenAI Codex, Cursor, Antigravity, ChatGPT' );
+$out .= sb_blog_slider();
 $out .= sb_cta();
 $out .= sb_contact();
 

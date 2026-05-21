@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/blog-slider",
+	"title": "Blog Slider",
+	"category": "smart-blocks",
+	"icon": "format-aside",
+	"description": "Carousel of the latest blog posts. Pulled dynamically from WP_Query — admins manage posts in the editor, not the block.",
+	"keywords": [ "blog", "posts", "carousel", "latest" ],
+	"textdomain": "smart-blocks",
+	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
+	"attributes": {
+		"eyebrow":   { "type": "string", "default": "Latest writing" },
+		"heading":   { "type": "string", "default": "Notes from the build." },
+		"dek":       { "type": "string", "default": "Field notes on custom WordPress development, Gutenberg block architecture, performance work, and the occasional war story." },
+		"postsToShow": { "type": "number", "default": 5 },
+		"categorySlug": { "type": "string", "default": "" },
+		"showDate": { "type": "boolean", "default": true },
+		"showExcerpt": { "type": "boolean", "default": true }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"viewScript":   "smart-blocks-carousel",
+	"render":       "file:./render.php"
+}

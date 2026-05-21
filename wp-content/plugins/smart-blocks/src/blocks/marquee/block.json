@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/marquee",
+	"title": "Tech Marquee",
+	"category": "smart-blocks",
+	"icon": "leftright",
+	"description": "Auto-scrolling tech/keyword strip. Pauses on hover.",
+	"keywords": [ "marquee", "ticker", "scroll" ],
+	"textdomain": "smart-blocks",
+	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
+	"attributes": {
+		"items": {
+			"type": "string",
+			"default": "WordPress, ACF Pro, Gutenberg, WooCommerce, React, REST API, MySQL, WP-CLI, PHP 8, Performance, Multisite, Headless, Custom Plugins, Code Review, Team Lead"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ]
+}

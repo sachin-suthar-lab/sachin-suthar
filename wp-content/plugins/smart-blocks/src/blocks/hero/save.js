@@ -8,6 +8,8 @@ export default function Save( { attributes } ) {
 		ctaText, ctaUrl,
 		ctaSecondaryText, ctaSecondaryUrl,
 		imageUrl, imageAlt,
+		currentlyText, currentlyTarget,
+		chips,
 		metrics,
 	} = attributes;
 
@@ -33,10 +35,27 @@ export default function Save( { attributes } ) {
 							</h1>
 						) }
 						{ lede && <RichText.Content tagName="p" className="sb-hero__lede" value={ lede } /> }
+
+						{ ( currentlyText || currentlyTarget ) && (
+							<div className="sb-hero__currently">
+								<span className="bullet" aria-hidden="true" />
+								<span>
+									{ currentlyText }{ ' ' }
+									{ currentlyTarget && <strong>{ currentlyTarget }</strong> }
+								</span>
+							</div>
+						) }
+
 						{ ( ctaText || ctaSecondaryText ) && (
 							<div className="sb-hero__cta">
-								{ ctaText           && <a className="sb-btn sb-btn--primary" href={ ctaUrl }>{ ctaText }</a> }
-								{ ctaSecondaryText  && <a className="sb-btn sb-btn--ghost"   href={ ctaSecondaryUrl }>{ ctaSecondaryText }</a> }
+								{ ctaText          && <a className="sb-btn sb-btn--primary" href={ ctaUrl }>{ ctaText }</a> }
+								{ ctaSecondaryText && <a className="sb-btn sb-btn--ghost"   href={ ctaSecondaryUrl }>{ ctaSecondaryText }</a> }
+							</div>
+						) }
+
+						{ chips?.length > 0 && (
+							<div className="sb-hero__chips">
+								{ chips.map( ( c, i ) => <span key={ i } className="sb-hero__chips-item">{ c }</span> ) }
 							</div>
 						) }
 					</div>

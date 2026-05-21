@@ -22,6 +22,12 @@
 		"imageId":    { "type": "number", "default": 0 },
 		"imageUrl":   { "type": "string", "default": "" },
 		"imageAlt":   { "type": "string", "default": "" },
+		"currentlyText":   { "type": "string", "default": "Currently leading WP engineering at" },
+		"currentlyTarget": { "type": "string", "default": "NineGravity" },
+		"chips":      {
+			"type": "array",
+			"default": [ "WordPress VIP", "Gutenberg", "WooCommerce", "ACF Pro", "Headless WP", "Performance" ]
+		},
 		"metrics": {
 			"type": "array",
 			"default": [
