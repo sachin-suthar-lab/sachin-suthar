@@ -1,5 +1,13 @@
-/* Smart Blocks — editor canvas adjustments so server-rendered sections preview legibly. */
-.editor-styles-wrapper .ss-section {
-	color: #e7e7ee;
+/* Smart Blocks — editor canvas (light mode parity with front-end). */
+.editor-styles-wrapper {
+	background: #ffffff;
+	color: #23213a;
 }
+.editor-styles-wrapper .sb-reveal,
 .editor-styles-wrapper .ss-reveal { opacity: 1; transform: none; }
+
+/* Make sure shared.css surfaces show correctly inside editor (ACF/Gutenberg) */
+.editor-styles-wrapper .sb-section { color: #23213a; }
+.editor-styles-wrapper .sb-section h1,
+.editor-styles-wrapper .sb-section h2,
+.editor-styles-wrapper .sb-section h3 { color: #13112a; }

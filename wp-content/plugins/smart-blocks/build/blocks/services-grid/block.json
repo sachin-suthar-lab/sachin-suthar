@@ -39,6 +39,5 @@
     "smart-blocks-shared",
     "file:./style-index.css"
   ],
-  "viewScript": "smart-blocks-reveal",
-  "render": "file:./render.php"
+  "viewScript": "smart-blocks-reveal"
 }

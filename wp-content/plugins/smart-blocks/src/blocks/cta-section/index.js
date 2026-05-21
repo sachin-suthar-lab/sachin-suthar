@@ -49,5 +49,22 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save: () => null,
+	save( { attributes } ) {
+		const { heading, dek, primaryText, primaryUrl, secondaryText, secondaryUrl } = attributes;
+		const blockProps = useBlockProps.save( { className: 'sb-section sb-cta-wrap sb-section--cream sb-reveal' } );
+		return (
+			<section { ...blockProps }>
+				<div className="sb-container">
+					<div className="sb-cta">
+						{ heading && <RichText.Content tagName="h2" value={ heading } /> }
+						{ dek && <RichText.Content tagName="p" value={ dek } /> }
+						<div className="sb-cta__buttons">
+							{ primaryText && <a className="sb-btn sb-btn--primary" href={ primaryUrl }>{ primaryText }</a> }
+							{ secondaryText && <a className="sb-btn sb-btn--ghost" href={ secondaryUrl }>{ secondaryText }</a> }
+						</div>
+					</div>
+				</div>
+			</section>
+		);
+	},
 } );

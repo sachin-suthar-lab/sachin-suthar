@@ -15,7 +15,11 @@
       "Bash(npm run *)",
       "Bash(php -l tools/setup-homepage.php)",
       "Bash(git reset *)",
-      "Bash(git commit -m 'refactor\\(plugin\\): rebuild smart-blocks as native React Gutenberg blocks *)"
+      "Bash(git commit -m 'refactor\\(plugin\\): rebuild smart-blocks as native React Gutenberg blocks *)",
+      "Bash(git commit -m 'refactor\\(plugin+theme\\): light enterprise palette + content + new blocks + carousel + AJAX form *)",
+      "Bash(git stash *)",
+      "Bash(rm -f tools/_verify.php)",
+      "Bash(git commit -m 'refactor: convert all blocks to static-save \\(pure React/JSX\\), add cert badge upload, light editor *)"
     ]
   }
 }

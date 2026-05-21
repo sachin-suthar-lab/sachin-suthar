@@ -46,5 +46,21 @@ registerBlockType( metadata.name, {
 			</section>
 		);
 	},
-	save: () => null,
+	save( { attributes } ) {
+		const { eyebrow, heading, dek } = attributes;
+		const blockProps = useBlockProps.save( { className: 'sb-section sb-experience sb-reveal' } );
+		const innerProps = useInnerBlocksProps.save( { className: 'sb-timeline' } );
+		return (
+			<section { ...blockProps }>
+				<div className="sb-container">
+					<div className="sb-section-head">
+						{ eyebrow && <span className="sb-eyebrow">{ eyebrow }</span> }
+						{ heading && <h2>{ heading }</h2> }
+						{ dek && <p>{ dek }</p> }
+					</div>
+					<ol { ...innerProps } />
+				</div>
+			</section>
+		);
+	},
 } );

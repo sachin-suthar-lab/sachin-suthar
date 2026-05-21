@@ -5,7 +5,7 @@
   "title": "Certification",
   "category": "smart-blocks",
   "icon": "awards",
-  "description": "A single certification card. Used inside Certifications.",
+  "description": "A single certification card with optional badge image, issuer, and year.",
   "parent": [
     "smart-blocks/certifications"
   ],
@@ -22,6 +22,26 @@
     "issuer": {
       "type": "string",
       "default": ""
+    },
+    "year": {
+      "type": "string",
+      "default": ""
+    },
+    "badgeId": {
+      "type": "number",
+      "default": 0
+    },
+    "badgeUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "badgeAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "default": ""
     }
   },
   "editorScript": "file:./index.js",
@@ -29,6 +49,5 @@
   "style": [
     "smart-blocks-shared",
     "file:./style-index.css"
-  ],
-  "render": "file:./render.php"
+  ]
 }

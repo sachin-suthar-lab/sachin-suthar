@@ -91,5 +91,39 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save: () => null,
+	save( { attributes } ) {
+		const { eyebrow, heading, body, imageUrl, imageAlt, highlights = [] } = attributes;
+		const blockProps = useBlockProps.save( { className: 'sb-section sb-about sb-reveal' } );
+		return (
+			<section { ...blockProps }>
+				<div className="sb-container">
+					<div className="sb-about__layout">
+						<div className="sb-about__visual">
+							<div className="sb-image-slot">
+								{ imageUrl
+									? <img src={ imageUrl } alt={ imageAlt } loading="lazy" />
+									: <span className="sb-image-slot__label">Image goes here</span>
+								}
+							</div>
+						</div>
+						<div className="sb-about__copy">
+							{ eyebrow && <RichText.Content tagName="span" className="sb-eyebrow" value={ eyebrow } /> }
+							{ heading && <RichText.Content tagName="h2" value={ heading } /> }
+							{ body && <RichText.Content tagName="p" value={ body } /> }
+							{ highlights.length > 0 && (
+								<div className="sb-about__highlights">
+									{ highlights.map( ( h, i ) => (
+										<div className="sb-about__highlight" key={ i }>
+											<strong>{ h.title }</strong>
+											<span>{ h.meta }</span>
+										</div>
+									) ) }
+								</div>
+							) }
+						</div>
+					</div>
+				</div>
+			</section>
+		);
+	},
 } );

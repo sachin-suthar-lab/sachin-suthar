@@ -19,6 +19,5 @@
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",
-	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
-	"render":       "file:./render.php"
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ]
 }

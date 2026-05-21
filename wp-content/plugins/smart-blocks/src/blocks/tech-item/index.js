@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, RichText, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
-import { ICON_OPTIONS, IconPreview } from '../../shared/icon-options';
+import { ICON_OPTIONS, Icon } from '../../shared/icons';
 import metadata from './block.json';
 import './style.scss';
 
@@ -23,7 +23,7 @@ registerBlockType( metadata.name, {
 					</PanelBody>
 				</InspectorControls>
 				<div { ...blockProps }>
-					<div className="sb-tech-card__icon"><IconPreview name={ icon } /></div>
+					<div className="sb-tech-card__icon"><Icon name={ icon } size={ 22 } /></div>
 					<div className="sb-tech-card__body">
 						<RichText
 							tagName="span"
@@ -46,5 +46,17 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save: () => null,
+	save( { attributes } ) {
+		const { icon, name, meta } = attributes;
+		const blockProps = useBlockProps.save( { className: 'sb-tech-card' } );
+		return (
+			<div { ...blockProps }>
+				<div className="sb-tech-card__icon"><Icon name={ icon } size={ 22 } /></div>
+				<div className="sb-tech-card__body">
+					<RichText.Content tagName="span" className="sb-tech-card__name" value={ name } />
+					{ meta && <RichText.Content tagName="span" className="sb-tech-card__meta" value={ meta } /> }
+				</div>
+			</div>
+		);
+	},
 } );

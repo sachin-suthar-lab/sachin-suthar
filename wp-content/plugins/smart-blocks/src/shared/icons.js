@@ -1,0 +1,87 @@
+/**
+ * Smart Blocks — single source of truth for inline SVG icons.
+ * Same component used in edit() and save() so post_content never
+ * mismatches what the editor previews.
+ */
+
+const PATHS = {
+	wp:       '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10M12 2a15 15 0 0 0-4 10 15 15 0 0 0 4 10"/>',
+	php:      '<ellipse cx="12" cy="12" rx="10" ry="5"/>',
+	js:       '<rect x="3" y="3" width="18" height="18" rx="3"/>',
+	react:    '<circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
+	layers:   '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+	cart:     '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
+	db:       '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6"/>',
+	tailwind: '<path d="M3 12c2-5 5-5 9-3 4 2 6 2 9-1-2 5-5 5-9 3-4-2-6-2-9 1z"/>',
+	rest:     '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 9l-2 3 2 3M17 9l2 3-2 3M14 7l-4 10"/>',
+	git:      '<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M6 16V8a2 2 0 0 1 2-2h8"/><path d="M18 8v8"/>',
+	linux:    '<ellipse cx="12" cy="17" rx="6" ry="3"/><path d="M9 12c0-3 1-7 3-7s3 4 3 7"/><circle cx="10" cy="11" r="1"/><circle cx="14" cy="11" r="1"/>',
+	terminal: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
+	plug:     '<path d="M9 2v6"/><path d="M15 2v6"/><path d="M6 8h12v4a6 6 0 0 1-12 0V8z"/><path d="M12 18v4"/>',
+	gauge:    '<circle cx="12" cy="13" r="9"/><path d="M12 14l4-4"/>',
+	cube:     '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>',
+	box:      '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+	code:     '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+	spark:    '<path d="M12 3l2.39 5.84L20 11.21l-4.5 3.91L17 21l-5-3.1L7 21l1.5-5.88L4 11.21l5.61-2.37L12 3z"/>',
+	bolt:     '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+	mail:     '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+	github:   '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+	linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+	twitter:  '<path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>',
+	arrow:    '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+	check:    '<polyline points="20 6 9 17 4 12"/>',
+	award:    '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',
+};
+
+export const ICON_OPTIONS = [
+	{ label: '— None —', value: '' },
+	{ label: 'WordPress', value: 'wp' },
+	{ label: 'PHP',       value: 'php' },
+	{ label: 'JavaScript',value: 'js' },
+	{ label: 'React',     value: 'react' },
+	{ label: 'Gutenberg / Layers', value: 'layers' },
+	{ label: 'WooCommerce / Cart', value: 'cart' },
+	{ label: 'Database',  value: 'db' },
+	{ label: 'Tailwind',  value: 'tailwind' },
+	{ label: 'REST API',  value: 'rest' },
+	{ label: 'Git',       value: 'git' },
+	{ label: 'Linux',     value: 'linux' },
+	{ label: 'Terminal',  value: 'terminal' },
+	{ label: 'Plug',      value: 'plug' },
+	{ label: 'Gauge',     value: 'gauge' },
+	{ label: 'Cube',      value: 'cube' },
+	{ label: 'Box',       value: 'box' },
+	{ label: 'Code',      value: 'code' },
+	{ label: 'Spark',     value: 'spark' },
+	{ label: 'Bolt',      value: 'bolt' },
+	{ label: 'Mail',      value: 'mail' },
+	{ label: 'GitHub',    value: 'github' },
+	{ label: 'LinkedIn',  value: 'linkedin' },
+	{ label: 'Twitter / X', value: 'twitter' },
+	{ label: 'Arrow',     value: 'arrow' },
+	{ label: 'Check',     value: 'check' },
+	{ label: 'Award',     value: 'award' },
+];
+
+export function Icon( { name, size = 24, className = '' } ) {
+	if ( ! name || ! PATHS[ name ] ) return null;
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width={ size }
+			height={ size }
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="1.6"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			aria-hidden="true"
+			focusable="false"
+			className={ className }
+			dangerouslySetInnerHTML={ { __html: PATHS[ name ] } }
+		/>
+	);
+}
+
+export const ICON_PATHS = PATHS;

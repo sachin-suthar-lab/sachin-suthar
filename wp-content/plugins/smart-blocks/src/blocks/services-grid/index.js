@@ -34,5 +34,21 @@ registerBlockType( metadata.name, {
 			</section>
 		);
 	},
-	save: () => null, // dynamic — rendered by render.php
+	save( { attributes } ) {
+		const { eyebrow, heading, dek } = attributes;
+		const blockProps = useBlockProps.save( { className: 'sb-section sb-services sb-reveal' } );
+		const innerProps = useInnerBlocksProps.save( { className: 'sb-services__grid' } );
+		return (
+			<section { ...blockProps }>
+				<div className="sb-container">
+					<div className="sb-section-head">
+						{ eyebrow && <span className="sb-eyebrow">{ eyebrow }</span> }
+						{ heading && <h2>{ heading }</h2> }
+						{ dek && <p>{ dek }</p> }
+					</div>
+					<div { ...innerProps } />
+				</div>
+			</section>
+		);
+	},
 } );
