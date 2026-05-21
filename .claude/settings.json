@@ -23,7 +23,9 @@
       "Bash(git commit -m 'feat\\(certification\\): make uploaded image the hero visual \\(Credly-style\\) *)",
       "Bash(grep -n '// PROJECTS\\\\|// CERTIFICATIONS\\\\|// TESTIMONIALS\\\\|$out .= sb_cta' e:/wamp/www/projects/sachin/tools/setup-homepage.php)",
       "Bash(git commit -m 'feat: testimonial slider fix + blog slider + modernization pass *)",
-      "Bash(git commit -m 'feat: plugin rename + cert image-first + remove proficiency + Education block + contact form fix *)"
+      "Bash(git commit -m 'feat: plugin rename + cert image-first + remove proficiency + Education block + contact form fix *)",
+      "Bash(rm -f tools/_test_submission.php)",
+      "Bash(git commit -m 'feat: AJAX contact form persistence + custom submissions table + built-in SMTP *)"
     ]
   }
 }
