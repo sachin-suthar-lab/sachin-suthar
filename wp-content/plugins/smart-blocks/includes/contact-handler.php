@@ -98,16 +98,31 @@ function validate_and_send( $body ): array {
 
 	$sent = wp_mail( $to, $subject, $msg, $headers );
 
+	// Persist the submission regardless of mail success — never silently lose
+	// a message because of an SMTP hiccup. Admin UI surfaces both states.
+	$submission_id = \SmartBlocks\Submissions::insert( [
+		'name'    => $name,
+		'email'   => $email,
+		'company' => $company,
+		'message' => $message,
+	] );
+
 	if ( ! $sent ) {
 		return [
 			'ok'      => false,
 			'code'    => 'mail_failed',
-			'message' => __( 'We could not send your message right now. Please email me directly at ' . get_option( 'admin_email' ) . '.', 'smart-blocks' ),
+			'id'      => $submission_id,
+			'message' => sprintf(
+				/* translators: %s: site admin email */
+				__( 'We saved your message but the email notification did not send. The site owner will see it in the admin dashboard. You can also reach out directly at %s.', 'sachins-blocks' ),
+				get_option( 'admin_email' )
+			),
 		];
 	}
 
 	return [
 		'ok'      => true,
-		'message' => __( 'Thanks — your message landed. I will reply within two working days.', 'smart-blocks' ),
+		'id'      => $submission_id,
+		'message' => __( 'Thanks — your message landed. I will reply within two working days.', 'sachins-blocks' ),
 	];
 }
