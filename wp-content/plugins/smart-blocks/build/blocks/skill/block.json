@@ -5,11 +5,11 @@
   "title": "Skill",
   "category": "smart-blocks",
   "icon": "chart-line",
-  "description": "A single skill with icon and proficiency bar. Used inside Skills Showcase.",
+  "description": "A single skill tile with icon and name.",
   "parent": [
     "smart-blocks/skills-showcase"
   ],
-  "textdomain": "smart-blocks",
+  "textdomain": "sachins-blocks",
   "supports": {
     "html": false,
     "reusable": false
@@ -22,10 +22,6 @@
     "name": {
       "type": "string",
       "default": ""
-    },
-    "proficiency": {
-      "type": "number",
-      "default": 80
     }
   },
   "editorScript": "file:./index.js",

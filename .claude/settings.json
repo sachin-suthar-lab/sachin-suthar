@@ -25,7 +25,10 @@
       "Bash(git commit -m 'feat: testimonial slider fix + blog slider + modernization pass *)",
       "Bash(git commit -m 'feat: plugin rename + cert image-first + remove proficiency + Education block + contact form fix *)",
       "Bash(rm -f tools/_test_submission.php)",
-      "Bash(git commit -m 'feat: AJAX contact form persistence + custom submissions table + built-in SMTP *)"
+      "Bash(git commit -m 'feat: AJAX contact form persistence + custom submissions table + built-in SMTP *)",
+      "Bash(grep -n \"/* ============================================================$\\\\|^.sb-skill {\" \"e:/wamp/www/projects/sachin/wp-content/plugins/smart-blocks/src/shared.scss\")",
+      "Bash(grep -n \"/* ============================================================$\" \"e:/wamp/www/projects/sachin/wp-content/plugins/smart-blocks/src/shared.scss\")",
+      "Bash(git commit -m 'refactor\\(design\\): square radii + skill simplify + remove marquees + about redesign + section anchors + stagger animations *)"
     ]
   }
 }
