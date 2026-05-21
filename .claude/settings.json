@@ -22,7 +22,8 @@
       "Bash(git commit -m 'refactor: convert all blocks to static-save \\(pure React/JSX\\), add cert badge upload, light editor *)",
       "Bash(git commit -m 'feat\\(certification\\): make uploaded image the hero visual \\(Credly-style\\) *)",
       "Bash(grep -n '// PROJECTS\\\\|// CERTIFICATIONS\\\\|// TESTIMONIALS\\\\|$out .= sb_cta' e:/wamp/www/projects/sachin/tools/setup-homepage.php)",
-      "Bash(git commit -m 'feat: testimonial slider fix + blog slider + modernization pass *)"
+      "Bash(git commit -m 'feat: testimonial slider fix + blog slider + modernization pass *)",
+      "Bash(git commit -m 'feat: plugin rename + cert image-first + remove proficiency + Education block + contact form fix *)"
     ]
   }
 }

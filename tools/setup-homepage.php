@@ -37,18 +37,14 @@ function sb_wrap( string $name, array $atts, string $inner ): string { return "<
 
 /* ---------- Child block emitters ---------- */
 function sb_service_block( array $a ): string {
-	$pct = max( 0, min( 100, (int) ( $a['proficiency'] ?? 0 ) ) );
-	$bar = '';
-	if ( ! empty( $a['showBar'] ) ) {
-		$bar = '<div class="sb-service__bar-wrap"><div class="sb-service__bar-head"><span class="sb-service__bar-label">' . esc_html( $a['barLabel'] ?? '' ) . '</span><span class="sb-service__bar-pct">' . $pct . '%</span></div><div class="sb-service__bar" role="progressbar" aria-valuenow="' . $pct . '" aria-valuemin="0" aria-valuemax="100"><div class="sb-service__bar-fill" style="width:' . $pct . '%"></div></div></div>';
-	}
+	// Strip legacy proficiency keys so block attribute JSON stays clean.
+	unset( $a['proficiency'], $a['showBar'], $a['barLabel'] );
 	$inner = '<article class="wp-block-smart-blocks-service sb-service">'
 		. '<div class="sb-service__head">'
 			. '<div class="sb-service__icon">' . icon( $a['icon'] ?? 'spark', 22 ) . '</div>'
 			. ( ! empty( $a['title'] ) ? '<h3 class="sb-service__title">' . wp_kses_post( $a['title'] ) . '</h3>' : '' )
 		. '</div>'
 		. ( ! empty( $a['desc'] ) ? '<p class="sb-service__desc">' . wp_kses_post( $a['desc'] ) . '</p>' : '' )
-		. $bar
 	. '</article>';
 	return sb_wrap( 'smart-blocks/service', $a, $inner );
 }
@@ -149,19 +145,38 @@ function sb_testimonial_block( array $a ): string {
 }
 
 function sb_cert_block( array $a ): string {
-	$badge = ! empty( $a['badgeUrl'] )
+	$image = ! empty( $a['badgeUrl'] )
 		? '<img src="' . esc_url( $a['badgeUrl'] ) . '" alt="' . esc_attr( $a['badgeAlt'] ?? '' ) . '"/>'
-		: '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>';
-	$body = '<span class="sb-cert__badge">' . $badge . '</span>'
-		. ( ! empty( $a['title'] )  ? '<h3 class="sb-cert__title">' . wp_kses_post( $a['title'] ) . '</h3>' : '' )
-		. ( ! empty( $a['issuer'] ) ? '<span class="sb-cert__issuer">' . wp_kses_post( $a['issuer'] ) . '</span>' : '' )
-		. ( ! empty( $a['year'] )   ? '<span class="sb-cert__year">' . esc_html( $a['year'] ) . '</span>' : '' );
+		: '<span class="sb-cert__placeholder">Image goes here</span>';
+
+	$body = '<div class="sb-cert__image">' . $image . '</div>'
+		. '<div class="sb-cert__body">'
+			. ( ! empty( $a['title'] )  ? '<h3 class="sb-cert__title">' . wp_kses_post( $a['title'] ) . '</h3>' : '' )
+			. ( ! empty( $a['issuer'] ) ? '<span class="sb-cert__issuer">' . wp_kses_post( $a['issuer'] ) . '</span>' : '' )
+			. ( ! empty( $a['year'] )   ? '<span class="sb-cert__year">' . esc_html( $a['year'] ) . '</span>' : '' )
+		. '</div>';
+
 	$inner = '<div class="wp-block-smart-blocks-certification sb-cert">'
 		. ( ! empty( $a['url'] )
 			? '<a class="sb-cert__link" href="' . esc_url( $a['url'] ) . '" rel="noopener" target="_blank">' . $body . '</a>'
 			: $body )
 	. '</div>';
 	return sb_wrap( 'smart-blocks/certification', $a, $inner );
+}
+
+/* Education item */
+function sb_education_block( array $a ): string {
+	$cap = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 4 2 10l10 6 10-6Z"></path><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"></path></svg>';
+	$inner = '<div class="wp-block-smart-blocks-education-item sb-edu">'
+		. '<span class="sb-edu__icon">' . $cap . '</span>'
+		. '<div class="sb-edu__body">'
+			. ( ! empty( $a['degree'] )      ? '<h3 class="sb-edu__degree">'   . wp_kses_post( $a['degree'] )      . '</h3>'  : '' )
+			. ( ! empty( $a['institution'] ) ? '<span class="sb-edu__inst">'   . wp_kses_post( $a['institution'] ) . '</span>' : '' )
+			. ( ! empty( $a['years'] )       ? '<span class="sb-edu__years">'  . wp_kses_post( $a['years'] )       . '</span>' : '' )
+			. ( ! empty( $a['detail'] )      ? '<p class="sb-edu__detail">'    . wp_kses_post( $a['detail'] )      . '</p>'    : '' )
+		. '</div>'
+	. '</div>';
+	return sb_wrap( 'smart-blocks/education-item', $a, $inner );
 }
 
 /* ---------- Parent section wrapper ---------- */
@@ -321,13 +336,13 @@ function sb_contact(): string {
 	$form = '<form class="sb-contact__form" data-sb-contact novalidate>'
 		. '<div class="sb-contact__form-status" data-sb-status role="status" aria-live="polite"></div>'
 		. '<div class="sb-contact__form-row">'
-			. '<div class="sb-field" data-sb-field="sb_name"><label class="sb-field__label" for="sb_name_input">Your name<span class="sb-field__required" aria-hidden="true">*</span></label><input type="text" id="sb_name_input" name="sb_name" required autocomplete="name" placeholder="Jane Doe" aria-describedby="sb_name_err" disabled/><div class="sb-field__error" id="sb_name_err"></div></div>'
-			. '<div class="sb-field" data-sb-field="sb_email"><label class="sb-field__label" for="sb_email_input">Email<span class="sb-field__required" aria-hidden="true">*</span></label><input type="email" id="sb_email_input" name="sb_email" required autocomplete="email" placeholder="jane@company.com" aria-describedby="sb_email_err" disabled/><div class="sb-field__error" id="sb_email_err"></div></div>'
+			. '<div class="sb-field" data-sb-field="sb_name"><label class="sb-field__label" for="sb_name_input">Your name<span class="sb-field__required" aria-hidden="true">*</span></label><input type="text" id="sb_name_input" name="sb_name" required autocomplete="name" placeholder="Jane Doe" aria-describedby="sb_name_err"/><div class="sb-field__error" id="sb_name_err"></div></div>'
+			. '<div class="sb-field" data-sb-field="sb_email"><label class="sb-field__label" for="sb_email_input">Email<span class="sb-field__required" aria-hidden="true">*</span></label><input type="email" id="sb_email_input" name="sb_email" required autocomplete="email" placeholder="jane@company.com" aria-describedby="sb_email_err"/><div class="sb-field__error" id="sb_email_err"></div></div>'
 		. '</div>'
-		. '<div class="sb-field" data-sb-field="sb_company"><label class="sb-field__label" for="sb_company_input">Company / Project</label><input type="text" id="sb_company_input" name="sb_company" autocomplete="organization" placeholder="Acme Inc · WooCommerce rebuild" disabled/></div>'
-		. '<div class="sb-field" data-sb-field="sb_message"><label class="sb-field__label" for="sb_message_input">Tell me about the project<span class="sb-field__required" aria-hidden="true">*</span></label><textarea id="sb_message_input" name="sb_message" required placeholder="What are you building, what\'s the timeline, and what does success look like?" aria-describedby="sb_message_err" disabled></textarea><div class="sb-field__error" id="sb_message_err"></div></div>'
+		. '<div class="sb-field" data-sb-field="sb_company"><label class="sb-field__label" for="sb_company_input">Company / Project</label><input type="text" id="sb_company_input" name="sb_company" autocomplete="organization" placeholder="Acme Inc · WooCommerce rebuild"/></div>'
+		. '<div class="sb-field" data-sb-field="sb_message"><label class="sb-field__label" for="sb_message_input">Tell me about the project<span class="sb-field__required" aria-hidden="true">*</span></label><textarea id="sb_message_input" name="sb_message" required placeholder="What are you building, what\'s the timeline, and what does success look like?" aria-describedby="sb_message_err"></textarea><div class="sb-field__error" id="sb_message_err"></div></div>'
 		. '<div class="sb-honeypot" aria-hidden="true"><label>Leave this empty <input type="text" name="sb_website" tabindex="-1" autocomplete="off"/></label></div>'
-		. '<div class="sb-contact__form-actions"><button type="submit" class="sb-btn sb-btn--primary" data-sb-submit disabled>Send message</button></div>'
+		. '<div class="sb-contact__form-actions"><button type="submit" class="sb-btn sb-btn--primary" data-sb-submit>Send message</button></div>'
 	. '</form>';
 
 	$inner = '<section class="wp-block-smart-blocks-contact-section sb-section sb-contact sb-reveal">'
@@ -399,15 +414,15 @@ $out .= sb_about();
 
 // SERVICES
 $services = [
-	[ 'icon' => 'wp',       'title' => 'Custom WordPress Development',  'desc' => 'End-to-end custom themes, plugins, and admin-side tooling, built to WordPress VIP coding standards with clean architecture.',  'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 96 ],
-	[ 'icon' => 'box',      'title' => 'ACF & Gutenberg Block Dev',     'desc' => 'Production-grade ACF blocks and native Gutenberg blocks. Editor UX that lets marketing ship without engineering.',                'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 94 ],
-	[ 'icon' => 'cart',     'title' => 'WooCommerce Engineering',       'desc' => 'Custom checkouts, subscriptions, payment gateways, and ERP integrations for content-heavy stores.',                              'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 92 ],
-	[ 'icon' => 'plug',     'title' => 'API Integrations',              'desc' => 'REST and third-party API bridges to CRMs, payment processors, mailers, and back-office systems.',                                'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 91 ],
-	[ 'icon' => 'gauge',    'title' => 'Performance Optimisation',      'desc' => 'Core Web Vitals deep-dives, MySQL query optimisation, Redis/Batcache/edge caching. 30–50% measured gains.',                      'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 93 ],
-	[ 'icon' => 'layers',   'title' => 'Advanced Custom Fields (ACF)',  'desc' => 'Modular content models with ACF Pro, custom post types, taxonomies, and user-role architectures.',                              'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 96 ],
-	[ 'icon' => 'cube',     'title' => 'Elementor · WPBakery · Divi',   'desc' => 'Custom widgets, dynamic data, and visual-builder workflows that match designer intent without sacrificing performance.',          'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 86 ],
-	[ 'icon' => 'terminal', 'title' => 'WP-CLI Automation',             'desc' => 'Idempotent CLI scripts for migrations, content imports, environment setup, and CI/CD-friendly deploys.',                          'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 90 ],
-	[ 'icon' => 'spark',    'title' => 'AI-assisted Development',       'desc' => 'n8n, Claude Code, OpenAI Codex, ChatGPT, Antigravity, Cursor — modern tooling to ship faster without compromising code quality.', 'showBar' => true, 'barLabel' => 'Expertise', 'proficiency' => 85 ],
+	[ 'icon' => 'wp',       'title' => 'Custom WordPress Development',  'desc' => 'End-to-end custom themes, plugins, and admin-side tooling, built to WordPress VIP coding standards with clean architecture.' ],
+	[ 'icon' => 'box',      'title' => 'ACF & Gutenberg Block Dev',     'desc' => 'Production-grade ACF blocks and native Gutenberg blocks. Editor UX that lets marketing ship without engineering.' ],
+	[ 'icon' => 'cart',     'title' => 'WooCommerce Engineering',       'desc' => 'Custom checkouts, subscriptions, payment gateways, and ERP integrations for content-heavy stores.' ],
+	[ 'icon' => 'plug',     'title' => 'API Integrations',              'desc' => 'REST and third-party API bridges to CRMs, payment processors, mailers, and back-office systems.' ],
+	[ 'icon' => 'gauge',    'title' => 'Performance Optimisation',      'desc' => 'Core Web Vitals deep-dives, MySQL query optimisation, Redis/Batcache/edge caching. 30–50% measured gains.' ],
+	[ 'icon' => 'layers',   'title' => 'Advanced Custom Fields (ACF)',  'desc' => 'Modular content models with ACF Pro, custom post types, taxonomies, and user-role architectures.' ],
+	[ 'icon' => 'cube',     'title' => 'Elementor · WPBakery · Divi',   'desc' => 'Custom widgets, dynamic data, and visual-builder workflows that match designer intent without sacrificing performance.' ],
+	[ 'icon' => 'terminal', 'title' => 'WP-CLI Automation',             'desc' => 'Idempotent CLI scripts for migrations, content imports, environment setup, and CI/CD-friendly deploys.' ],
+	[ 'icon' => 'spark',    'title' => 'AI-assisted Development',       'desc' => 'n8n, Claude Code, OpenAI Codex, ChatGPT, Antigravity, Cursor — modern tooling to ship faster without compromising code quality.' ],
 ];
 $out .= sb_parent( 'smart-blocks/services-grid', 'sb-services', [
 	'eyebrow' => '01 · What I do',
@@ -480,8 +495,19 @@ $certs = [
 $out .= sb_parent( 'smart-blocks/certifications', 'sb-certifications', [
 	'eyebrow' => '05 · Credentials',
 	'heading' => 'Certifications.',
-	'dek'     => 'Continuing education aligned with WordPress VIP and enterprise-grade practice. Upload badge images per certification from the editor.',
+	'dek'     => 'Continuing education aligned with WordPress VIP and enterprise-grade practice. Upload certificate images per item from the editor.',
 ], 'div', 'sb-certifications__grid', implode( '', array_map( 'sb_cert_block', $certs ) ) );
+
+// EDUCATION
+$education = [
+	[ 'degree' => 'Master of Computer Applications (MCA)',  'institution' => 'Gujarat Technological University',          'years' => '— · CGPA 8.08' ],
+	[ 'degree' => 'Bachelor of Computer Applications (BCA)', 'institution' => 'Hemchandracharya North Gujarat University', 'years' => '— · CGPA 7.25' ],
+];
+$out .= sb_parent( 'smart-blocks/education', 'sb-education', [
+	'eyebrow' => '06 · Academic',
+	'heading' => 'Education.',
+	'dek'     => 'Computer-science foundation in software development and applied programming.',
+], 'div', 'sb-education__grid', implode( '', array_map( 'sb_education_block', $education ) ) );
 
 // PROJECTS
 $projects = [
@@ -493,7 +519,7 @@ $projects = [
 	[ 'cat' => 'Enterprise CMS',  'title' => 'Corporate multisite migration',           'desc' => 'Migrated multiple country sites into a unified multisite network with shared theme.json, automated WP-CLI deploys, editorial workflow.','glyph' => 'MS', 'gradient' => 'linear-gradient(135deg, #4c1d95 0%, #a78bfa 100%)', 'tags' => [ 'Multisite', 'WP-CLI', 'i18n' ] ],
 ];
 $out .= sb_parent( 'smart-blocks/portfolio-projects', 'sb-projects', [
-	'eyebrow' => '06 · Selected work',
+	'eyebrow' => '07 · Selected work',
 	'heading' => 'Selected work that shipped.',
 	'dek'     => 'A snapshot of recent projects across eCommerce, LMS, custom plugins, and performance engineering. 70+ projects delivered overall.',
 ], 'div', 'sb-projects__grid', implode( '', array_map( 'sb_project_block', $projects ) ) );
@@ -508,7 +534,7 @@ $tests = [
 	[ 'quote' => 'Migrated multiple country sites into one multisite network with zero downtime and a faster editorial workflow on the other side. Quiet, calm, and exact.',               'name' => 'Jonas Berg',     'role' => 'Director of Web · Enterprise' ],
 ];
 $out .= sb_testimonials_parent( [
-	'eyebrow' => '07 · Testimonials',
+	'eyebrow' => '08 · Testimonials',
 	'heading' => 'What collaborators say.',
 	'dek'     => 'Feedback from the people I have shipped with — founders, engineering leaders, and product teams.',
 ], implode( '', array_map( 'sb_testimonial_block', $tests ) ) );

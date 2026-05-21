@@ -1,18 +1,19 @@
 <?php
 /**
- * Plugin Name:       Smart Blocks
+ * Plugin Name:       Sachin's Blocks
  * Plugin URI:        https://sachinsuthar.dev
- * Description:       Premium portfolio-section Gutenberg blocks (Hero, Services, Skills, Experience, Tech Stack, Projects, Testimonials, CTA, Contact). Pairs with the Sachin Suthar theme.
- * Version:           1.0.0
+ * Update URI:        https://sachinsuthar.dev/plugins/sachins-blocks/
+ * Description:       Custom portfolio Gutenberg blocks for the Sachin Suthar theme: Hero, About, Services, Skills, Experience, Tech Stack, Certifications, Education, Projects, Testimonials carousel, Blog Slider, Marquee, CTA, Contact.
+ * Version:           1.1.0
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Author:            Sachin Suthar
  * Author URI:        https://sachinsuthar.dev
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       smart-blocks
+ * Text Domain:       sachins-blocks
  *
- * @package SmartBlocks
+ * @package SachinsBlocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

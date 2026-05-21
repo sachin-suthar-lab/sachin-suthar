@@ -34,7 +34,7 @@ final class Loader {
 	public function register_category( array $categories ): array {
 		array_unshift( $categories, [
 			'slug'  => 'smart-blocks',
-			'title' => __( 'Smart Blocks', 'smart-blocks' ),
+			'title' => __( "Sachin's Blocks", 'sachins-blocks' ),
 			'icon'  => 'layout',
 		] );
 		return $categories;
@@ -79,7 +79,6 @@ final class Loader {
 		if ( is_admin() ) return;
 		$post = get_post();
 		if ( ! $post ) return;
-		$content = $post->post_content;
 
 		$blocks_with_view = [
 			'smart-blocks/testimonials'    => 'smart-blocks-carousel',
