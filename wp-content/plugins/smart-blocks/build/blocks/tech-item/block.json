@@ -5,7 +5,7 @@
   "title": "Tech Item",
   "category": "smart-blocks",
   "icon": "admin-tools",
-  "description": "Single technology card. Used inside Tech Stack.",
+  "description": "Single technology with icon, name, and a short meta line.",
   "parent": [
     "smart-blocks/tech-stack"
   ],
@@ -20,6 +20,10 @@
       "default": "spark"
     },
     "name": {
+      "type": "string",
+      "default": ""
+    },
+    "meta": {
       "type": "string",
       "default": ""
     }

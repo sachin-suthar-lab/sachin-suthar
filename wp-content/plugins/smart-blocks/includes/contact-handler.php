@@ -2,8 +2,11 @@
 /**
  * Smart Blocks — contact form handler.
  *
- * Receives the form from the Contact Section block, validates a nonce + honeypot,
- * then emails the site admin and redirects back with a success / error flag.
+ * Exposes a REST endpoint `smart-blocks/v1/contact` that receives the form
+ * payload, validates nonce + honeypot + field rules, sends an email, and
+ * returns a structured JSON response that the front-end view.js renders.
+ *
+ * Falls back to the classic admin-post handler for users with JS disabled.
  *
  * @package SmartBlocks
  */
@@ -12,46 +15,99 @@ namespace SmartBlocks\Contact;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-add_action( 'admin_post_nopriv_smart_blocks_contact', __NAMESPACE__ . '\\handle' );
-add_action( 'admin_post_smart_blocks_contact',        __NAMESPACE__ . '\\handle' );
+/* ---------- REST endpoint (primary path used by AJAX form) ---------- */
+add_action( 'rest_api_init', __NAMESPACE__ . '\\register_route' );
 
-function handle(): void {
+function register_route(): void {
+	register_rest_route( 'smart-blocks/v1', '/contact', [
+		'methods'             => \WP_REST_Server::CREATABLE,
+		'callback'            => __NAMESPACE__ . '\\rest_handle',
+		'permission_callback' => '__return_true',
+	] );
+}
+
+function rest_handle( \WP_REST_Request $request ) {
+	$nonce = $request->get_header( 'X-WP-Nonce' );
+	if ( ! $nonce || ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
+		return new \WP_REST_Response( [
+			'ok'      => false,
+			'code'    => 'bad_nonce',
+			'message' => __( 'Security check failed. Please refresh and try again.', 'smart-blocks' ),
+		], 403 );
+	}
+
+	$body = $request->get_json_params() ?: $request->get_body_params();
+	$res  = validate_and_send( $body );
+
+	return new \WP_REST_Response( $res, $res['ok'] ? 200 : 400 );
+}
+
+/* ---------- Legacy non-JS fallback (admin-post) ---------- */
+add_action( 'admin_post_nopriv_smart_blocks_contact', __NAMESPACE__ . '\\fallback_handle' );
+add_action( 'admin_post_smart_blocks_contact',        __NAMESPACE__ . '\\fallback_handle' );
+
+function fallback_handle(): void {
 	$referer = wp_get_referer() ?: home_url( '/' );
-
 	if ( ! isset( $_POST['smart_blocks_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['smart_blocks_nonce'] ) ), 'smart_blocks_contact' ) ) {
 		wp_safe_redirect( add_query_arg( 'sb_contact', 'invalid', $referer ) . '#contact' );
 		exit;
 	}
+	$res = validate_and_send( wp_unslash( $_POST ) );
+	wp_safe_redirect( add_query_arg( 'sb_contact', $res['ok'] ? 'sent' : 'invalid', $referer ) . '#contact' );
+	exit;
+}
 
-	// Honeypot — silent reject.
-	if ( ! empty( $_POST['sb_website'] ) ) {
-		wp_safe_redirect( add_query_arg( 'sb_contact', 'sent', $referer ) . '#contact' );
-		exit;
+/* ---------- Shared validation + send ---------- */
+function validate_and_send( $body ): array {
+	$body = is_array( $body ) ? $body : [];
+
+	// Honeypot — silent reject reported as success so bots don't iterate.
+	if ( ! empty( $body['sb_website'] ) ) {
+		return [ 'ok' => true, 'message' => '', 'silent' => true ];
 	}
 
-	$name    = isset( $_POST['sb_name'] )    ? sanitize_text_field( wp_unslash( $_POST['sb_name'] ) )    : '';
-	$email   = isset( $_POST['sb_email'] )   ? sanitize_email(      wp_unslash( $_POST['sb_email'] ) )   : '';
-	$company = isset( $_POST['sb_company'] ) ? sanitize_text_field( wp_unslash( $_POST['sb_company'] ) ) : '';
-	$message = isset( $_POST['sb_message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['sb_message'] ) ) : '';
+	$name    = isset( $body['sb_name'] )    ? sanitize_text_field( $body['sb_name'] )           : '';
+	$email   = isset( $body['sb_email'] )   ? sanitize_email( $body['sb_email'] )               : '';
+	$company = isset( $body['sb_company'] ) ? sanitize_text_field( $body['sb_company'] )        : '';
+	$message = isset( $body['sb_message'] ) ? sanitize_textarea_field( $body['sb_message'] )    : '';
 
-	if ( '' === $name || ! is_email( $email ) || '' === $message ) {
-		wp_safe_redirect( add_query_arg( 'sb_contact', 'invalid', $referer ) . '#contact' );
-		exit;
+	$errors = [];
+	if ( '' === trim( $name ) )           { $errors['sb_name']    = __( 'Please enter your name.', 'smart-blocks' ); }
+	if ( ! is_email( $email ) )           { $errors['sb_email']   = __( 'Please enter a valid email address.', 'smart-blocks' ); }
+	if ( strlen( trim( $message ) ) < 12 ) { $errors['sb_message'] = __( 'Please write at least a sentence about your project.', 'smart-blocks' ); }
+
+	if ( ! empty( $errors ) ) {
+		return [
+			'ok'      => false,
+			'code'    => 'validation',
+			'message' => __( 'Please fix the highlighted fields and try again.', 'smart-blocks' ),
+			'errors'  => $errors,
+		];
 	}
 
-	$to      = get_option( 'admin_email' );
-	$subject = sprintf( '[Portfolio] New enquiry from %s', $name );
-	$body    = sprintf(
+	$to      = apply_filters( 'smart_blocks/contact/to', get_option( 'admin_email' ) );
+	$subject = sprintf( __( '[Portfolio] New enquiry from %s', 'smart-blocks' ), $name );
+	$msg     = sprintf(
 		"Name:    %s\nEmail:   %s\nCompany: %s\n\nMessage:\n%s\n",
 		$name, $email, $company, $message
 	);
 	$headers = [
 		'Content-Type: text/plain; charset=UTF-8',
-		'Reply-To: ' . $name . ' <' . $email . '>',
+		sprintf( 'Reply-To: %s <%s>', $name, $email ),
 	];
 
-	wp_mail( $to, $subject, $body, $headers );
+	$sent = wp_mail( $to, $subject, $msg, $headers );
 
-	wp_safe_redirect( add_query_arg( 'sb_contact', 'sent', $referer ) . '#contact' );
-	exit;
+	if ( ! $sent ) {
+		return [
+			'ok'      => false,
+			'code'    => 'mail_failed',
+			'message' => __( 'We could not send your message right now. Please email me directly at ' . get_option( 'admin_email' ) . '.', 'smart-blocks' ),
+		];
+	}
+
+	return [
+		'ok'      => true,
+		'message' => __( 'Thanks — your message landed. I will reply within two working days.', 'smart-blocks' ),
+	];
 }

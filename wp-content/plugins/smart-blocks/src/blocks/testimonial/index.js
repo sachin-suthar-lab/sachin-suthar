@@ -68,22 +68,5 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save( { attributes } ) {
-		const { quote, name, role, avatarUrl } = attributes;
-		const blockProps = useBlockProps.save( { className: 'sb-testimonial' } );
-		return (
-			<figure { ...blockProps }>
-				<RichText.Content tagName="blockquote" className="sb-testimonial__quote" value={ quote } />
-				<figcaption className="sb-testimonial__person">
-					<span className="sb-testimonial__avatar" aria-hidden="true">
-						{ avatarUrl ? <img src={ avatarUrl } alt="" /> : initials( name ) }
-					</span>
-					<span>
-						<RichText.Content tagName="span" className="sb-testimonial__name" value={ name } /><br />
-						<RichText.Content tagName="span" className="sb-testimonial__role" value={ role } />
-					</span>
-				</figcaption>
-			</figure>
-		);
-	},
+	save: () => null,
 } );

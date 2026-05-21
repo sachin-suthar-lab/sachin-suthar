@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/about",
+	"title": "About",
+	"category": "smart-blocks",
+	"icon": "id",
+	"description": "About section: portrait image, intro copy, and key highlight cards.",
+	"keywords": [ "about", "intro", "bio" ],
+	"textdomain": "smart-blocks",
+	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
+	"attributes": {
+		"eyebrow":  { "type": "string", "default": "About" },
+		"heading":  { "type": "string", "default": "Engineer-led WordPress, from planning to deployment." },
+		"body":     { "type": "string", "default": "I'm Sachin Suthar — based in Ahmedabad, India, with 7+ years building custom themes, plugins, and backend systems for eCommerce, LMS, and corporate platforms. I take projects from technical scoping all the way through code review and deployment: writing clean, maintainable code, fixing performance bottlenecks, and integrating third-party APIs. Familiar with WordPress VIP coding standards and best practices through certification. Currently expanding into React-based Gutenberg block development and PHPUnit testing." },
+		"imageId":  { "type": "number", "default": 0 },
+		"imageUrl": { "type": "string", "default": "" },
+		"imageAlt": { "type": "string", "default": "" },
+		"highlights": {
+			"type": "array",
+			"default": [
+				{ "title": "Ahmedabad, India",          "meta": "Available worldwide · Remote-first" },
+				{ "title": "7+ years experience",        "meta": "Across 70+ shipped WordPress projects" },
+				{ "title": "WP VIP standards",           "meta": "Architecture, performance, and security" },
+				{ "title": "MCA · Gujarat Tech Univ.",   "meta": "CGPA 8.08 · BCA from HNGU (7.25)" }
+			]
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"viewScript":   "smart-blocks-reveal",
+	"render":       "file:./render.php"
+}

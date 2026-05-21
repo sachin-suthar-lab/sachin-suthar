@@ -8,7 +8,7 @@ import './style.scss';
 
 registerBlockType( metadata.name, {
 	edit( { attributes, setAttributes } ) {
-		const { icon, name } = attributes;
+		const { icon, name, meta } = attributes;
 		const blockProps = useBlockProps( { className: 'sb-tech-card' } );
 		return (
 			<>
@@ -24,14 +24,24 @@ registerBlockType( metadata.name, {
 				</InspectorControls>
 				<div { ...blockProps }>
 					<div className="sb-tech-card__icon"><IconPreview name={ icon } /></div>
-					<RichText
-						tagName="div"
-						className="sb-tech-card__name"
-						value={ name }
-						onChange={ ( v ) => setAttributes( { name: v } ) }
-						placeholder={ __( 'Tech name', 'smart-blocks' ) }
-						allowedFormats={ [] }
-					/>
+					<div className="sb-tech-card__body">
+						<RichText
+							tagName="span"
+							className="sb-tech-card__name"
+							value={ name }
+							onChange={ ( v ) => setAttributes( { name: v } ) }
+							placeholder={ __( 'Tech name', 'smart-blocks' ) }
+							allowedFormats={ [] }
+						/>
+						<RichText
+							tagName="span"
+							className="sb-tech-card__meta"
+							value={ meta }
+							onChange={ ( v ) => setAttributes( { meta: v } ) }
+							placeholder={ __( 'e.g. 7+ years', 'smart-blocks' ) }
+							allowedFormats={ [] }
+						/>
+					</div>
 				</div>
 			</>
 		);

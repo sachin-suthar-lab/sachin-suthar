@@ -5,7 +5,7 @@
   "title": "Hero",
   "category": "smart-blocks",
   "icon": "format-status",
-  "description": "Hero section with badge, headline, lede, dual CTAs, and metric cards.",
+  "description": "Two-column hero with badge, headline, lede, dual CTAs, portrait image, and metric cards.",
   "keywords": [
     "hero",
     "headline",
@@ -23,7 +23,7 @@
   "attributes": {
     "badge": {
       "type": "string",
-      "default": "Senior WordPress Developer · 8+ years"
+      "default": "Senior WordPress Developer · 7+ years"
     },
     "badgeDot": {
       "type": "boolean",
@@ -31,15 +31,15 @@
     },
     "headline": {
       "type": "string",
-      "default": "WordPress development that feels"
+      "default": "WordPress engineering, built for"
     },
     "highlight": {
       "type": "string",
-      "default": "engineered, not assembled."
+      "default": "long-term performance."
     },
     "lede": {
       "type": "string",
-      "default": "I'm Sachin Suthar — a senior WordPress developer specialising in custom themes, Gutenberg block development, WooCommerce, and headless architectures. I help teams ship fast, accessible, and maintainable WordPress products."
+      "default": "I'm Sachin Suthar — a Senior WordPress Developer from Ahmedabad with 7+ years of hands-on experience across 70+ projects. I build custom themes, plugins, ACF and Gutenberg blocks, and performance-tuned WooCommerce stores for agencies, startups, and enterprise clients."
     },
     "ctaText": {
       "type": "string",
@@ -57,24 +57,36 @@
       "type": "string",
       "default": "#work"
     },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": ""
+    },
     "metrics": {
       "type": "array",
       "default": [
         {
-          "value": "8+",
-          "label": "Years building scalable WordPress"
+          "value": "7+",
+          "label": "Years of WordPress engineering"
         },
         {
-          "value": "120+",
-          "label": "Custom themes & plugins shipped"
+          "value": "70+",
+          "label": "Projects shipped end-to-end"
         },
         {
-          "value": "40+",
-          "label": "Gutenberg blocks engineered"
+          "value": "50+",
+          "label": "Custom themes & plugins built"
         },
         {
-          "value": "99",
-          "label": "Median Lighthouse performance"
+          "value": "30–50%",
+          "label": "Median performance gains"
         }
       ]
     }

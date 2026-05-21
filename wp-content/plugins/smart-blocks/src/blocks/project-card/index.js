@@ -89,35 +89,5 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save( { attributes } ) {
-		const { cat, title, desc, glyph, gradient, coverUrl, coverAlt, url, tags = [] } = attributes;
-		const blockProps = useBlockProps.save( { className: 'sb-project' } );
-		const coverStyle = {
-			'--cover': coverUrl ? `url(${ coverUrl })` : gradient,
-			backgroundImage: coverUrl ? `url(${ coverUrl })` : undefined,
-		};
-		const TitleTag = url ? 'a' : 'span';
-		return (
-			<article { ...blockProps }>
-				<div className="sb-project__cover" style={ coverStyle } role={ coverUrl ? 'img' : undefined } aria-label={ coverUrl ? coverAlt : undefined }>
-					{ ! coverUrl && glyph && <span className="sb-project__cover-glyph">{ glyph }</span> }
-				</div>
-				<div className="sb-project__body">
-					<RichText.Content tagName="span" className="sb-project__cat"  value={ cat } />
-					<h3 className="sb-project__title">
-						{ url
-							? <TitleTag href={ url } rel="noopener" target="_blank"><RichText.Content value={ title } /></TitleTag>
-							: <RichText.Content value={ title } />
-						}
-					</h3>
-					<RichText.Content tagName="p" className="sb-project__desc" value={ desc } />
-					{ tags.length > 0 && (
-						<div className="sb-project__tags">
-							{ tags.map( ( t, i ) => ( <span key={ i } className="sb-tag">{ t }</span> ) ) }
-						</div>
-					) }
-				</div>
-			</article>
-		);
-	},
+	save: () => null,
 } );

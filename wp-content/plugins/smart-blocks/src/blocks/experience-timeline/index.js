@@ -8,32 +8,25 @@ import './editor.scss';
 const ALLOWED = [ 'smart-blocks/timeline-item' ];
 const TEMPLATE = [
 	[ 'smart-blocks/timeline-item', {
-		period: '2022 — Present',
-		role:   'Senior WordPress Engineer · Freelance',
-		org:    'SaaS, agencies & enterprise clients · Remote',
-		desc:   'Lead WordPress engineer on headless and FSE builds for SaaS marketing sites, agency clients, and enterprise CMS migrations. Architecting custom block libraries, performance-tuned WooCommerce stores, and CI-friendly WP-CLI workflows.',
-		tags:   [ 'FSE Themes', 'Gutenberg Blocks', 'Headless', 'Performance' ],
+		period: '2024 — Present',
+		role:   'Senior WordPress Developer · Team Lead',
+		org:    'NineGravity — Ahmedabad, India',
+		desc:   'Lead development of WordPress projects used in live production environments. Built custom plugin architecture that automates internal business workflows. Conduct code reviews, enforce WordPress Coding Standards, and define technical scope with PMs and stakeholders. Resolve critical live-site bugs with minimal downtime.',
+		tags:   [ 'Team Lead', 'Custom Plugins', 'Code Review', 'WP Coding Standards', 'MySQL Tuning' ],
 	} ],
 	[ 'smart-blocks/timeline-item', {
-		period: '2020 — 2022',
-		role:   'WordPress Tech Lead',
-		org:    'Digital product studio',
-		desc:   'Led a team of four building custom plugins and themes for venture-backed SaaS startups. Owned Gutenberg block architecture, code review standards, and release engineering. Delivered 40+ shipped products with measurable Core Web Vitals improvements.',
-		tags:   [ 'Team Lead', 'Plugin Architecture', 'Code Review', 'CI/CD' ],
-	} ],
-	[ 'smart-blocks/timeline-item', {
-		period: '2018 — 2020',
+		period: '2019 — 2024',
 		role:   'Senior WordPress Developer',
-		org:    'Boutique agency · Remote / Hybrid',
-		desc:   'WooCommerce-heavy practice: custom checkout flows, subscription billing, ERP integrations, and multilingual storefronts. Migrated legacy classic-editor sites to Gutenberg with custom block parity.',
-		tags:   [ 'WooCommerce', 'Custom Plugins', 'Migrations', 'ACF Pro' ],
+		org:    'SilverWebBuzz Pvt. Ltd. — Ahmedabad, India',
+		desc:   'Built 50+ custom themes and plugins for business-critical client websites across eCommerce, LMS, and corporate platforms. Implemented custom post types, taxonomies, and user roles for content-heavy projects. Integrated third-party APIs and reduced page load times through DB query optimisation. Used WP-CLI to automate database operations and deployments.',
+		tags:   [ 'Custom Themes', 'WooCommerce', 'API Integrations', 'WP-CLI', 'Performance' ],
 	} ],
 	[ 'smart-blocks/timeline-item', {
 		period: '2017 — 2018',
-		role:   'WordPress Developer',
-		org:    'Product-led startup',
-		desc:   'First in-house WordPress hire. Built the marketing platform, custom block library, REST integrations with the product app, and a publish workflow that took editors from idea to live in minutes.',
-		tags:   [ 'Custom Themes', 'REST API', 'Editor UX' ],
+		role:   'PHP Developer · Software Support Engineer',
+		org:    'BlueMax Services — Mehsana, India',
+		desc:   'Supported government software platforms where uptime and reliability were critical. Fixed server-side and application bugs, documented long-term solutions, built and maintained PHP modules, and assisted with deployments, upgrades, and technical documentation.',
+		tags:   [ 'PHP', 'Bug Fixing', 'Documentation', 'Deployments' ],
 	} ],
 ];
 
@@ -46,24 +39,12 @@ registerBlockType( metadata.name, {
 		);
 		return (
 			<section { ...blockProps }>
-				<SectionHead attributes={ attributes } setAttributes={ setAttributes } />
-				<ol { ...innerProps } />
-			</section>
-		);
-	},
-	save( { attributes } ) {
-		const { eyebrow, heading, dek } = attributes;
-		const blockProps = useBlockProps.save( { className: 'sb-section sb-experience sb-reveal' } );
-		const innerProps = useInnerBlocksProps.save( { className: 'sb-timeline' } );
-		return (
-			<section { ...blockProps }>
-				<div className="sb-section-head">
-					{ eyebrow && <span className="sb-eyebrow">{ eyebrow }</span> }
-					{ heading && <h2>{ heading }</h2> }
-					{ dek && <p>{ dek }</p> }
+				<div className="sb-container">
+					<SectionHead attributes={ attributes } setAttributes={ setAttributes } />
+					<ol { ...innerProps } />
 				</div>
-				<ol { ...innerProps } />
 			</section>
 		);
 	},
+	save: () => null,
 } );

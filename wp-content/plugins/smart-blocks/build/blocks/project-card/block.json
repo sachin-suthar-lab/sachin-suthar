@@ -61,5 +61,6 @@
   "style": [
     "smart-blocks-shared",
     "file:./style-index.css"
-  ]
+  ],
+  "render": "file:./render.php"
 }

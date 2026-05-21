@@ -18,46 +18,58 @@ $ctaText    = $attributes['ctaText']          ?? '';
 $ctaUrl     = $attributes['ctaUrl']           ?? '#';
 $cta2Text   = $attributes['ctaSecondaryText'] ?? '';
 $cta2Url    = $attributes['ctaSecondaryUrl']  ?? '#';
+$imageUrl   = $attributes['imageUrl']         ?? '';
+$imageAlt   = $attributes['imageAlt']         ?? '';
 $metrics    = is_array( $attributes['metrics'] ?? null ) ? $attributes['metrics'] : [];
 
 $wrapper = get_block_wrapper_attributes( [ 'class' => 'sb-section sb-hero sb-reveal' ] );
 ?>
 <section <?php echo $wrapper; ?>>
-	<div class="sb-hero__inner">
-		<?php if ( $badge !== '' ) : ?>
-			<span class="sb-hero__badge">
-				<?php if ( $badgeDot ) : ?><span class="dot" aria-hidden="true"></span><?php endif; ?>
-				<span><?php echo wp_kses_post( $badge ); ?></span>
-			</span>
-		<?php endif; ?>
-
-		<?php if ( $headline !== '' || $highlight !== '' ) : ?>
-			<h1>
-				<?php echo wp_kses_post( $headline ); ?>
-				<?php if ( $highlight !== '' ) : ?>
-					<span class="sb-gradient"><?php echo wp_kses_post( $highlight ); ?></span>
+	<div class="sb-container">
+		<div class="sb-hero__layout">
+			<div class="sb-hero__copy">
+				<?php if ( $badge !== '' ) : ?>
+					<span class="sb-hero__badge">
+						<?php if ( $badgeDot ) : ?><span class="dot" aria-hidden="true"></span><?php endif; ?>
+						<span><?php echo wp_kses_post( $badge ); ?></span>
+					</span>
 				<?php endif; ?>
-			</h1>
-		<?php endif; ?>
 
-		<?php if ( $lede !== '' ) : ?>
-			<p class="sb-hero__lede"><?php echo wp_kses_post( $lede ); ?></p>
-		<?php endif; ?>
-
-		<?php if ( $ctaText || $cta2Text ) : ?>
-			<div class="sb-hero__cta">
-				<?php if ( $ctaText ) : ?>
-					<a class="sb-btn sb-btn--primary" href="<?php echo esc_url( $ctaUrl ); ?>">
-						<?php echo esc_html( $ctaText ); ?>
-					</a>
+				<?php if ( $headline !== '' || $highlight !== '' ) : ?>
+					<h1>
+						<?php echo wp_kses_post( $headline ); ?>
+						<?php if ( $highlight !== '' ) : ?>
+							<span class="sb-gradient"><?php echo wp_kses_post( $highlight ); ?></span>
+						<?php endif; ?>
+					</h1>
 				<?php endif; ?>
-				<?php if ( $cta2Text ) : ?>
-					<a class="sb-btn sb-btn--ghost" href="<?php echo esc_url( $cta2Url ); ?>">
-						<?php echo esc_html( $cta2Text ); ?>
-					</a>
+
+				<?php if ( $lede !== '' ) : ?>
+					<p class="sb-hero__lede"><?php echo wp_kses_post( $lede ); ?></p>
+				<?php endif; ?>
+
+				<?php if ( $ctaText || $cta2Text ) : ?>
+					<div class="sb-hero__cta">
+						<?php if ( $ctaText ) : ?>
+							<a class="sb-btn sb-btn--primary" href="<?php echo esc_url( $ctaUrl ); ?>"><?php echo esc_html( $ctaText ); ?></a>
+						<?php endif; ?>
+						<?php if ( $cta2Text ) : ?>
+							<a class="sb-btn sb-btn--ghost" href="<?php echo esc_url( $cta2Url ); ?>"><?php echo esc_html( $cta2Text ); ?></a>
+						<?php endif; ?>
+					</div>
 				<?php endif; ?>
 			</div>
-		<?php endif; ?>
+
+			<div class="sb-hero__visual">
+				<div class="sb-image-slot">
+					<?php if ( $imageUrl ) : ?>
+						<img src="<?php echo esc_url( $imageUrl ); ?>" alt="<?php echo esc_attr( $imageAlt ); ?>" loading="eager" />
+					<?php else : ?>
+						<span class="sb-image-slot__label">Image goes here</span>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
 
 		<?php if ( ! empty( $metrics ) ) : ?>
 			<div class="sb-hero__metrics" role="list">

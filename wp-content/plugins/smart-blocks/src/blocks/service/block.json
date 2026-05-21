@@ -5,14 +5,17 @@
 	"title": "Service Card",
 	"category": "smart-blocks",
 	"icon": "category",
-	"description": "A single service card. Used inside Services Grid.",
+	"description": "A single service card with icon, title, description, and optional expertise bar.",
 	"parent": [ "smart-blocks/services-grid" ],
 	"textdomain": "smart-blocks",
 	"supports": { "html": false, "reusable": false, "inserter": true },
 	"attributes": {
-		"icon":  { "type": "string", "default": "spark" },
-		"title": { "type": "string", "default": "" },
-		"desc":  { "type": "string", "default": "" }
+		"icon":       { "type": "string", "default": "spark" },
+		"title":      { "type": "string", "default": "" },
+		"desc":       { "type": "string", "default": "" },
+		"showBar":    { "type": "boolean", "default": true },
+		"barLabel":   { "type": "string", "default": "Expertise" },
+		"proficiency":{ "type": "number", "default": 90 }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",

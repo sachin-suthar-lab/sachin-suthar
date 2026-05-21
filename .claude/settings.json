@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where node *)",
+      "Bash(where git *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'chore: initial repo setup with .gitignore and CLAUDE.md *)",
+      "Bash(git checkout *)",
+      "Bash(git commit -m 'feat\\(theme\\): sachin-suthar FSE theme *)",
+      "Bash(git merge *)",
+      "Bash(git commit -m 'feat\\(plugin\\): smart-blocks with 9 portfolio Gutenberg blocks *)",
+      "Bash(git commit -m 'feat\\(content\\): WP-CLI provisioner for theme/plugin activation + homepage *)",
+      "Bash(git rm *)",
+      "Bash(npm run *)",
+      "Bash(php -l tools/setup-homepage.php)",
+      "Bash(git reset *)",
+      "Bash(git commit -m 'refactor\\(plugin\\): rebuild smart-blocks as native React Gutenberg blocks *)"
+    ]
+  }
+}

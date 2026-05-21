@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "smart-blocks/certifications",
+  "title": "Certifications",
+  "category": "smart-blocks",
+  "icon": "awards",
+  "description": "Section heading + grid of editable Certification cards.",
+  "keywords": [
+    "certifications",
+    "credentials"
+  ],
+  "textdomain": "smart-blocks",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "anchor": true,
+    "reusable": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Credentials"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Certifications."
+    },
+    "dek": {
+      "type": "string",
+      "default": "Continuing education aligned with WordPress VIP and enterprise-grade practice."
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": [
+    "smart-blocks-shared",
+    "file:./style-index.css"
+  ],
+  "viewScript": "smart-blocks-reveal",
+  "render": "file:./render.php"
+}

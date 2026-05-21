@@ -1,63 +1,42 @@
 /* ============================================================
-   Sachin Suthar — Front-end supplemental styles
-   Animations, glassmorphism utilities, reveal effects.
-   Design tokens live in theme.json and are surfaced as
-   --wp--preset--* CSS variables; this file only adds what
-   the JSON layer can't express.
+   Sachin Suthar — light enterprise theme supplemental styles
+   Token-aware via theme.json. Adds layout primitives, reveal,
+   and refined link/button hover states.
    ============================================================ */
 
 :root {
-	--ss-radius-sm: 10px;
-	--ss-radius-md: 16px;
-	--ss-radius-lg: 22px;
-	--ss-radius-pill: 999px;
 	--ss-ease: cubic-bezier(.22,.61,.36,1);
-	--ss-glass-bg: rgba(23, 24, 35, 0.55);
-	--ss-glass-bd: rgba(255, 255, 255, 0.06);
+	--ss-radius-pill: 999px;
 }
 
-/* Smooth, friction-light scrollbars on dark surfaces */
+/* Smooth, light-mode scrollbars */
 ::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-	background: linear-gradient(180deg, #2a2b39, #1a1b25);
+	background: linear-gradient(180deg, #d6cee9, #c0b3df);
 	border-radius: 999px;
 	border: 3px solid var(--wp--preset--color--base);
 }
-::-webkit-scrollbar-thumb:hover { background: #3b3d4f; }
+::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
 
-/* ---------- Reveal-on-scroll (used by every smart-block) ---------- */
-.ss-reveal {
+/* Reveal on scroll */
+.ss-reveal,
+.sb-reveal {
 	opacity: 0;
 	transform: translateY(18px);
 	transition: opacity .9s var(--ss-ease), transform .9s var(--ss-ease);
 	will-change: opacity, transform;
 }
-.ss-reveal.is-visible { opacity: 1; transform: translateY(0); }
+.ss-reveal.is-visible,
+.sb-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
 @media (prefers-reduced-motion: reduce) {
-	.ss-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+	.ss-reveal, .sb-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 	html { scroll-behavior: auto; }
 }
 
-/* ---------- Glass card utility ---------- */
-.ss-glass {
-	background: var(--ss-glass-bg);
-	border: 1px solid var(--ss-glass-bd);
-	backdrop-filter: blur(14px) saturate(160%);
-	-webkit-backdrop-filter: blur(14px) saturate(160%);
-	border-radius: var(--ss-radius-md);
-}
-
-/* ---------- Gradient text helper ---------- */
-.ss-gradient-text {
-	background: linear-gradient(135deg, var(--wp--preset--color--accent) 0%, var(--wp--preset--color--accent-2) 60%, var(--wp--preset--color--accent-3) 100%);
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: transparent;
-}
-
-/* ---------- Aurora ambient background ---------- */
-body { position: relative; overflow-x: hidden; }
+/* Subtle ambient halo behind hero — light & restrained */
+body { position: relative; overflow-x: hidden; background: var(--wp--preset--color--base); }
 body::before {
 	content: "";
 	position: fixed;
@@ -65,47 +44,52 @@ body::before {
 	pointer-events: none;
 	z-index: 0;
 	background:
-		radial-gradient(40rem 30rem at 12% -8%, rgba(124, 92, 255, 0.22), transparent 60%),
-		radial-gradient(36rem 26rem at 92% 8%, rgba(34, 211, 238, 0.16), transparent 60%),
-		radial-gradient(50rem 36rem at 50% 110%, rgba(240, 171, 252, 0.10), transparent 60%);
-	filter: blur(2px);
+		radial-gradient(46rem 28rem at 88% -10%, rgba(167, 139, 250, 0.22), transparent 60%),
+		radial-gradient(36rem 24rem at -8% 22%, rgba(109, 40, 217, 0.08), transparent 60%),
+		radial-gradient(50rem 32rem at 50% 110%, rgba(167, 139, 250, 0.10), transparent 60%);
 }
 .wp-site-blocks { position: relative; z-index: 1; }
 
-/* ---------- Navigation polish (overrides for the FSE Navigation block) ---------- */
+/* Navigation polish */
 .site-header .wp-block-navigation a:where(:not(.wp-element-button)) {
-	color: var(--wp--preset--color--contrast);
-	opacity: 0.78;
+	color: var(--wp--preset--color--text);
+	opacity: 0.82;
 	transition: opacity .25s var(--ss-ease), color .25s var(--ss-ease);
 }
-.site-header .wp-block-navigation a:where(:not(.wp-element-button)):hover { opacity: 1; color: #fff; }
+.site-header .wp-block-navigation a:where(:not(.wp-element-button)):hover {
+	opacity: 1;
+	color: var(--wp--preset--color--accent);
+}
 
-/* ---------- Buttons: secondary "ghost" style for outline buttons ---------- */
+/* Ghost button style */
 .wp-block-button.is-style-ghost .wp-block-button__link {
-	background: transparent;
-	border: 1px solid var(--wp--preset--color--border);
-	color: var(--wp--preset--color--contrast-2);
-	box-shadow: none;
+	background: #fff;
+	border: 1px solid var(--wp--preset--color--border-strong);
+	color: var(--wp--preset--color--contrast);
+	box-shadow: 0 1px 2px rgba(35,33,58,0.06);
 }
 .wp-block-button.is-style-ghost .wp-block-button__link:hover {
 	border-color: var(--wp--preset--color--accent);
-	box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.12);
+	color: var(--wp--preset--color--accent);
+	box-shadow: 0 0 0 4px rgba(109,40,217,0.10);
 }
-
-/* Primary button hover lift */
 .wp-block-button .wp-block-button__link {
 	transition: transform .25s var(--ss-ease), box-shadow .25s var(--ss-ease), filter .25s var(--ss-ease);
 }
 .wp-block-button .wp-block-button__link:hover {
 	transform: translateY(-2px);
-	filter: brightness(1.05);
-	box-shadow: 0 14px 34px -10px rgba(124, 92, 255, .55);
+	filter: brightness(1.04);
+	box-shadow: 0 14px 32px -10px rgba(109,40,217,.4);
 }
 
-/* Tighten list bullet style 'no-bullets' used in footer */
+/* List "no-bullets" */
 .is-style-no-bullets li { list-style: none; padding-left: 0; }
-.is-style-no-bullets a { color: var(--wp--preset--color--muted); text-decoration: none; }
-.is-style-no-bullets a:hover { color: var(--wp--preset--color--contrast-2); }
+.is-style-no-bullets a {
+	color: var(--wp--preset--color--muted);
+	text-decoration: none;
+	transition: color .2s ease;
+}
+.is-style-no-bullets a:hover { color: var(--wp--preset--color--accent); }
 
-/* ---------- Section anchor offset so sticky header doesn't cover headings ---------- */
+/* Section anchor offset for sticky header */
 [id] { scroll-margin-top: 90px; }
