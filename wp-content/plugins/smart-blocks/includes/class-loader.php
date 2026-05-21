@@ -1,10 +1,10 @@
 <?php
 /**
- * Smart Blocks loader (React/wp-scripts edition).
+ * Smart Blocks loader (pure static-save edition).
  *
- * Discovers every compiled block directory under /build/blocks, registers it
- * via block.json, and ensures the shared front-end stylesheet + reveal observer
- * are enqueued whenever any of our blocks renders.
+ * Registers each compiled block via block.json, wires up the shared front-end
+ * stylesheet and reveal observer, and localises the contact-form view script
+ * with a fresh REST nonce + endpoint URL.
  *
  * @package SmartBlocks
  */
@@ -27,8 +27,10 @@ final class Loader {
 	}
 
 	private function __construct() {
-		add_action( 'init',                 [ $this, 'register_blocks' ], 20 );
 		add_action( 'init',                 [ $this, 'register_shared_assets' ] );
+		add_action( 'init',                 [ $this, 'register_blocks' ], 20 );
+		add_action( 'wp_enqueue_scripts',   [ $this, 'enqueue_shared' ] );
+		add_action( 'wp_enqueue_scripts',   [ $this, 'localize_contact' ], 20 );
 		add_filter( 'block_categories_all', [ $this, 'register_category' ] );
 	}
 
@@ -41,12 +43,6 @@ final class Loader {
 		return $categories;
 	}
 
-	/**
-	 * Register the shared front-end stylesheet + reveal IO observer.
-	 * These are referenced by every block's block.json `viewStyle` / `viewScript`
-	 * (via the registered handles below), so they only load on pages that include
-	 * one of our blocks.
-	 */
 	public function register_shared_assets(): void {
 		$shared_css = SMART_BLOCKS_DIR . 'build/shared.css';
 		if ( file_exists( $shared_css ) ) {
@@ -57,42 +53,54 @@ final class Loader {
 				filemtime( $shared_css )
 			);
 		}
+		$reveal_js = SMART_BLOCKS_DIR . 'assets/js/reveal.js';
 		wp_register_script(
 			'smart-blocks-reveal',
 			SMART_BLOCKS_URL . 'assets/js/reveal.js',
 			[],
-			SMART_BLOCKS_VERSION,
+			file_exists( $reveal_js ) ? filemtime( $reveal_js ) : SMART_BLOCKS_VERSION,
 			true
 		);
 	}
 
-	/**
-	 * Scans /build/blocks/* (compiled by wp-scripts) and registers each block.
-	 * Falls back to src/blocks/* if no build directory exists yet so the plugin
-	 * doesn't fatal-error during development before the first build.
-	 */
 	public function register_blocks(): void {
 		$build_dir = SMART_BLOCKS_DIR . 'build/blocks';
 		$src_dir   = SMART_BLOCKS_DIR . 'src/blocks';
 		$root      = is_dir( $build_dir ) ? $build_dir : $src_dir;
-
 		if ( ! is_dir( $root ) ) {
 			return;
 		}
-
 		foreach ( glob( $root . '/*', GLOB_ONLYDIR ) as $block_path ) {
 			$json = $block_path . '/block.json';
 			if ( file_exists( $json ) ) {
 				register_block_type( $json );
 			}
 		}
+	}
 
-		// Ensure shared front-end script loads whenever our blocks render.
-		add_action( 'wp_enqueue_scripts', static function () {
-			if ( wp_style_is( 'smart-blocks-shared', 'registered' ) ) {
-				wp_enqueue_style( 'smart-blocks-shared' );
-			}
-			wp_enqueue_script( 'smart-blocks-reveal' );
-		} );
+	/**
+	 * Ensure shared front-end CSS + reveal script are always available.
+	 * Cheap — both are tiny.
+	 */
+	public function enqueue_shared(): void {
+		if ( wp_style_is( 'smart-blocks-shared', 'registered' ) ) {
+			wp_enqueue_style( 'smart-blocks-shared' );
+		}
+		wp_enqueue_script( 'smart-blocks-reveal' );
+	}
+
+	/**
+	 * Pass the REST endpoint + a fresh nonce to the contact form's view.js.
+	 * The handle name follows the wp-scripts convention: <block-name>-view-script.
+	 */
+	public function localize_contact(): void {
+		$handle = 'smart-blocks-contact-section-view-script';
+		if ( ! wp_script_is( $handle, 'registered' ) ) {
+			return;
+		}
+		wp_localize_script( $handle, 'SmartBlocksContact', [
+			'endpoint' => rest_url( 'smart-blocks/v1/contact' ),
+			'nonce'    => wp_create_nonce( 'wp_rest' ),
+		] );
 	}
 }

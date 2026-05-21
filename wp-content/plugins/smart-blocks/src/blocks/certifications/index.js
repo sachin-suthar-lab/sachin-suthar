@@ -30,5 +30,21 @@ registerBlockType( metadata.name, {
 			</section>
 		);
 	},
-	save: () => null,
+	save( { attributes } ) {
+		const { eyebrow, heading, dek } = attributes;
+		const blockProps = useBlockProps.save( { className: 'sb-section sb-certifications sb-reveal' } );
+		const innerProps = useInnerBlocksProps.save( { className: 'sb-certifications__grid' } );
+		return (
+			<section { ...blockProps }>
+				<div className="sb-container">
+					<div className="sb-section-head">
+						{ eyebrow && <span className="sb-eyebrow">{ eyebrow }</span> }
+						{ heading && <h2>{ heading }</h2> }
+						{ dek && <p>{ dek }</p> }
+					</div>
+					<div { ...innerProps } />
+				</div>
+			</section>
+		);
+	},
 } );

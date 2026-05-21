@@ -32,5 +32,22 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save: () => null,
+	save( { attributes } ) {
+		const { period, role, org, desc, tags = [] } = attributes;
+		const blockProps = useBlockProps.save( { className: 'sb-timeline-item' } );
+		return (
+			<li { ...blockProps }>
+				<div className="sb-timeline-item__dot" aria-hidden="true" />
+				{ period && <RichText.Content tagName="span" className="sb-timeline-item__period" value={ period } /> }
+				{ role && <RichText.Content tagName="h3" className="sb-timeline-item__role" value={ role } /> }
+				{ org && <RichText.Content tagName="p" className="sb-timeline-item__org" value={ org } /> }
+				{ desc && <RichText.Content tagName="p" className="sb-timeline-item__desc" value={ desc } /> }
+				{ tags.length > 0 && (
+					<div className="sb-timeline-item__tags">
+						{ tags.map( ( t, i ) => <span key={ i } className="sb-tag">{ t }</span> ) }
+					</div>
+				) }
+			</li>
+		);
+	},
 } );

@@ -1,4 +1,6 @@
 .wp-block-smart-blocks-certifications {
+	background: #ffffff;
 	color: #23213a;
-	.block-editor-block-list__layout { display: grid; grid-template-columns: repeat( auto-fit, minmax(240px, 1fr) ); gap: 1rem; }
+	border-radius: 18px;
+	padding-block: 1rem;
 }

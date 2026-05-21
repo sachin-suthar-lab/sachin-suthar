@@ -1,4 +1,7 @@
-/* Editor canvas: light mode parity */
-.editor-styles-wrapper { background: #ffffff; color: #23213a; }
+/* Editor canvas — light mode parity with front-end. */
+.editor-styles-wrapper {
+	background: #ffffff;
+	color: #23213a;
+}
 .editor-styles-wrapper .ss-reveal,
 .editor-styles-wrapper .sb-reveal { opacity: 1 !important; transform: none !important; }
