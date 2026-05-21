@@ -22,26 +22,43 @@ registerBlockType( metadata.name, {
 		return (
 			<>
 				<InspectorControls>
-					<PanelBody title={ __( 'Badge image', 'smart-blocks' ) } initialOpen>
+					<PanelBody title={ __( 'Certification image', 'smart-blocks' ) } initialOpen>
 						<MediaUploadCheck>
 							<MediaUpload
-								onSelect={ ( m ) => setAttributes( { badgeId: m.id, badgeUrl: m.url, badgeAlt: m.alt || '' } ) }
+								onSelect={ ( m ) => setAttributes( { badgeId: m.id, badgeUrl: m.url, badgeAlt: m.alt || m.title || '' } ) }
 								allowedTypes={ [ 'image' ] }
 								value={ badgeId }
 								render={ ( { open } ) => (
 									<>
 										{ badgeUrl ? (
-											<img src={ badgeUrl } alt={ badgeAlt } style={ { width: 80, height: 80, borderRadius: 12, objectFit: 'contain', marginBottom: 8, background: '#f6f5fb', padding: 6 } } />
+											<img
+												src={ badgeUrl }
+												alt={ badgeAlt }
+												style={ { width: '100%', maxWidth: 160, aspectRatio: '1 / 1', borderRadius: 12, objectFit: 'contain', marginBottom: 10, background: '#f6f5fb', padding: 10, border: '1px solid #e6e3f1', display: 'block' } }
+											/>
 										) : (
-											<p style={ { color: '#615b76', fontSize: 12 } }>{ __( 'No badge image — fallback award icon will appear.', 'smart-blocks' ) }</p>
+											<p style={ { color: '#b91c1c', fontSize: 12, fontWeight: 500, margin: '0 0 8px' } }>
+												{ __( '⚠ No image set — upload the certification badge / certificate so visitors see the actual credential.', 'smart-blocks' ) }
+											</p>
 										) }
-										<Button variant="primary" onClick={ open }>{ badgeUrl ? __( 'Replace badge', 'smart-blocks' ) : __( 'Upload / Select badge', 'smart-blocks' ) }</Button>
+										<Button variant="primary" onClick={ open } style={ { width: '100%', justifyContent: 'center' } }>
+											{ badgeUrl ? __( 'Replace image', 'smart-blocks' ) : __( 'Upload certification image', 'smart-blocks' ) }
+										</Button>
 										{ badgeUrl && (
-											<Button variant="link" isDestructive onClick={ () => setAttributes( { badgeId: 0, badgeUrl: '', badgeAlt: '' } ) } style={ { marginLeft: 8 } }>
-												{ __( 'Remove', 'smart-blocks' ) }
+											<Button variant="link" isDestructive onClick={ () => setAttributes( { badgeId: 0, badgeUrl: '', badgeAlt: '' } ) } style={ { marginTop: 6 } }>
+												{ __( 'Remove image', 'smart-blocks' ) }
 											</Button>
 										) }
-										<TextControl label={ __( 'Image alt text', 'smart-blocks' ) } value={ badgeAlt } onChange={ ( v ) => setAttributes( { badgeAlt: v } ) } __nextHasNoMarginBottom />
+										<p style={ { color: '#615b76', fontSize: 11, margin: '8px 0 4px' } }>
+											{ __( 'Square images (e.g. 300×300) look best. Credly / WP VIP badge PNGs work great.', 'smart-blocks' ) }
+										</p>
+										<TextControl
+											label={ __( 'Image alt text', 'smart-blocks' ) }
+											value={ badgeAlt }
+											onChange={ ( v ) => setAttributes( { badgeAlt: v } ) }
+											help={ __( 'Describe the certification for screen readers.', 'smart-blocks' ) }
+											__nextHasNoMarginBottom
+										/>
 									</>
 								) }
 							/>

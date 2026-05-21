@@ -19,7 +19,8 @@
       "Bash(git commit -m 'refactor\\(plugin+theme\\): light enterprise palette + content + new blocks + carousel + AJAX form *)",
       "Bash(git stash *)",
       "Bash(rm -f tools/_verify.php)",
-      "Bash(git commit -m 'refactor: convert all blocks to static-save \\(pure React/JSX\\), add cert badge upload, light editor *)"
+      "Bash(git commit -m 'refactor: convert all blocks to static-save \\(pure React/JSX\\), add cert badge upload, light editor *)",
+      "Bash(git commit -m 'feat\\(certification\\): make uploaded image the hero visual \\(Credly-style\\) *)"
     ]
   }
 }

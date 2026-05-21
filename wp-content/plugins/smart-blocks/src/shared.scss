@@ -590,40 +590,55 @@ html.sb-anim-ready .sb-reveal.is-visible { opacity: 1; transform: translateY(0);
 	grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) );
 	gap: 1rem;
 }
+/* Certification card — Credly-style: uploaded image is the hero visual. */
 .sb-cert {
-	padding: 1.4rem;
-	border-radius: var(--sb-radius-md);
+	padding: 1.6rem 1.4rem 1.4rem;
+	border-radius: var(--sb-radius-lg);
 	background: #fff;
 	border: 1px solid var(--sb-border);
 	box-shadow: var(--sb-shadow-sm);
-	display: flex; flex-direction: column; gap: .65rem;
+	display: flex; flex-direction: column; align-items: center;
+	gap: 1rem;
+	text-align: center;
 	transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
-	&:hover { transform: translateY(-2px); border-color: var(--sb-accent-3); box-shadow: var(--sb-shadow-md); }
+	&:hover { transform: translateY(-3px); border-color: var(--sb-accent-3); box-shadow: var(--sb-shadow-md); }
 
 	&__badge {
 		display: inline-grid; place-items: center;
-		width: 56px; height: 56px;
-		border-radius: 14px;
-		background: linear-gradient(135deg, rgba(109,40,217,0.12), rgba(167,139,250,0.18));
+		width: 130px; height: 130px;
+		border-radius: var(--sb-radius-md);
+		background:
+			radial-gradient(60% 80% at 50% 0%, rgba(167,139,250,0.20), transparent 70%),
+			linear-gradient(180deg, #faf8ff 0%, #f1ebff 100%);
 		color: var(--sb-accent);
 		border: 1px solid rgba(109,40,217,0.18);
 		overflow: hidden;
+		flex-shrink: 0;
+		transition: transform .25s ease;
 		img {
 			width: 100%; height: 100%;
 			object-fit: contain;
-			padding: 6px;
+			padding: .9rem;
 			box-sizing: border-box;
 			background: #fff;
 		}
+		svg { width: 56px; height: 56px; opacity: .65; stroke-width: 1.4; }
 	}
-	&__title { font-size: 1rem; font-weight: 700; color: var(--sb-contrast); letter-spacing: -0.01em; margin: 0; }
-	&__issuer { font-size: .82rem; color: var(--sb-muted); }
-	&__year   { font-size: .72rem; color: var(--sb-accent); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+	&__title  { font-size: 1.02rem; font-weight: 700; color: var(--sb-contrast); letter-spacing: -0.01em; margin: 0; line-height: 1.35; }
+	&__issuer { font-size: .85rem; color: var(--sb-muted); display: block; }
+	&__year   { font-size: .72rem; color: var(--sb-accent); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; display: inline-block; padding: .25rem .65rem; background: rgba(109,40,217,0.07); border: 1px solid rgba(109,40,217,0.18); border-radius: 999px; margin-top: .15rem; }
 	&__link {
 		text-decoration: none; color: inherit;
-		display: flex; flex-direction: column; gap: .65rem;
-		&:hover .sb-cert__title { color: var(--sb-accent); }
+		display: flex; flex-direction: column; align-items: center;
+		gap: 1rem; width: 100%;
+		&:hover .sb-cert__title  { color: var(--sb-accent); }
+		&:hover .sb-cert__badge  { transform: scale(1.03); }
 	}
+}
+
+/* Tighter card width for cert grid so the 130-px badge breathes. */
+.sb-certifications__grid {
+	grid-template-columns: repeat( auto-fit, minmax(220px, 1fr) );
 }
 
 /* ============================================================
