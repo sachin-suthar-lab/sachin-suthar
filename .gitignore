@@ -1,0 +1,35 @@
+# WordPress core (tracked separately / not part of custom work)
+/wp-admin/
+/wp-includes/
+/wp-*.php
+!/wp-config-sample.php
+/index.php
+/license.txt
+/readme.html
+/xmlrpc.php
+
+# Local config (contains DB creds + salts)
+/wp-config.php
+
+# Upgrade / backup dirs
+/wp-content/upgrade/
+/wp-content/upgrade-temp-backup/
+
+# Uploads (user content, large binaries)
+/wp-content/uploads/
+
+# Bundled default themes / plugins (upstream, not ours)
+/wp-content/themes/twentytwentythree/
+/wp-content/themes/twentytwentyfour/
+/wp-content/themes/twentytwentyfive/
+/wp-content/plugins/akismet/
+/wp-content/plugins/hello.php
+/wp-content/plugins/index.php
+/wp-content/themes/index.php
+/wp-content/index.php
+
+# Build artifacts
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
