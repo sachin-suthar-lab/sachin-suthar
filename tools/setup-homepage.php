@@ -50,14 +50,12 @@ function sb_service_block( array $a ): string {
 }
 
 function sb_skill_block( array $a ): string {
-	$pct = max( 0, min( 100, (int) ( $a['proficiency'] ?? 0 ) ) );
-	$iconH = ! empty( $a['icon'] ) ? '<span class="sb-skill__icon">' . icon( $a['icon'], 18 ) . '</span>' : '';
+	// Strip legacy proficiency keys so attribute JSON stays clean.
+	unset( $a['proficiency'] );
+	$iconH = ! empty( $a['icon'] ) ? '<div class="sb-skill__icon">' . icon( $a['icon'], 24 ) . '</div>' : '';
 	$inner = '<div class="wp-block-smart-blocks-skill sb-skill">'
-		. '<div class="sb-skill__head">'
-			. '<span class="sb-skill__name">' . $iconH . '<span>' . wp_kses_post( $a['name'] ?? '' ) . '</span></span>'
-			. '<span class="sb-skill__pct">' . $pct . '%</span>'
-		. '</div>'
-		. '<div class="sb-skill__bar" role="progressbar" aria-valuenow="' . $pct . '" aria-valuemin="0" aria-valuemax="100"><div class="sb-skill__fill" style="width:' . $pct . '%"></div></div>'
+		. $iconH
+		. '<span class="sb-skill__name">' . wp_kses_post( $a['name'] ?? '' ) . '</span>'
 	. '</div>';
 	return sb_wrap( 'smart-blocks/skill', $a, $inner );
 }
@@ -180,7 +178,7 @@ function sb_education_block( array $a ): string {
 }
 
 /* ---------- Parent section wrapper ---------- */
-function sb_parent( string $name, string $shortCls, array $atts, string $innerTag, string $innerCls, string $childrenHtml, string $extraCls = '' ): string {
+function sb_parent( string $name, string $shortCls, array $atts, string $innerTag, string $innerCls, string $childrenHtml, string $extraCls = '', string $anchor = '' ): string {
 	$wrap = trim( 'sb-section ' . $shortCls . ' ' . $extraCls . ' sb-reveal' );
 	$head = '<div class="sb-section-head">'
 		. ( ! empty( $atts['eyebrow'] ) ? '<span class="sb-eyebrow">' . wp_kses_post( $atts['eyebrow'] ) . '</span>' : '' )
@@ -188,9 +186,13 @@ function sb_parent( string $name, string $shortCls, array $atts, string $innerTa
 		. ( ! empty( $atts['dek'] )     ? '<p>'  . wp_kses_post( $atts['dek'] )     . '</p>'  : '' )
 	. '</div>';
 	$full_cls = 'wp-block-' . str_replace( '/', '-', $name ) . ' ' . $wrap;
-	$inner = '<section class="' . esc_attr( $full_cls ) . '">'
+	$id_attr  = $anchor !== '' ? ' id="' . esc_attr( $anchor ) . '"' : '';
+	$inner = '<section class="' . esc_attr( $full_cls ) . '"' . $id_attr . '>'
 		. '<div class="sb-container">' . $head . '<' . $innerTag . ' class="' . esc_attr( $innerCls ) . '">' . $childrenHtml . '</' . $innerTag . '></div>'
 	. '</section>';
+	if ( $anchor !== '' ) {
+		$atts = array_merge( $atts, [ 'anchor' => $anchor ] );
+	}
 	return sb_wrap( $name, $atts, $inner );
 }
 
@@ -201,7 +203,8 @@ function sb_testimonials_parent( array $atts, string $childrenHtml ): string {
 		. '<h2>' . wp_kses_post( $atts['heading'] ?? '' ) . '</h2>'
 		. '<p>'  . wp_kses_post( $atts['dek'] ?? '' )     . '</p>'
 	. '</div>';
-	$inner = '<section class="' . esc_attr( $cls ) . '">'
+	$atts['anchor'] = 'testimonials';
+	$inner = '<section id="testimonials" class="' . esc_attr( $cls ) . '">'
 		. '<div class="sb-container">' . $head
 			. '<div class="sb-testimonials__carousel" data-sb-carousel>'
 				. '<div class="sb-testimonials__viewport"><div class="sb-testimonials__track">' . $childrenHtml . '</div></div>'
@@ -232,7 +235,7 @@ function sb_hero(): string {
 	$c = '';
 	foreach ( $chips as $x )   $c .= '<span class="sb-hero__chips-item">' . esc_html( $x ) . '</span>';
 
-	$inner = '<section class="wp-block-smart-blocks-hero sb-section sb-hero sb-reveal">'
+	$inner = '<section id="home" class="wp-block-smart-blocks-hero sb-section sb-hero sb-reveal">'
 		. '<div class="sb-container">'
 			. '<div class="sb-hero__layout">'
 				. '<div class="sb-hero__copy">'
@@ -284,7 +287,7 @@ function sb_about(): string {
 	$h = '';
 	foreach ( $highlights as $x ) $h .= '<div class="sb-about__highlight"><strong>' . esc_html( $x['title'] ) . '</strong><span>' . esc_html( $x['meta'] ) . '</span></div>';
 
-	$inner = '<section class="wp-block-smart-blocks-about sb-section sb-about sb-reveal">'
+	$inner = '<section id="about" class="wp-block-smart-blocks-about sb-section sb-about sb-section--cream sb-reveal">'
 		. '<div class="sb-container">'
 			. '<div class="sb-about__layout">'
 				. '<div class="sb-about__visual"><div class="sb-image-slot"><span class="sb-image-slot__label">Image goes here</span></div></div>'
@@ -301,7 +304,7 @@ function sb_about(): string {
 }
 
 function sb_cta(): string {
-	$inner = '<section class="wp-block-smart-blocks-cta-section sb-section sb-cta-wrap sb-section--cream sb-reveal">'
+	$inner = '<section id="cta" class="wp-block-smart-blocks-cta-section sb-section sb-cta-wrap sb-section--cream sb-reveal">'
 		. '<div class="sb-container">'
 			. '<div class="sb-cta">'
 				. '<h2>Got a WordPress build that needs a senior pair of hands?</h2>'
@@ -345,7 +348,7 @@ function sb_contact(): string {
 		. '<div class="sb-contact__form-actions"><button type="submit" class="sb-btn sb-btn--primary" data-sb-submit>Send message</button></div>'
 	. '</form>';
 
-	$inner = '<section class="wp-block-smart-blocks-contact-section sb-section sb-contact sb-reveal">'
+	$inner = '<section id="contact" class="wp-block-smart-blocks-contact-section sb-section sb-contact sb-reveal">'
 		. '<div class="sb-container">'
 			. '<div class="sb-section-head"><span class="sb-eyebrow">Contact</span><h2>Let\'s build something durable together.</h2><p>Drop a note about your project, timeline, and stack. I read every message and reply within two working days.</p></div>'
 			. '<div class="sb-contact__wrap">'
@@ -409,7 +412,6 @@ if ( ( $existing_posts->publish ?? 0 ) < 4 ) {
 
 /* ---------- Build the page content ---------- */
 $out  = sb_hero();
-$out .= sb_marquee( 'WordPress, ACF Pro, Gutenberg, WooCommerce, React, REST API, MySQL, WP-CLI, PHP 8, Performance, Multisite, Headless, Custom Plugins, Code Review, Team Lead' );
 $out .= sb_about();
 
 // SERVICES
@@ -428,7 +430,7 @@ $out .= sb_parent( 'smart-blocks/services-grid', 'sb-services', [
 	'eyebrow' => '01 · What I do',
 	'heading' => 'Services tuned for ambitious WordPress products.',
 	'dek'     => 'Specialist services across the modern WordPress stack — from custom block development to performance engineering and CI-friendly deployments.',
-], 'div', 'sb-services__grid', implode( '', array_map( 'sb_service_block', $services ) ) );
+], 'div', 'sb-services__grid', implode( '', array_map( 'sb_service_block', $services ) ), '', 'services' );
 
 // SKILLS
 $skills = [
@@ -449,7 +451,7 @@ $out .= sb_parent( 'smart-blocks/skills-showcase', 'sb-skills', [
 	'eyebrow' => '02 · Toolkit',
 	'heading' => 'Skills sharpened by 7+ years of shipping.',
 	'dek'     => 'A focused stack centred on WordPress, ACF, and the infrastructure that keeps enterprise products durable.',
-], 'div', 'sb-skills__grid', implode( '', array_map( 'sb_skill_block', $skills ) ), 'sb-section--alt' );
+], 'div', 'sb-skills__grid', implode( '', array_map( 'sb_skill_block', $skills ) ), 'sb-section--cream', 'skills' );
 
 // EXPERIENCE
 $experience = [
@@ -461,7 +463,7 @@ $out .= sb_parent( 'smart-blocks/experience-timeline', 'sb-experience', [
 	'eyebrow' => '03 · Experience',
 	'heading' => 'A practical journey through the WordPress ecosystem.',
 	'dek'     => '7+ years of building WordPress products across agencies, SaaS, eCommerce, LMS, and government platforms.',
-], 'ol', 'sb-timeline', implode( '', array_map( 'sb_timeline_block', $experience ) ) );
+], 'ol', 'sb-timeline', implode( '', array_map( 'sb_timeline_block', $experience ) ), '', 'experience' );
 
 // TECH
 $stack = [
@@ -482,7 +484,7 @@ $out .= sb_parent( 'smart-blocks/tech-stack', 'sb-tech', [
 	'eyebrow' => '04 · Tech stack',
 	'heading' => 'A focused stack — not a buzzword soup.',
 	'dek'     => 'Tools I use daily, picked for stability, ecosystem health, and team velocity.',
-], 'div', 'sb-tech__grid', implode( '', array_map( 'sb_techitem_block', $stack ) ) );
+], 'div', 'sb-tech__grid', implode( '', array_map( 'sb_techitem_block', $stack ) ), 'sb-section--cream', 'stack' );
 
 // CERTIFICATIONS
 $certs = [
@@ -496,7 +498,7 @@ $out .= sb_parent( 'smart-blocks/certifications', 'sb-certifications', [
 	'eyebrow' => '05 · Credentials',
 	'heading' => 'Certifications.',
 	'dek'     => 'Continuing education aligned with WordPress VIP and enterprise-grade practice. Upload certificate images per item from the editor.',
-], 'div', 'sb-certifications__grid', implode( '', array_map( 'sb_cert_block', $certs ) ) );
+], 'div', 'sb-certifications__grid', implode( '', array_map( 'sb_cert_block', $certs ) ), '', 'certifications' );
 
 // EDUCATION
 $education = [
@@ -507,7 +509,7 @@ $out .= sb_parent( 'smart-blocks/education', 'sb-education', [
 	'eyebrow' => '06 · Academic',
 	'heading' => 'Education.',
 	'dek'     => 'Computer-science foundation in software development and applied programming.',
-], 'div', 'sb-education__grid', implode( '', array_map( 'sb_education_block', $education ) ) );
+], 'div', 'sb-education__grid', implode( '', array_map( 'sb_education_block', $education ) ), 'sb-section--cream', 'education' );
 
 // PROJECTS
 $projects = [
@@ -522,7 +524,7 @@ $out .= sb_parent( 'smart-blocks/portfolio-projects', 'sb-projects', [
 	'eyebrow' => '07 · Selected work',
 	'heading' => 'Selected work that shipped.',
 	'dek'     => 'A snapshot of recent projects across eCommerce, LMS, custom plugins, and performance engineering. 70+ projects delivered overall.',
-], 'div', 'sb-projects__grid', implode( '', array_map( 'sb_project_block', $projects ) ) );
+], 'div', 'sb-projects__grid', implode( '', array_map( 'sb_project_block', $projects ) ), '', 'work' );
 
 // TESTIMONIALS (carousel)
 $tests = [
@@ -539,7 +541,6 @@ $out .= sb_testimonials_parent( [
 	'dek'     => 'Feedback from the people I have shipped with — founders, engineering leaders, and product teams.',
 ], implode( '', array_map( 'sb_testimonial_block', $tests ) ) );
 
-$out .= sb_marquee( 'PHP 8, MySQL, Redis, Object Cache, Edge Caching, CI/CD, GitLab, GitHub Actions, n8n, Claude Code, OpenAI Codex, Cursor, Antigravity, ChatGPT' );
 $out .= sb_blog_slider();
 $out .= sb_cta();
 $out .= sb_contact();
