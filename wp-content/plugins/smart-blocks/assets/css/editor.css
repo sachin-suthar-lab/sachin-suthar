@@ -1,0 +1,5 @@
+/* Smart Blocks — editor canvas adjustments so server-rendered sections preview legibly. */
+.editor-styles-wrapper .ss-section {
+	color: #e7e7ee;
+}
+.editor-styles-wrapper .ss-reveal { opacity: 1; transform: none; }
