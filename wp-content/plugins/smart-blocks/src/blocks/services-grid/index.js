@@ -7,15 +7,15 @@ import './editor.scss';
 
 const ALLOWED = [ 'smart-blocks/service' ];
 const TEMPLATE = [
-	[ 'smart-blocks/service', { icon: 'wp',       title: 'Custom WordPress Development', desc: 'Custom themes, plugins, and bespoke admin tools — architected for long-term maintainability and zero technical debt.' } ],
-	[ 'smart-blocks/service', { icon: 'layers',   title: 'Gutenberg Block Development',  desc: 'Production-grade native and dynamic blocks with React, block.json, server-side rendering, and editor parity.' } ],
-	[ 'smart-blocks/service', { icon: 'cart',     title: 'WooCommerce Engineering',      desc: 'High-conversion stores, custom checkout flows, subscription logic, and ERP / payment gateway integrations.' } ],
-	[ 'smart-blocks/service', { icon: 'plug',     title: 'Headless WordPress',           desc: 'WordPress as a content API powering Next.js, React, and mobile front-ends, with auth, ISR, and caching done right.' } ],
-	[ 'smart-blocks/service', { icon: 'gauge',    title: 'Performance Optimisation',     desc: 'Core Web Vitals deep-dives, query profiling, asset budgets, and a measurable path to 90+ Lighthouse on real hardware.' } ],
-	[ 'smart-blocks/service', { icon: 'cube',     title: 'Elementor & Bricks',           desc: 'Custom widgets, dynamic data, and clean visual builder workflows that ship designer intent without bloat.' } ],
-	[ 'smart-blocks/service', { icon: 'rest',     title: 'API Integrations',             desc: 'REST, GraphQL, and webhook bridges to CRMs, payment processors, mailers, and internal back-office systems.' } ],
-	[ 'smart-blocks/service', { icon: 'box',      title: 'Advanced Custom Fields',       desc: 'Modular content models, ACF Pro field groups, and editor experiences that let marketing ship without engineering.' } ],
-	[ 'smart-blocks/service', { icon: 'terminal', title: 'WP-CLI Automation',            desc: 'Idempotent CLI scripts for migrations, content imports, environment setup, and CI/CD-friendly deploys.' } ],
+	[ 'smart-blocks/service', { icon: 'wp',       title: 'Custom WordPress Development', desc: 'End-to-end custom themes, plugins, and admin-side tooling. Built to WordPress VIP coding standards with clean architecture.',           proficiency: 96 } ],
+	[ 'smart-blocks/service', { icon: 'layers',   title: 'Gutenberg & ACF Block Development', desc: 'Production-grade native blocks plus rich ACF-based blocks. Strong editor UX so marketing can ship without engineering.',           proficiency: 92 } ],
+	[ 'smart-blocks/service', { icon: 'cart',     title: 'WooCommerce Engineering',     desc: 'Custom checkouts, subscriptions, payment gateways, and ERP integrations for content-heavy stores.',                                          proficiency: 90 } ],
+	[ 'smart-blocks/service', { icon: 'plug',     title: 'API Integrations',            desc: 'REST and third-party API bridges to CRMs, payment processors, mailers, and back-office systems.',                                            proficiency: 91 } ],
+	[ 'smart-blocks/service', { icon: 'gauge',    title: 'Performance Optimisation',    desc: 'Core Web Vitals deep-dives, MySQL query optimisation, object caching (Redis, Batcache), and edge caching. 30–50% measured gains.',           proficiency: 93 } ],
+	[ 'smart-blocks/service', { icon: 'box',      title: 'Advanced Custom Fields',      desc: 'Modular content models with ACF Pro, custom post types, taxonomies, and user-role architectures for content-heavy platforms.',              proficiency: 95 } ],
+	[ 'smart-blocks/service', { icon: 'cube',     title: 'Elementor / WPBakery / Divi', desc: 'Custom widgets, dynamic data, and visual-builder workflows that match designer intent without sacrificing performance.',                     proficiency: 86 } ],
+	[ 'smart-blocks/service', { icon: 'terminal', title: 'WP-CLI Automation',           desc: 'Idempotent CLI scripts for migrations, content imports, environment setup, and CI/CD-friendly deploys.',                                     proficiency: 90 } ],
+	[ 'smart-blocks/service', { icon: 'spark',    title: 'AI-assisted Development',     desc: 'n8n, Claude Code, Codex, Cursor — leveraging modern AI tooling to ship faster without compromising code quality.',                            proficiency: 85 } ],
 ];
 
 registerBlockType( metadata.name, {
@@ -27,24 +27,12 @@ registerBlockType( metadata.name, {
 		);
 		return (
 			<section { ...blockProps }>
-				<SectionHead attributes={ attributes } setAttributes={ setAttributes } />
-				<div { ...innerProps } />
-			</section>
-		);
-	},
-	save( { attributes } ) {
-		const { eyebrow, heading, dek } = attributes;
-		const blockProps = useBlockProps.save( { className: 'sb-section sb-services sb-reveal' } );
-		const innerProps = useInnerBlocksProps.save( { className: 'sb-services__grid' } );
-		return (
-			<section { ...blockProps }>
-				<div className="sb-section-head">
-					{ eyebrow && <span className="sb-eyebrow">{ eyebrow }</span> }
-					{ heading && <h2>{ heading }</h2> }
-					{ dek && <p>{ dek }</p> }
+				<div className="sb-container">
+					<SectionHead attributes={ attributes } setAttributes={ setAttributes } />
+					<div { ...innerProps } />
 				</div>
-				<div { ...innerProps } />
 			</section>
 		);
 	},
+	save: () => null, // dynamic — rendered by render.php
 } );

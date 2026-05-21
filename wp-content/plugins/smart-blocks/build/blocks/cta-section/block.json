@@ -42,7 +42,7 @@
     },
     "secondaryUrl": {
       "type": "string",
-      "default": "mailto:hello@sachinsuthar.dev"
+      "default": "mailto:sachin.suthar2493@gmail.com"
     }
   },
   "editorScript": "file:./index.js",
@@ -51,5 +51,6 @@
     "smart-blocks-shared",
     "file:./style-index.css"
   ],
-  "viewScript": "smart-blocks-reveal"
+  "viewScript": "smart-blocks-reveal",
+  "render": "file:./render.php"
 }

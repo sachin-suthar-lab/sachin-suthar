@@ -5,13 +5,14 @@
 	"title": "Tech Item",
 	"category": "smart-blocks",
 	"icon": "admin-tools",
-	"description": "Single technology card. Used inside Tech Stack.",
+	"description": "Single technology with icon, name, and a short meta line.",
 	"parent": [ "smart-blocks/tech-stack" ],
 	"textdomain": "smart-blocks",
 	"supports": { "html": false, "reusable": false },
 	"attributes": {
 		"icon": { "type": "string", "default": "spark" },
-		"name": { "type": "string", "default": "" }
+		"name": { "type": "string", "default": "" },
+		"meta": { "type": "string", "default": "" }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",

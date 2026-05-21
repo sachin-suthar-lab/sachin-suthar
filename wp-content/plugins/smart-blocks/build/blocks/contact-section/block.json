@@ -5,7 +5,7 @@
   "title": "Contact Section",
   "category": "smart-blocks",
   "icon": "email-alt",
-  "description": "Contact intro with channel links and inquiry form.",
+  "description": "Enterprise contact section: intro, editable channels, AJAX form with inline validation.",
   "keywords": [
     "contact",
     "form",
@@ -39,7 +39,7 @@
     },
     "asideIntro": {
       "type": "string",
-      "default": "Pick whatever's easiest. For project enquiries, email or the form below gets the fastest reply."
+      "default": "Pick whatever's easiest. For project enquiries, the form below gets the fastest reply."
     },
     "submitLabel": {
       "type": "string",
@@ -51,26 +51,26 @@
         {
           "icon": "mail",
           "label": "Email",
-          "value": "hello@sachinsuthar.dev",
-          "href": "mailto:hello@sachinsuthar.dev"
+          "value": "sachin.suthar2493@gmail.com",
+          "href": "mailto:sachin.suthar2493@gmail.com"
         },
         {
           "icon": "linkedin",
           "label": "LinkedIn",
-          "value": "in/sachinsuthar",
-          "href": "https://www.linkedin.com/in/sachinsuthar"
+          "value": "in/sachin-wordpress-developer",
+          "href": "https://www.linkedin.com/in/sachin-wordpress-developer/"
         },
         {
           "icon": "github",
           "label": "GitHub",
-          "value": "github.com/sachinsuthar",
-          "href": "https://github.com/sachinsuthar"
+          "value": "github.com/sachin5713",
+          "href": "https://github.com/sachin5713/"
         },
         {
-          "icon": "twitter",
-          "label": "X",
-          "value": "@sachinsuthar",
-          "href": "https://twitter.com/sachinsuthar"
+          "icon": "bolt",
+          "label": "Phone",
+          "value": "+91 97263 37383",
+          "href": "tel:+919726337383"
         }
       ]
     }
@@ -81,6 +81,6 @@
     "smart-blocks-shared",
     "file:./style-index.css"
   ],
-  "viewScript": "smart-blocks-reveal",
+  "viewScript": "file:./view.js",
   "render": "file:./render.php"
 }

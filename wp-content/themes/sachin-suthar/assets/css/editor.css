@@ -1,6 +1,4 @@
-/* Editor parity: hint the dark canvas so blocks render legibly while editing. */
-.editor-styles-wrapper {
-	background: #0a0a0f;
-	color: #e7e7ee;
-}
-.editor-styles-wrapper .ss-reveal { opacity: 1 !important; transform: none !important; }
+/* Editor canvas: light mode parity */
+.editor-styles-wrapper { background: #ffffff; color: #23213a; }
+.editor-styles-wrapper .ss-reveal,
+.editor-styles-wrapper .sb-reveal { opacity: 1 !important; transform: none !important; }

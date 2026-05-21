@@ -25,6 +25,7 @@ define( 'SMART_BLOCKS_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'SMART_BLOCKS_URL',     plugin_dir_url( __FILE__ ) );
 
 require_once SMART_BLOCKS_DIR . 'includes/helpers.php';
+require_once SMART_BLOCKS_DIR . 'src/shared/section-renderer.php';
 require_once SMART_BLOCKS_DIR . 'includes/class-loader.php';
 require_once SMART_BLOCKS_DIR . 'includes/contact-handler.php';
 
