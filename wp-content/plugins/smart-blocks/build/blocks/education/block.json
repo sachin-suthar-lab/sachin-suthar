@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "smart-blocks/education",
+  "title": "Education",
+  "category": "smart-blocks",
+  "icon": "welcome-learn-more",
+  "description": "Section heading + grid of editable Education Item cards.",
+  "keywords": [
+    "education",
+    "degree",
+    "academic"
+  ],
+  "textdomain": "sachins-blocks",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "anchor": true,
+    "reusable": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Academic"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Education."
+    },
+    "dek": {
+      "type": "string",
+      "default": "Computer science foundation in WordPress engineering and software development."
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": [
+    "smart-blocks-shared",
+    "file:./style-index.css"
+  ],
+  "viewScript": "smart-blocks-reveal"
+}
