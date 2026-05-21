@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/portfolio-projects",
+	"title": "Portfolio Projects",
+	"category": "smart-blocks",
+	"icon": "portfolio",
+	"description": "Section heading + grid of editable Project Cards.",
+	"keywords": [ "projects", "portfolio", "case studies" ],
+	"textdomain": "smart-blocks",
+	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
+	"attributes": {
+		"eyebrow": { "type": "string", "default": "Selected work" },
+		"heading": { "type": "string", "default": "Selected work that shipped." },
+		"dek":     { "type": "string", "default": "A snapshot of recent projects across e-commerce, headless, custom plugins, and performance work." }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"viewScript":   "smart-blocks-reveal"
+}

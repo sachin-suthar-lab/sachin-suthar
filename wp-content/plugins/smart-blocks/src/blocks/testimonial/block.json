@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/testimonial",
+	"title": "Testimonial",
+	"category": "smart-blocks",
+	"icon": "format-quote",
+	"description": "Single testimonial quote with author. Used inside Testimonials.",
+	"parent": [ "smart-blocks/testimonials" ],
+	"textdomain": "smart-blocks",
+	"supports": { "html": false, "reusable": false },
+	"attributes": {
+		"quote":     { "type": "string", "default": "" },
+		"name":      { "type": "string", "default": "" },
+		"role":      { "type": "string", "default": "" },
+		"avatarId":  { "type": "number", "default": 0 },
+		"avatarUrl": { "type": "string", "default": "" }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ]
+}

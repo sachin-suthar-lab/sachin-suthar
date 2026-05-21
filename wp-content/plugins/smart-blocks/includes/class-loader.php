@@ -1,9 +1,10 @@
 <?php
 /**
- * Smart Blocks loader.
+ * Smart Blocks loader (React/wp-scripts edition).
  *
- * Discovers every block directory under /blocks, registers it via block.json,
- * and wires up the shared editor registration script + front-end assets.
+ * Discovers every compiled block directory under /build/blocks, registers it
+ * via block.json, and ensures the shared front-end stylesheet + reveal observer
+ * are enqueued whenever any of our blocks renders.
  *
  * @package SmartBlocks
  */
@@ -18,9 +19,6 @@ final class Loader {
 
 	private static ?self $instance = null;
 
-	/** @var string[] Block slugs (without namespace) discovered on init. */
-	private array $block_slugs = [];
-
 	public static function instance(): self {
 		if ( ! self::$instance ) {
 			self::$instance = new self();
@@ -29,14 +27,11 @@ final class Loader {
 	}
 
 	private function __construct() {
-		add_action( 'init',                    [ $this, 'register_blocks' ], 20 );
-		add_action( 'wp_enqueue_scripts',      [ $this, 'enqueue_frontend' ] );
-		add_filter( 'block_categories_all',    [ $this, 'register_category' ], 10, 1 );
+		add_action( 'init',                 [ $this, 'register_blocks' ], 20 );
+		add_action( 'init',                 [ $this, 'register_shared_assets' ] );
+		add_filter( 'block_categories_all', [ $this, 'register_category' ] );
 	}
 
-	/**
-	 * Adds a "Smart Blocks" category at the top of the block inserter.
-	 */
 	public function register_category( array $categories ): array {
 		array_unshift( $categories, [
 			'slug'  => 'smart-blocks',
@@ -47,38 +42,21 @@ final class Loader {
 	}
 
 	/**
-	 * Scans /blocks/* and registers each via block.json.
+	 * Register the shared front-end stylesheet + reveal IO observer.
+	 * These are referenced by every block's block.json `viewStyle` / `viewScript`
+	 * (via the registered handles below), so they only load on pages that include
+	 * one of our blocks.
 	 */
-	public function register_blocks(): void {
-		$blocks_dir = SMART_BLOCKS_DIR . 'blocks';
-		if ( ! is_dir( $blocks_dir ) ) {
-			return;
+	public function register_shared_assets(): void {
+		$shared_css = SMART_BLOCKS_DIR . 'build/shared.css';
+		if ( file_exists( $shared_css ) ) {
+			wp_register_style(
+				'smart-blocks-shared',
+				SMART_BLOCKS_URL . 'build/shared.css',
+				[],
+				filemtime( $shared_css )
+			);
 		}
-
-		// Shared editor script: registers every block with ServerSideRender.
-		wp_register_script(
-			'smart-blocks-editor',
-			SMART_BLOCKS_URL . 'assets/js/register-blocks.js',
-			[ 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-server-side-render', 'wp-i18n', 'wp-components' ],
-			SMART_BLOCKS_VERSION,
-			true
-		);
-
-		// Shared editor stylesheet (sidebar tweaks, block previews dark canvas).
-		wp_register_style(
-			'smart-blocks-editor',
-			SMART_BLOCKS_URL . 'assets/css/editor.css',
-			[],
-			SMART_BLOCKS_VERSION
-		);
-
-		// Shared front-end style + reveal-on-scroll.
-		wp_register_style(
-			'smart-blocks-frontend',
-			SMART_BLOCKS_URL . 'assets/css/blocks.css',
-			[],
-			SMART_BLOCKS_VERSION
-		);
 		wp_register_script(
 			'smart-blocks-reveal',
 			SMART_BLOCKS_URL . 'assets/js/reveal.js',
@@ -86,30 +64,35 @@ final class Loader {
 			SMART_BLOCKS_VERSION,
 			true
 		);
-
-		foreach ( glob( $blocks_dir . '/*', GLOB_ONLYDIR ) as $block_path ) {
-			if ( ! file_exists( $block_path . '/block.json' ) ) {
-				continue;
-			}
-			register_block_type( $block_path );
-			$this->block_slugs[] = basename( $block_path );
-		}
-
-		// Pass the discovered block list to the shared editor script.
-		wp_localize_script( 'smart-blocks-editor', 'SmartBlocksData', [
-			'blocks' => array_map(
-				static fn( string $slug ): string => 'smart-blocks/' . $slug,
-				$this->block_slugs
-			),
-		] );
 	}
 
 	/**
-	 * Front-end: enqueue shared CSS + reveal observer on every page that uses any of our blocks.
-	 * To keep things simple and zero-config, we always load them — the CSS is ~6KB and the JS ~1KB.
+	 * Scans /build/blocks/* (compiled by wp-scripts) and registers each block.
+	 * Falls back to src/blocks/* if no build directory exists yet so the plugin
+	 * doesn't fatal-error during development before the first build.
 	 */
-	public function enqueue_frontend(): void {
-		wp_enqueue_style(  'smart-blocks-frontend' );
-		wp_enqueue_script( 'smart-blocks-reveal' );
+	public function register_blocks(): void {
+		$build_dir = SMART_BLOCKS_DIR . 'build/blocks';
+		$src_dir   = SMART_BLOCKS_DIR . 'src/blocks';
+		$root      = is_dir( $build_dir ) ? $build_dir : $src_dir;
+
+		if ( ! is_dir( $root ) ) {
+			return;
+		}
+
+		foreach ( glob( $root . '/*', GLOB_ONLYDIR ) as $block_path ) {
+			$json = $block_path . '/block.json';
+			if ( file_exists( $json ) ) {
+				register_block_type( $json );
+			}
+		}
+
+		// Ensure shared front-end script loads whenever our blocks render.
+		add_action( 'wp_enqueue_scripts', static function () {
+			if ( wp_style_is( 'smart-blocks-shared', 'registered' ) ) {
+				wp_enqueue_style( 'smart-blocks-shared' );
+			}
+			wp_enqueue_script( 'smart-blocks-reveal' );
+		} );
 	}
 }

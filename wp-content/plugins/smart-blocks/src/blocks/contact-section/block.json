@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/contact-section",
+	"title": "Contact Section",
+	"category": "smart-blocks",
+	"icon": "email-alt",
+	"description": "Contact intro with channel links and inquiry form.",
+	"keywords": [ "contact", "form", "email" ],
+	"textdomain": "smart-blocks",
+	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
+	"attributes": {
+		"eyebrow":     { "type": "string", "default": "Contact" },
+		"heading":     { "type": "string", "default": "Let's build something durable together." },
+		"dek":         { "type": "string", "default": "Drop a note about your project, timeline, and stack. I read every message and reply within two working days." },
+		"asideTitle":  { "type": "string", "default": "Channels" },
+		"asideIntro":  { "type": "string", "default": "Pick whatever's easiest. For project enquiries, email or the form below gets the fastest reply." },
+		"submitLabel": { "type": "string", "default": "Send message" },
+		"channels": {
+			"type": "array",
+			"default": [
+				{ "icon": "mail",     "label": "Email",    "value": "hello@sachinsuthar.dev",      "href": "mailto:hello@sachinsuthar.dev" },
+				{ "icon": "linkedin", "label": "LinkedIn", "value": "in/sachinsuthar",             "href": "https://www.linkedin.com/in/sachinsuthar" },
+				{ "icon": "github",   "label": "GitHub",   "value": "github.com/sachinsuthar",     "href": "https://github.com/sachinsuthar" },
+				{ "icon": "twitter",  "label": "X",        "value": "@sachinsuthar",               "href": "https://twitter.com/sachinsuthar" }
+			]
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"viewScript":   "smart-blocks-reveal",
+	"render":       "file:./render.php"
+}

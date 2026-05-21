@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/project-card",
+	"title": "Project Card",
+	"category": "smart-blocks",
+	"icon": "portfolio",
+	"description": "Single project case study card. Used inside Portfolio Projects.",
+	"parent": [ "smart-blocks/portfolio-projects" ],
+	"textdomain": "smart-blocks",
+	"supports": { "html": false, "reusable": false },
+	"attributes": {
+		"cat":       { "type": "string", "default": "" },
+		"title":     { "type": "string", "default": "" },
+		"desc":      { "type": "string", "default": "" },
+		"glyph":     { "type": "string", "default": "" },
+		"gradient":  { "type": "string", "default": "linear-gradient(135deg, #7c5cff 0%, #22d3ee 100%)" },
+		"coverId":   { "type": "number", "default": 0 },
+		"coverUrl":  { "type": "string", "default": "" },
+		"coverAlt":  { "type": "string", "default": "" },
+		"url":       { "type": "string", "default": "" },
+		"tags":      { "type": "array",  "default": [] }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ]
+}

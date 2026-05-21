@@ -1,0 +1,8 @@
+/* Hero editor canvas: keep dark background even without theme styles loading early. */
+.wp-block-smart-blocks-hero {
+	background: #0a0a0f;
+	color: #e7e7ee;
+	border-radius: 18px;
+
+	.sb-hero h1 [data-rich-text-placeholder]::after { color: rgba(255,255,255,.35); }
+}

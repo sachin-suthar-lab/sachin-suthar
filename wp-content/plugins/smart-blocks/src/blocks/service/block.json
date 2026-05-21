@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/service",
+	"title": "Service Card",
+	"category": "smart-blocks",
+	"icon": "category",
+	"description": "A single service card. Used inside Services Grid.",
+	"parent": [ "smart-blocks/services-grid" ],
+	"textdomain": "smart-blocks",
+	"supports": { "html": false, "reusable": false, "inserter": true },
+	"attributes": {
+		"icon":  { "type": "string", "default": "spark" },
+		"title": { "type": "string", "default": "" },
+		"desc":  { "type": "string", "default": "" }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"render":       "file:./render.php"
+}

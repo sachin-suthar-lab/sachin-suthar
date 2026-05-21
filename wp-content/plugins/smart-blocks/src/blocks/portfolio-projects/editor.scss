@@ -1,0 +1,6 @@
+.wp-block-smart-blocks-portfolio-projects {
+	background: #0a0a0f;
+	color: #e7e7ee;
+	border-radius: 18px;
+	.block-editor-block-list__layout { display: grid; grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) ); gap: 1.5rem; }
+}

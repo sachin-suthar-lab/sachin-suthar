@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "smart-blocks/tech-stack",
+	"title": "Tech Stack",
+	"category": "smart-blocks",
+	"icon": "admin-tools",
+	"description": "Section heading + grid of editable Tech Item cards.",
+	"keywords": [ "stack", "technology", "tools" ],
+	"textdomain": "smart-blocks",
+	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
+	"attributes": {
+		"eyebrow": { "type": "string", "default": "Tech stack" },
+		"heading": { "type": "string", "default": "A focused stack — not a buzzword soup." },
+		"dek":     { "type": "string", "default": "The tools I actually use day-to-day, picked for stability, ecosystem health, and team velocity." }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        [ "smart-blocks-shared", "file:./style-index.css" ],
+	"viewScript":   "smart-blocks-reveal"
+}
