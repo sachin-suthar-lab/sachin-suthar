@@ -246,7 +246,11 @@ function sb_hero(): string {
 					. '<div class="sb-hero__cta"><a class="sb-btn sb-btn--primary" href="#contact">Start a project</a><a class="sb-btn sb-btn--ghost" href="#work">View selected work</a></div>'
 					. '<div class="sb-hero__chips">' . $c . '</div>'
 				. '</div>'
-				. '<div class="sb-hero__visual"><div class="sb-image-slot"><span class="sb-image-slot__label">Image goes here</span></div></div>'
+				. '<div class="sb-hero__visual">'
+					. '<div class="sb-image-slot"><span class="sb-image-slot__label">Image goes here</span></div>'
+					. '<div class="sb-hero__mark" aria-hidden="true"><span class="sb-hero__mark-kicker">Certified</span><span class="sb-hero__mark-title">WP VIP</span></div>'
+					. '<div class="sb-hero__statustag"><div class="sb-hero__statustag-label">Open to work</div><div class="sb-hero__statustag-text">Senior WordPress roles, freelance &amp; consulting — 2026.</div></div>'
+				. '</div>'
 			. '</div>'
 			. '<div class="sb-hero__metrics" role="list">' . $m . '</div>'
 		. '</div>'
@@ -255,6 +259,10 @@ function sb_hero(): string {
 		'currentlyText'   => 'Currently leading WP engineering at',
 		'currentlyTarget' => 'NineGravity',
 		'chips'           => $chips,
+		'badgeKicker'     => 'Certified',
+		'badgeTitle'      => 'WP VIP',
+		'tagLabel'        => 'Open to work',
+		'tagText'         => 'Senior WordPress roles, freelance & consulting — 2026.',
 	], $inner );
 }
 
@@ -428,7 +436,7 @@ $services = [
 ];
 $out .= sb_parent( 'smart-blocks/services-grid', 'sb-services', [
 	'eyebrow' => '01 · What I do',
-	'heading' => 'Services tuned for ambitious WordPress products.',
+	'heading' => 'Services tuned for <em>ambitious</em> WordPress products.',
 	'dek'     => 'Specialist services across the modern WordPress stack — from custom block development to performance engineering and CI-friendly deployments.',
 ], 'div', 'sb-services__grid', implode( '', array_map( 'sb_service_block', $services ) ), '', 'services' );
 
@@ -461,7 +469,7 @@ $experience = [
 ];
 $out .= sb_parent( 'smart-blocks/experience-timeline', 'sb-experience', [
 	'eyebrow' => '03 · Experience',
-	'heading' => 'A practical journey through the WordPress ecosystem.',
+	'heading' => 'A practical journey through the <em>WordPress ecosystem.</em>',
 	'dek'     => '7+ years of building WordPress products across agencies, SaaS, eCommerce, LMS, and government platforms.',
 ], 'ol', 'sb-timeline', implode( '', array_map( 'sb_timeline_block', $experience ) ), '', 'experience' );
 
@@ -522,7 +530,7 @@ $projects = [
 ];
 $out .= sb_parent( 'smart-blocks/portfolio-projects', 'sb-projects', [
 	'eyebrow' => '07 · Selected work',
-	'heading' => 'Selected work that shipped.',
+	'heading' => 'Selected work that <em>shipped.</em>',
 	'dek'     => 'A snapshot of recent projects across eCommerce, LMS, custom plugins, and performance engineering. 70+ projects delivered overall.',
 ], 'div', 'sb-projects__grid', implode( '', array_map( 'sb_project_block', $projects ) ), '', 'work' );
 
@@ -537,7 +545,7 @@ $tests = [
 ];
 $out .= sb_testimonials_parent( [
 	'eyebrow' => '08 · Testimonials',
-	'heading' => 'What collaborators say.',
+	'heading' => 'What collaborators <em>say.</em>',
 	'dek'     => 'Feedback from the people I have shipped with — founders, engineering leaders, and product teams.',
 ], implode( '', array_map( 'sb_testimonial_block', $tests ) ) );
 
