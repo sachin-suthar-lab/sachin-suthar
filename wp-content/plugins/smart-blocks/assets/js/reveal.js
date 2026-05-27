@@ -5,6 +5,17 @@
 ( function () {
 	if ( typeof window === 'undefined' ) return;
 
+	// Keep footer copyright year current.
+	function stampYear() {
+		var y = String( new Date().getFullYear() );
+		document.querySelectorAll( '[data-sb-year]' ).forEach( function ( el ) { el.textContent = y; } );
+	}
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', stampYear );
+	} else {
+		stampYear();
+	}
+
 	var SEL = '.sb-reveal, .ss-reveal';
 
 	function isInView( el ) {

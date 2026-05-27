@@ -1,66 +1,47 @@
-<!-- wp:group {"tagName":"footer","align":"full","className":"site-footer","style":{"spacing":{"padding":{"top":"4.5rem","bottom":"2.5rem","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"2rem"},"border":{"top":{"color":"var:preset|color|border","width":"1px"}}},"backgroundColor":"surface","layout":{"type":"constrained","contentSize":"1240px"}} -->
-<footer class="wp-block-group alignfull site-footer has-surface-background-color has-background" style="border-top-color:var(--wp--preset--color--border);border-top-width:1px;padding-top:4.5rem;padding-right:var(--wp--preset--spacing--40);padding-bottom:2.5rem;padding-left:var(--wp--preset--spacing--40)">
-	<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"2rem","left":"3rem"}}}} -->
-	<div class="wp-block-columns">
-		<!-- wp:column {"width":"45%"} -->
-		<div class="wp-block-column" style="flex-basis:45%">
-			<!-- wp:heading {"level":3,"fontSize":"xl"} -->
-			<h3 class="wp-block-heading has-xl-font-size">Building durable WordPress products.</h3>
-			<!-- /wp:heading -->
-			<!-- wp:paragraph {"textColor":"muted","fontSize":"sm"} -->
-			<p class="has-muted-color has-text-color has-sm-font-size">Custom themes, Gutenberg blocks, WooCommerce, and headless architectures — engineered for performance, accessibility, and long-term maintainability.</p>
-			<!-- /wp:paragraph -->
-		</div>
-		<!-- /wp:column -->
+<!-- wp:group {"tagName":"footer","align":"full","className":"site-footer","layout":{"type":"default"}} -->
+<footer class="wp-block-group alignfull site-footer">
+	<!-- wp:html -->
+	<div class="ss-footer">
+		<div class="ss-footer__inner">
 
-		<!-- wp:column -->
-		<div class="wp-block-column">
-			<!-- wp:heading {"level":6,"fontSize":"xs"} -->
-			<h6 class="wp-block-heading has-xs-font-size">Navigate</h6>
-			<!-- /wp:heading -->
-			<!-- wp:list {"className":"is-style-no-bullets","fontSize":"sm","style":{"spacing":{"blockGap":"0.4rem"}}} -->
-			<ul class="wp-block-list is-style-no-bullets has-sm-font-size" style="list-style:none;padding:0;margin:0">
-				<!-- wp:list-item --><li><a href="#about">About</a></li><!-- /wp:list-item -->
-				<!-- wp:list-item --><li><a href="#services">Services</a></li><!-- /wp:list-item -->
-				<!-- wp:list-item --><li><a href="#work">Selected Work</a></li><!-- /wp:list-item -->
-				<!-- wp:list-item --><li><a href="#certifications">Certifications</a></li><!-- /wp:list-item -->
-				<!-- wp:list-item --><li><a href="#contact">Contact</a></li><!-- /wp:list-item -->
-			</ul>
-			<!-- /wp:list -->
-		</div>
-		<!-- /wp:column -->
+			<div class="ss-footer__lead">
+				<span class="ss-footer__eyebrow"><span class="dot" aria-hidden="true"></span>Open to senior WordPress roles &amp; freelance</span>
+				<h2 class="ss-footer__headline">Let’s build something<br>durable together.</h2>
+				<a class="ss-footer__mail" href="mailto:sachin.suthar2493@gmail.com">sachin.suthar2493@gmail.com</a>
+			</div>
 
-		<!-- wp:column -->
-		<div class="wp-block-column">
-			<!-- wp:heading {"level":6,"fontSize":"xs"} -->
-			<h6 class="wp-block-heading has-xs-font-size">Connect</h6>
-			<!-- /wp:heading -->
-			<!-- wp:list {"className":"is-style-no-bullets","fontSize":"sm","style":{"spacing":{"blockGap":"0.4rem"}}} -->
-			<ul class="wp-block-list is-style-no-bullets has-sm-font-size" style="list-style:none;padding:0;margin:0">
-				<!-- wp:list-item --><li><a href="mailto:sachin.suthar2493@gmail.com">sachin.suthar2493@gmail.com</a></li><!-- /wp:list-item -->
-				<!-- wp:list-item --><li><a href="tel:+919726337383">+91 97263 37383</a></li><!-- /wp:list-item -->
-				<!-- wp:list-item --><li><a href="https://github.com/sachin5713/" rel="me noopener" target="_blank">GitHub</a></li><!-- /wp:list-item -->
-				<!-- wp:list-item --><li><a href="https://www.linkedin.com/in/sachin-wordpress-developer/" rel="me noopener" target="_blank">LinkedIn</a></li><!-- /wp:list-item -->
-			</ul>
-			<!-- /wp:list -->
+			<div class="ss-footer__cols">
+				<nav class="ss-footer__col" aria-label="Sections">
+					<span class="ss-footer__label">Navigate</span>
+					<a href="#about">About</a>
+					<a href="#work">Selected work</a>
+					<a href="#experience">Experience</a>
+					<a href="#stack">Tech stack</a>
+					<a href="#certifications">Certifications</a>
+				</nav>
+
+				<nav class="ss-footer__col" aria-label="Elsewhere">
+					<span class="ss-footer__label">Connect</span>
+					<a href="https://github.com/sachin5713/" target="_blank" rel="me noopener">GitHub <span aria-hidden="true">↗</span></a>
+					<a href="https://www.linkedin.com/in/sachin-wordpress-developer/" target="_blank" rel="me noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+					<a href="tel:+919726337383">+91 97263 37383</a>
+					<a href="#contact">Contact form</a>
+				</nav>
+
+				<div class="ss-footer__col">
+					<span class="ss-footer__label">Currently</span>
+					<p class="ss-footer__note">Senior WordPress Developer &amp; Team Lead at <strong>NineGravity</strong>, Ahmedabad. Building custom themes, Gutenberg blocks, and performance-tuned WooCommerce.</p>
+				</div>
+			</div>
+
 		</div>
-		<!-- /wp:column -->
+
+		<div class="ss-footer__bar">
+			<span class="ss-footer__sig">© <span data-sb-year>2026</span> Sachin Suthar — built with WordPress &amp; Gutenberg.</span>
+			<span class="ss-footer__meta">7+ yrs · 70+ projects · Ahmedabad, IN</span>
+			<a class="ss-footer__top" href="#home">Back to top <span aria-hidden="true">↑</span></a>
+		</div>
 	</div>
-	<!-- /wp:columns -->
-
-	<!-- wp:separator {"backgroundColor":"border","className":"is-style-wide"} -->
-	<hr class="wp-block-separator has-text-color has-border-background-color has-alpha-channel-opacity has-background is-style-wide"/>
-	<!-- /wp:separator -->
-
-	<!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
-	<div class="wp-block-group">
-		<!-- wp:paragraph {"fontSize":"xs","textColor":"muted"} -->
-		<p class="has-muted-color has-text-color has-xs-font-size">© Sachin Suthar · Ahmedabad, Gujarat, India. Crafted with WordPress, Gutenberg, and care.</p>
-		<!-- /wp:paragraph -->
-		<!-- wp:paragraph {"fontSize":"xs","textColor":"muted"} -->
-		<p class="has-muted-color has-text-color has-xs-font-size">7+ years · 70+ projects · WordPress engineering</p>
-		<!-- /wp:paragraph -->
-	</div>
-	<!-- /wp:group -->
+	<!-- /wp:html -->
 </footer>
 <!-- /wp:group -->

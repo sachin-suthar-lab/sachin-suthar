@@ -1,22 +1,30 @@
-<!-- wp:group {"tagName":"header","align":"full","className":"site-header","style":{"spacing":{"padding":{"top":"0.85rem","bottom":"0.85rem","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}},"position":{"type":"sticky","top":"0px"}},"layout":{"type":"constrained","contentSize":"1240px"}} -->
-<header class="wp-block-group alignfull site-header" style="padding-top:0.85rem;padding-right:var(--wp--preset--spacing--40);padding-bottom:0.85rem;padding-left:var(--wp--preset--spacing--40);position:sticky;top:0px;z-index:50;background:rgba(255,255,255,0.82);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--wp--preset--color--border)">
-	<!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
-	<div class="wp-block-group">
+<!-- wp:group {"tagName":"header","align":"full","className":"site-header","style":{"position":{"type":"sticky","top":"0px"}},"layout":{"type":"default"}} -->
+<header class="wp-block-group alignfull site-header" style="position:sticky;top:0px;z-index:50">
+	<!-- wp:group {"align":"full","className":"ss-headbar","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
+	<div class="wp-block-group alignfull ss-headbar">
+
 		<!-- wp:html -->
-		<a href="/" aria-label="Sachin Suthar — Home" style="display:inline-flex;align-items:center;gap:.55rem;text-decoration:none">
-			<span style="display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6d28d9,#a78bfa);color:#fff;font-weight:800;font-family:'Inter',sans-serif;letter-spacing:-.02em;box-shadow:0 8px 24px -8px rgba(109,40,217,.5)">SS</span>
-			<span style="color:#13112a;font-weight:700;letter-spacing:-.01em">Sachin&nbsp;Suthar</span>
+		<a class="ss-logo" href="/" aria-label="Sachin Suthar — home">
+			<span class="ss-logo__mark">SS</span>
+			<span class="ss-logo__text">sachin<span class="ss-logo__dot">.</span>suthar</span>
 		</a>
 		<!-- /wp:html -->
 
-		<!-- wp:navigation {"overlayMenu":"mobile","overlayBackgroundColor":"base","overlayTextColor":"contrast","textColor":"text","style":{"typography":{"fontWeight":"500","fontSize":"0.95rem"},"spacing":{"blockGap":"1.75rem"}},"layout":{"type":"flex","setCascadingProperties":true,"justifyContent":"right"}} -->
+		<!-- wp:navigation {"overlayMenu":"mobile","overlayBackgroundColor":"base","overlayTextColor":"contrast","textColor":"text","className":"ss-nav","style":{"spacing":{"blockGap":"1.6rem"}},"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"}} -->
 			<!-- wp:navigation-link {"label":"About","url":"#about","kind":"custom"} /-->
-			<!-- wp:navigation-link {"label":"Services","url":"#services","kind":"custom"} /-->
-			<!-- wp:navigation-link {"label":"Skills","url":"#skills","kind":"custom"} /-->
 			<!-- wp:navigation-link {"label":"Work","url":"#work","kind":"custom"} /-->
-			<!-- wp:navigation-link {"label":"Certifications","url":"#certifications","kind":"custom"} /-->
-			<!-- wp:navigation-link {"label":"Contact","url":"#contact","kind":"custom"} /-->
+			<!-- wp:navigation-link {"label":"Experience","url":"#experience","kind":"custom"} /-->
+			<!-- wp:navigation-link {"label":"Stack","url":"#stack","kind":"custom"} /-->
+			<!-- wp:navigation-link {"label":"Writing","url":"#blog","kind":"custom"} /-->
 		<!-- /wp:navigation -->
+
+		<!-- wp:html -->
+		<div class="ss-headend">
+			<span class="ss-headend__status"><span class="dot" aria-hidden="true"></span>Available</span>
+			<a class="ss-headend__cta" href="#contact">Let’s talk</a>
+		</div>
+		<!-- /wp:html -->
+
 	</div>
 	<!-- /wp:group -->
 </header>
