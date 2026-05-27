@@ -10,12 +10,12 @@
 	"textdomain": "smart-blocks",
 	"supports": { "align": [ "full" ], "html": false, "anchor": true, "reusable": true },
 	"attributes": {
-		"heading":       { "type": "string", "default": "Got a WordPress build that needs a senior pair of hands?" },
-		"dek":           { "type": "string", "default": "Let's talk about your roadmap, your existing stack, and the constraints that make your project actually hard. I'll come back with a clear plan and a realistic estimate." },
-		"primaryText":   { "type": "string", "default": "Book a discovery call" },
+		"heading":       { "type": "string", "default": "Like what you see? Let's connect." },
+		"dek":           { "type": "string", "default": "Always happy to talk WordPress, swap notes on Gutenberg and performance, or just say hello." },
+		"primaryText":   { "type": "string", "default": "Say hello" },
 		"primaryUrl":    { "type": "string", "default": "#contact" },
-		"secondaryText": { "type": "string", "default": "Email me directly" },
-		"secondaryUrl":  { "type": "string", "default": "mailto:sachin.suthar2493@gmail.com" }
+		"secondaryText": { "type": "string", "default": "View GitHub" },
+		"secondaryUrl":  { "type": "string", "default": "https://github.com/sachin5713/" }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",

@@ -25,10 +25,6 @@
       "type": "string",
       "default": "Senior WordPress Developer · 7+ years"
     },
-    "badgeDot": {
-      "type": "boolean",
-      "default": true
-    },
     "headline": {
       "type": "string",
       "default": "WordPress engineering, built for"
@@ -68,22 +64,6 @@
     "imageAlt": {
       "type": "string",
       "default": ""
-    },
-    "badgeKicker": {
-      "type": "string",
-      "default": "Certified"
-    },
-    "badgeTitle": {
-      "type": "string",
-      "default": "WP VIP"
-    },
-    "tagLabel": {
-      "type": "string",
-      "default": "Open to work"
-    },
-    "tagText": {
-      "type": "string",
-      "default": "Senior WordPress roles, freelance & consulting — 2026."
     },
     "currentlyText": {
       "type": "string",

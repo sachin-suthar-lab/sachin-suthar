@@ -8,7 +8,7 @@ import './style.scss';
 
 registerBlockType( metadata.name, {
 	edit( { attributes, setAttributes } ) {
-		const { icon, name } = attributes;
+		const { icon, name, meta } = attributes;
 		const blockProps = useBlockProps( { className: 'sb-skill' } );
 		return (
 			<>
@@ -23,26 +23,39 @@ registerBlockType( metadata.name, {
 					</PanelBody>
 				</InspectorControls>
 				<div { ...blockProps }>
-					<div className="sb-skill__icon"><Icon name={ icon } size={ 24 } /></div>
-					<RichText
-						tagName="span"
-						className="sb-skill__name"
-						value={ name }
-						onChange={ ( v ) => setAttributes( { name: v } ) }
-						placeholder={ __( 'Skill name', 'sachins-blocks' ) }
-						allowedFormats={ [] }
-					/>
+					{ icon && <span className="sb-skill__icon"><Icon name={ icon } size={ 20 } /></span> }
+					<span className="sb-skill__body">
+						<RichText
+							tagName="span"
+							className="sb-skill__name"
+							value={ name }
+							onChange={ ( v ) => setAttributes( { name: v } ) }
+							placeholder={ __( 'Expertise area', 'sachins-blocks' ) }
+							allowedFormats={ [] }
+						/>
+						<RichText
+							tagName="span"
+							className="sb-skill__meta"
+							value={ meta }
+							onChange={ ( v ) => setAttributes( { meta: v } ) }
+							placeholder={ __( 'Short descriptor', 'sachins-blocks' ) }
+							allowedFormats={ [] }
+						/>
+					</span>
 				</div>
 			</>
 		);
 	},
 	save( { attributes } ) {
-		const { icon, name } = attributes;
+		const { icon, name, meta } = attributes;
 		const blockProps = useBlockProps.save( { className: 'sb-skill' } );
 		return (
 			<div { ...blockProps }>
-				<div className="sb-skill__icon"><Icon name={ icon } size={ 24 } /></div>
-				<RichText.Content tagName="span" className="sb-skill__name" value={ name } />
+				{ icon && <span className="sb-skill__icon"><Icon name={ icon } size={ 20 } /></span> }
+				<span className="sb-skill__body">
+					<RichText.Content tagName="span" className="sb-skill__name" value={ name } />
+					{ meta && <RichText.Content tagName="span" className="sb-skill__meta" value={ meta } /> }
+				</span>
 			</div>
 		);
 	},

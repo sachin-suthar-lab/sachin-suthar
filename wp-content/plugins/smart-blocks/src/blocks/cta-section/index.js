@@ -25,20 +25,22 @@ registerBlockType( metadata.name, {
 				<section { ...blockProps }>
 					<div className="sb-container">
 						<div className="sb-cta">
-							<RichText
-								tagName="h2"
-								value={ heading }
-								onChange={ ( v ) => setAttributes( { heading: v } ) }
-								placeholder={ __( 'CTA headline', 'smart-blocks' ) }
-								allowedFormats={ [ 'core/bold' ] }
-							/>
-							<RichText
-								tagName="p"
-								value={ dek }
-								onChange={ ( v ) => setAttributes( { dek: v } ) }
-								placeholder={ __( 'Supporting paragraph', 'smart-blocks' ) }
-								allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
-							/>
+							<div className="sb-cta__text">
+								<RichText
+									tagName="h2"
+									value={ heading }
+									onChange={ ( v ) => setAttributes( { heading: v } ) }
+									placeholder={ __( 'CTA headline', 'smart-blocks' ) }
+									allowedFormats={ [ 'core/bold' ] }
+								/>
+								<RichText
+									tagName="p"
+									value={ dek }
+									onChange={ ( v ) => setAttributes( { dek: v } ) }
+									placeholder={ __( 'Supporting paragraph', 'smart-blocks' ) }
+									allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
+								/>
+							</div>
 							<div className="sb-cta__buttons">
 								<span className="sb-btn sb-btn--primary">{ primaryText }</span>
 								<span className="sb-btn sb-btn--ghost">{ secondaryText }</span>
@@ -56,8 +58,10 @@ registerBlockType( metadata.name, {
 			<section { ...blockProps }>
 				<div className="sb-container">
 					<div className="sb-cta">
-						{ heading && <RichText.Content tagName="h2" value={ heading } /> }
-						{ dek && <RichText.Content tagName="p" value={ dek } /> }
+						<div className="sb-cta__text">
+							{ heading && <RichText.Content tagName="h2" value={ heading } /> }
+							{ dek && <RichText.Content tagName="p" value={ dek } /> }
+						</div>
 						<div className="sb-cta__buttons">
 							{ primaryText && <a className="sb-btn sb-btn--primary" href={ primaryUrl }>{ primaryText }</a> }
 							{ secondaryText && <a className="sb-btn sb-btn--ghost" href={ secondaryUrl }>{ secondaryText }</a> }
