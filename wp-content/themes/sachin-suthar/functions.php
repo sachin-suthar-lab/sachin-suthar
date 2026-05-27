@@ -40,18 +40,26 @@ add_action( 'after_setup_theme', function () {
  * Front-end assets.
  */
 add_action( 'wp_enqueue_scripts', function () {
+	// Inter (UI) + JetBrains Mono (metadata / developer accent).
+	wp_enqueue_style(
+		'sachin-suthar-fonts',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap',
+		[],
+		null
+	);
+
 	$style_path = get_template_directory() . '/assets/css/theme.css';
 	wp_enqueue_style(
 		'sachin-suthar-theme',
 		get_template_directory_uri() . '/assets/css/theme.css',
-		[],
+		[ 'sachin-suthar-fonts' ],
 		file_exists( $style_path ) ? filemtime( $style_path ) : SACHIN_SUTHAR_VERSION
 	);
 
-	// Preconnect for Google Fonts fallback if local font missing.
 	add_filter( 'wp_resource_hints', function ( $urls, $relation ) {
 		if ( 'preconnect' === $relation ) {
 			$urls[] = [ 'href' => 'https://fonts.gstatic.com', 'crossorigin' ];
+			$urls[] = 'https://fonts.googleapis.com';
 		}
 		return $urls;
 	}, 10, 2 );
