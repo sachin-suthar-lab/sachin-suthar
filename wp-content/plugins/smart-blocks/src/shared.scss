@@ -125,6 +125,9 @@ html.sb-anim-ready .sb-reveal.is-visible { opacity: 1; transform: translateY(0);
 	position: relative;
 	padding: clamp(4.5rem, 9vw, 8rem) 0;
 	color: var(--sb-text);
+	/* sections self-space via padding + the hairline divider, so drop the
+	   editor block-gap (margin-block-start: var(--wp--preset--spacing--40)). */
+	margin-block: 0;
 	/* hairline divider between consecutive sections */
 	border-top: 1px solid var(--sb-border);
 
