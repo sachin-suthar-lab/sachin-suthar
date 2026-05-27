@@ -9,13 +9,15 @@
   "scripts": {
     "build": "wp-scripts build --webpack-copy-php",
     "start": "wp-scripts start --webpack-copy-php",
+    "gen:icons": "node tools/gen-icons.mjs",
     "format": "wp-scripts format ./src",
     "lint:js": "wp-scripts lint-js ./src",
     "lint:css": "wp-scripts lint-style ./src",
     "packages-update": "wp-scripts packages-update"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^30.0.0"
+    "@wordpress/scripts": "^30.0.0",
+    "simple-icons": "^16.21.0"
   },
   "wp-env": {
     "core": "WordPress/WordPress#trunk"

@@ -3,11 +3,7 @@
 	<!-- wp:group {"align":"full","className":"ss-headbar","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
 	<div class="wp-block-group alignfull ss-headbar">
 
-		<!-- wp:html -->
-		<a class="ss-logo" href="/" aria-label="Sachin Suthar — home">
-			<span class="ss-logo__text">Sachin Suthar<span class="ss-logo__dot">.</span></span>
-		</a>
-		<!-- /wp:html -->
+		<!-- wp:site-title {"level":0,"className":"ss-logo"} /-->
 
 		<!-- wp:navigation {"overlayMenu":"mobile","overlayBackgroundColor":"base","overlayTextColor":"contrast","textColor":"text","className":"ss-nav","style":{"spacing":{"blockGap":"1.6rem"}},"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"}} -->
 			<!-- wp:navigation-link {"label":"About","url":"#about","kind":"custom"} /-->
@@ -17,14 +13,24 @@
 			<!-- wp:navigation-link {"label":"Writing","url":"#blog","kind":"custom"} /-->
 		<!-- /wp:navigation -->
 
-		<!-- wp:html -->
-		<div class="ss-headend">
-			<a class="ss-headend__ghost" href="https://github.com/sachin5713/" target="_blank" rel="me noopener" aria-label="GitHub">
-				<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
-			</a>
-			<a class="ss-headend__cta" href="#contact">Get in touch</a>
+		<!-- wp:group {"className":"ss-headend","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+		<div class="wp-block-group ss-headend">
+			<!-- wp:social-links {"iconColor":"contrast","iconColorValue":"#1c1640","size":"has-small-icon-size","className":"is-style-logos-only ss-headend__social"} -->
+			<ul class="wp-block-social-links has-small-icon-size is-style-logos-only ss-headend__social">
+				<!-- wp:social-link {"url":"https://github.com/sachin5713/","service":"github","label":"GitHub"} /-->
+				<!-- wp:social-link {"url":"https://www.linkedin.com/in/sachin-wordpress-developer/","service":"linkedin","label":"LinkedIn"} /-->
+			</ul>
+			<!-- /wp:social-links -->
+
+			<!-- wp:buttons {"className":"ss-headend__cta-wrap"} -->
+			<div class="wp-block-buttons ss-headend__cta-wrap">
+				<!-- wp:button {"className":"ss-headend__cta"} -->
+				<div class="wp-block-button ss-headend__cta"><a class="wp-block-button__link wp-element-button" href="#contact">Get in touch</a></div>
+				<!-- /wp:button -->
+			</div>
+			<!-- /wp:buttons -->
 		</div>
-		<!-- /wp:html -->
+		<!-- /wp:group -->
 
 	</div>
 	<!-- /wp:group -->
