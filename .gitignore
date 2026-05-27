@@ -7,6 +7,7 @@
 /license.txt
 /readme.html
 /xmlrpc.php
+/tools
 
 # Local config (contains DB creds + salts)
 /wp-config.php
@@ -32,4 +33,5 @@
 node_modules/
 *.log
 .DS_Store
+.claude
 Thumbs.db
