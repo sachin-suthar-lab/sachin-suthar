@@ -33,7 +33,10 @@
       "Bash(git commit -q -m 'redesign\\(theme\\): editorial header + dark footer to match the new system *)",
       "Read(//c/Users/helLO/Downloads/john final/john final/**)",
       "Bash(echo \"---EXIT:$?---\")",
-      "Bash(git commit -q -m 'redesign: premium editorial direction \\(Fraunces serif + floating hero portrait\\) *)"
+      "Bash(git commit -q -m 'redesign: premium editorial direction \\(Fraunces serif + floating hero portrait\\) *)",
+      "Bash(grep -n '// SKILLS\\\\|$skills = \\\\[' tools/setup-homepage.php)",
+      "Bash(meta)",
+      "Bash(git commit -q -m 'refactor\\(profile\\): reframe as personal profile \\(not hire-me\\) + per-section layout changes *)"
     ]
   }
 }

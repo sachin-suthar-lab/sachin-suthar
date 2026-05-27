@@ -22,6 +22,10 @@
     "name": {
       "type": "string",
       "default": ""
+    },
+    "meta": {
+      "type": "string",
+      "default": ""
     }
   },
   "editorScript": "file:./index.js",

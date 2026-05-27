@@ -2,13 +2,12 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 export default function Save( { attributes } ) {
 	const {
-		badge, badgeDot,
+		badge,
 		headline, highlight,
 		lede,
 		ctaText, ctaUrl,
 		ctaSecondaryText, ctaSecondaryUrl,
 		imageUrl, imageAlt,
-		badgeKicker, badgeTitle, tagLabel, tagText,
 		currentlyText, currentlyTarget,
 		chips,
 		metrics,
@@ -23,7 +22,6 @@ export default function Save( { attributes } ) {
 					<div className="sb-hero__copy">
 						{ badge && (
 							<span className="sb-hero__badge">
-								{ badgeDot && <span className="dot" aria-hidden="true" /> }
 								<RichText.Content tagName="span" value={ badge } />
 							</span>
 						) }
@@ -67,18 +65,6 @@ export default function Save( { attributes } ) {
 								: <span className="sb-image-slot__label">Image goes here</span>
 							}
 						</div>
-						{ ( badgeKicker || badgeTitle ) && (
-							<div className="sb-hero__mark" aria-hidden="true">
-								{ badgeKicker && <span className="sb-hero__mark-kicker">{ badgeKicker }</span> }
-								{ badgeTitle && <span className="sb-hero__mark-title">{ badgeTitle }</span> }
-							</div>
-						) }
-						{ ( tagLabel || tagText ) && (
-							<div className="sb-hero__statustag">
-								{ tagLabel && <div className="sb-hero__statustag-label">{ tagLabel }</div> }
-								{ tagText && <div className="sb-hero__statustag-text">{ tagText }</div> }
-							</div>
-						) }
 					</div>
 				</div>
 				{ metrics?.length > 0 && (

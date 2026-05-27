@@ -50,12 +50,15 @@ function sb_service_block( array $a ): string {
 }
 
 function sb_skill_block( array $a ): string {
-	// Strip legacy proficiency keys so attribute JSON stays clean.
 	unset( $a['proficiency'] );
-	$iconH = ! empty( $a['icon'] ) ? '<div class="sb-skill__icon">' . icon( $a['icon'], 24 ) . '</div>' : '';
+	$iconH = ! empty( $a['icon'] ) ? '<span class="sb-skill__icon">' . icon( $a['icon'], 20 ) . '</span>' : '';
+	$metaH = ! empty( $a['meta'] ) ? '<span class="sb-skill__meta">' . wp_kses_post( $a['meta'] ) . '</span>' : '';
 	$inner = '<div class="wp-block-smart-blocks-skill sb-skill">'
 		. $iconH
-		. '<span class="sb-skill__name">' . wp_kses_post( $a['name'] ?? '' ) . '</span>'
+		. '<span class="sb-skill__body">'
+			. '<span class="sb-skill__name">' . wp_kses_post( $a['name'] ?? '' ) . '</span>'
+			. $metaH
+		. '</span>'
 	. '</div>';
 	return sb_wrap( 'smart-blocks/skill', $a, $inner );
 }
@@ -239,7 +242,7 @@ function sb_hero(): string {
 		. '<div class="sb-container">'
 			. '<div class="sb-hero__layout">'
 				. '<div class="sb-hero__copy">'
-					. '<span class="sb-hero__badge"><span class="dot" aria-hidden="true"></span><span>Senior WordPress Developer · 7+ years</span></span>'
+					. '<span class="sb-hero__badge"><span>Senior WordPress Developer · 7+ years</span></span>'
 					. '<h1><span>WordPress engineering, built for</span> <span class="sb-gradient">long-term performance.</span></h1>'
 					. '<p class="sb-hero__lede">I\'m Sachin Suthar — a Senior WordPress Developer from Ahmedabad with 7+ years of hands-on experience across 70+ projects. I build custom themes, plugins, ACF and Gutenberg blocks, and performance-tuned WooCommerce stores for agencies, startups, and enterprise clients.</p>'
 					. '<div class="sb-hero__currently"><span class="bullet" aria-hidden="true"></span><span>Currently leading WP engineering at <strong>NineGravity</strong></span></div>'
@@ -248,8 +251,6 @@ function sb_hero(): string {
 				. '</div>'
 				. '<div class="sb-hero__visual">'
 					. '<div class="sb-image-slot"><span class="sb-image-slot__label">Image goes here</span></div>'
-					. '<div class="sb-hero__mark" aria-hidden="true"><span class="sb-hero__mark-kicker">Certified</span><span class="sb-hero__mark-title">WP VIP</span></div>'
-					. '<div class="sb-hero__statustag"><div class="sb-hero__statustag-label">Open to work</div><div class="sb-hero__statustag-text">Senior WordPress roles, freelance &amp; consulting — 2026.</div></div>'
 				. '</div>'
 			. '</div>'
 			. '<div class="sb-hero__metrics" role="list">' . $m . '</div>'
@@ -259,10 +260,6 @@ function sb_hero(): string {
 		'currentlyText'   => 'Currently leading WP engineering at',
 		'currentlyTarget' => 'NineGravity',
 		'chips'           => $chips,
-		'badgeKicker'     => 'Certified',
-		'badgeTitle'      => 'WP VIP',
-		'tagLabel'        => 'Open to work',
-		'tagText'         => 'Senior WordPress roles, freelance & consulting — 2026.',
 	], $inner );
 }
 
@@ -286,11 +283,13 @@ function sb_blog_slider(): string {
 }
 
 function sb_about(): string {
+	// Spec-sheet: label → value (no availability framing).
 	$highlights = [
-		[ 'title' => 'Ahmedabad, India',         'meta' => 'Available worldwide · Remote-first' ],
-		[ 'title' => '7+ years experience',       'meta' => 'Across 70+ shipped WordPress projects' ],
-		[ 'title' => 'WP VIP standards',          'meta' => 'Architecture, performance, and security' ],
-		[ 'title' => 'MCA · Gujarat Tech Univ.',  'meta' => 'CGPA 8.08 · BCA from HNGU (7.25)' ],
+		[ 'title' => 'Based in',    'meta' => 'Ahmedabad, India · Remote-friendly' ],
+		[ 'title' => 'Experience',  'meta' => '7+ years · 70+ projects shipped' ],
+		[ 'title' => 'Focus',       'meta' => 'Custom themes, plugins, ACF & Gutenberg' ],
+		[ 'title' => 'Education',   'meta' => 'MCA — Gujarat Technological University' ],
+		[ 'title' => 'Currently',   'meta' => 'Senior WP Developer & Team Lead, NineGravity' ],
 	];
 	$h = '';
 	foreach ( $highlights as $x ) $h .= '<div class="sb-about__highlight"><strong>' . esc_html( $x['title'] ) . '</strong><span>' . esc_html( $x['meta'] ) . '</span></div>';
@@ -301,8 +300,8 @@ function sb_about(): string {
 				. '<div class="sb-about__visual"><div class="sb-image-slot"><span class="sb-image-slot__label">Image goes here</span></div></div>'
 				. '<div class="sb-about__copy">'
 					. '<span class="sb-eyebrow">About</span>'
-					. '<h2>Engineer-led WordPress, from planning to deployment.</h2>'
-					. '<p>I\'m Sachin Suthar — based in Ahmedabad, India, with 7+ years building custom themes, plugins, and backend systems for eCommerce, LMS, and corporate platforms. I take projects from technical scoping all the way through code review and deployment: writing clean, maintainable code, fixing performance bottlenecks, and integrating third-party APIs. Familiar with WordPress VIP coding standards through certification. Currently expanding into React-based Gutenberg block development and PHPUnit testing.</p>'
+					. '<h2>Engineer-led WordPress, from <em>planning to deployment.</em></h2>'
+					. '<p>I\'m Sachin Suthar — based in Ahmedabad, India, with 7+ years building custom themes, plugins, and backend systems for eCommerce, LMS, and corporate platforms. I take projects from technical scoping through code review and deployment: clean, maintainable code, fixing performance bottlenecks, and integrating third-party APIs. Familiar with WordPress VIP coding standards through certification, and currently going deeper into React-based Gutenberg development and PHPUnit testing.</p>'
 					. '<div class="sb-about__highlights">' . $h . '</div>'
 				. '</div>'
 			. '</div>'
@@ -315,11 +314,13 @@ function sb_cta(): string {
 	$inner = '<section id="cta" class="wp-block-smart-blocks-cta-section sb-section sb-cta-wrap sb-section--cream sb-reveal">'
 		. '<div class="sb-container">'
 			. '<div class="sb-cta">'
-				. '<h2>Got a WordPress build that needs a senior pair of hands?</h2>'
-				. '<p>Let\'s talk about your roadmap, your existing stack, and the constraints that make your project actually hard. I\'ll come back with a clear plan and a realistic estimate.</p>'
+				. '<div class="sb-cta__text">'
+					. '<h2>Like what you see? Let\'s connect.</h2>'
+					. '<p>Always happy to talk WordPress, swap notes on Gutenberg and performance, or just say hello. Find me below.</p>'
+				. '</div>'
 				. '<div class="sb-cta__buttons">'
-					. '<a class="sb-btn sb-btn--primary" href="#contact">Book a discovery call</a>'
-					. '<a class="sb-btn sb-btn--ghost" href="mailto:sachin.suthar2493@gmail.com">Email me directly</a>'
+					. '<a class="sb-btn sb-btn--primary" href="#contact">Say hello</a>'
+					. '<a class="sb-btn sb-btn--ghost" href="https://github.com/sachin5713/" target="_blank" rel="noopener">View GitHub</a>'
 				. '</div>'
 			. '</div>'
 		. '</div>'
@@ -358,9 +359,9 @@ function sb_contact(): string {
 
 	$inner = '<section id="contact" class="wp-block-smart-blocks-contact-section sb-section sb-contact sb-reveal">'
 		. '<div class="sb-container">'
-			. '<div class="sb-section-head"><span class="sb-eyebrow">Contact</span><h2>Let\'s build something durable together.</h2><p>Drop a note about your project, timeline, and stack. I read every message and reply within two working days.</p></div>'
+			. '<div class="sb-section-head"><span class="sb-eyebrow">Contact</span><h2>Get in <em>touch.</em></h2><p>Questions about my work, WordPress, or just want to connect? Drop a message — I read every one and reply within a couple of days.</p></div>'
 			. '<div class="sb-contact__wrap">'
-				. '<aside class="sb-contact__intro"><h3>Channels</h3><p>Pick whatever\'s easiest. For project enquiries, the form below gets the fastest reply.</p>' . $ch . '</aside>'
+				. '<aside class="sb-contact__intro"><h3>Find me</h3><p>Pick whatever\'s easiest — email, LinkedIn, or the form. Happy to chat.</p>' . $ch . '</aside>'
 				. $form
 			. '</div>'
 		. '</div>'
@@ -440,26 +441,20 @@ $out .= sb_parent( 'smart-blocks/services-grid', 'sb-services', [
 	'dek'     => 'Specialist services across the modern WordPress stack — from custom block development to performance engineering and CI-friendly deployments.',
 ], 'div', 'sb-services__grid', implode( '', array_map( 'sb_service_block', $services ) ), '', 'services' );
 
-// SKILLS
-$skills = [
-	[ 'icon' => 'php',      'name' => 'PHP 7 / 8 (OOP)',     'proficiency' => 96 ],
-	[ 'icon' => 'wp',       'name' => 'WordPress',           'proficiency' => 98 ],
-	[ 'icon' => 'box',      'name' => 'ACF / ACF Pro',       'proficiency' => 96 ],
-	[ 'icon' => 'layers',   'name' => 'Gutenberg Blocks',    'proficiency' => 90 ],
-	[ 'icon' => 'cart',     'name' => 'WooCommerce',         'proficiency' => 92 ],
-	[ 'icon' => 'js',       'name' => 'JavaScript (ES6+)',   'proficiency' => 88 ],
-	[ 'icon' => 'react',    'name' => 'React (Gutenberg)',   'proficiency' => 80 ],
-	[ 'icon' => 'db',       'name' => 'MySQL · Query Tuning','proficiency' => 90 ],
-	[ 'icon' => 'rest',     'name' => 'REST API · Webhooks', 'proficiency' => 92 ],
-	[ 'icon' => 'terminal', 'name' => 'WP-CLI',              'proficiency' => 92 ],
-	[ 'icon' => 'git',      'name' => 'Git · GitHub · GitLab','proficiency' => 90 ],
-	[ 'icon' => 'gauge',    'name' => 'Core Web Vitals',     'proficiency' => 88 ],
+// EXPERTISE (was Skills/Toolkit) — capability areas with descriptors
+$expertise = [
+	[ 'icon' => 'wp',       'name' => 'Custom WordPress',      'meta' => 'Themes, plugins & bespoke admin tooling, VIP standards.' ],
+	[ 'icon' => 'layers',   'name' => 'Gutenberg & ACF',       'meta' => 'Native + ACF blocks with a clean editor experience.' ],
+	[ 'icon' => 'cart',     'name' => 'WooCommerce',           'meta' => 'Checkout, subscriptions, gateways & ERP integrations.' ],
+	[ 'icon' => 'gauge',    'name' => 'Performance',           'meta' => 'Core Web Vitals, caching, and MySQL query tuning.' ],
+	[ 'icon' => 'plug',     'name' => 'Headless & APIs',       'meta' => 'REST, webhooks, and React / Next.js front-ends.' ],
+	[ 'icon' => 'terminal', 'name' => 'Architecture & DevOps', 'meta' => 'Multisite, WP-CLI, CI/CD, and code-review culture.' ],
 ];
 $out .= sb_parent( 'smart-blocks/skills-showcase', 'sb-skills', [
-	'eyebrow' => '02 · Toolkit',
-	'heading' => 'Skills sharpened by 7+ years of shipping.',
-	'dek'     => 'A focused stack centred on WordPress, ACF, and the infrastructure that keeps enterprise products durable.',
-], 'div', 'sb-skills__grid', implode( '', array_map( 'sb_skill_block', $skills ) ), 'sb-section--cream', 'skills' );
+	'eyebrow' => '02 · Expertise',
+	'heading' => 'Where I go <em>deep.</em>',
+	'dek'     => 'Six areas I have shipped repeatedly across agencies, products, and enterprise teams.',
+], 'div', 'sb-skills__grid', implode( '', array_map( 'sb_skill_block', $expertise ) ), 'sb-section--cream', 'skills' );
 
 // EXPERIENCE
 $experience = [
@@ -472,6 +467,17 @@ $out .= sb_parent( 'smart-blocks/experience-timeline', 'sb-experience', [
 	'heading' => 'A practical journey through the <em>WordPress ecosystem.</em>',
 	'dek'     => '7+ years of building WordPress products across agencies, SaaS, eCommerce, LMS, and government platforms.',
 ], 'ol', 'sb-timeline', implode( '', array_map( 'sb_timeline_block', $experience ) ), '', 'experience' );
+
+// EDUCATION (placed right after Experience — academic foundation for the career)
+$education = [
+	[ 'degree' => 'Master of Computer Applications', 'institution' => 'Gujarat Technological University', 'years' => 'MCA · CGPA 8.08', 'detail' => 'Advanced software engineering, databases, and systems design — the foundation for backend-heavy WordPress work.' ],
+	[ 'degree' => 'Bachelor of Computer Applications', 'institution' => 'Hemchandracharya North Gujarat University', 'years' => 'BCA · CGPA 7.25', 'detail' => 'Programming fundamentals, web technologies, and data structures.' ],
+];
+$out .= sb_parent( 'smart-blocks/education', 'sb-education', [
+	'eyebrow' => '04 · Education',
+	'heading' => 'Formal grounding in <em>computer science.</em>',
+	'dek'     => 'A CS background that underpins how I architect and reason about WordPress systems.',
+], 'div', 'sb-education__grid', implode( '', array_map( 'sb_education_block', $education ) ), 'sb-section--cream', 'education' );
 
 // TECH
 $stack = [
@@ -489,10 +495,10 @@ $stack = [
 	[ 'icon' => 'linux',    'name' => 'Linux',        'meta' => 'Server ops, deployments' ],
 ];
 $out .= sb_parent( 'smart-blocks/tech-stack', 'sb-tech', [
-	'eyebrow' => '04 · Tech stack',
-	'heading' => 'A focused stack — not a buzzword soup.',
+	'eyebrow' => '05 · Tech stack',
+	'heading' => 'A focused stack — <em>not a buzzword soup.</em>',
 	'dek'     => 'Tools I use daily, picked for stability, ecosystem health, and team velocity.',
-], 'div', 'sb-tech__grid', implode( '', array_map( 'sb_techitem_block', $stack ) ), 'sb-section--cream', 'stack' );
+], 'div', 'sb-tech__grid', implode( '', array_map( 'sb_techitem_block', $stack ) ), '', 'stack' );
 
 // CERTIFICATIONS
 $certs = [
@@ -503,21 +509,10 @@ $certs = [
 	[ 'title' => 'Enterprise WordPress Security',        'issuer' => 'WordPress VIP' ],
 ];
 $out .= sb_parent( 'smart-blocks/certifications', 'sb-certifications', [
-	'eyebrow' => '05 · Credentials',
+	'eyebrow' => '06 · Credentials',
 	'heading' => 'Certifications.',
 	'dek'     => 'Continuing education aligned with WordPress VIP and enterprise-grade practice. Upload certificate images per item from the editor.',
-], 'div', 'sb-certifications__grid', implode( '', array_map( 'sb_cert_block', $certs ) ), '', 'certifications' );
-
-// EDUCATION
-$education = [
-	[ 'degree' => 'Master of Computer Applications (MCA)',  'institution' => 'Gujarat Technological University',          'years' => '— · CGPA 8.08' ],
-	[ 'degree' => 'Bachelor of Computer Applications (BCA)', 'institution' => 'Hemchandracharya North Gujarat University', 'years' => '— · CGPA 7.25' ],
-];
-$out .= sb_parent( 'smart-blocks/education', 'sb-education', [
-	'eyebrow' => '06 · Academic',
-	'heading' => 'Education.',
-	'dek'     => 'Computer-science foundation in software development and applied programming.',
-], 'div', 'sb-education__grid', implode( '', array_map( 'sb_education_block', $education ) ), 'sb-section--cream', 'education' );
+], 'div', 'sb-certifications__grid', implode( '', array_map( 'sb_cert_block', $certs ) ), 'sb-section--cream', 'certifications' );
 
 // PROJECTS
 $projects = [

@@ -9,13 +9,12 @@ import {
 
 export default function Edit( { attributes, setAttributes } ) {
 	const {
-		badge, badgeDot,
+		badge,
 		headline, highlight,
 		lede,
 		ctaText, ctaUrl,
 		ctaSecondaryText, ctaSecondaryUrl,
 		imageId, imageUrl, imageAlt,
-		badgeKicker, badgeTitle, tagLabel, tagText,
 		metrics,
 	} = attributes;
 
@@ -59,13 +58,6 @@ export default function Edit( { attributes, setAttributes } ) {
 					</MediaUploadCheck>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Image badge + status tag', 'smart-blocks' ) } initialOpen={ false }>
-					<TextControl label={ __( 'Badge kicker', 'smart-blocks' ) } value={ badgeKicker } onChange={ ( v ) => setAttributes( { badgeKicker: v } ) } />
-					<TextControl label={ __( 'Badge title', 'smart-blocks' ) } value={ badgeTitle } onChange={ ( v ) => setAttributes( { badgeTitle: v } ) } />
-					<TextControl label={ __( 'Status label', 'smart-blocks' ) } value={ tagLabel } onChange={ ( v ) => setAttributes( { tagLabel: v } ) } />
-					<TextControl label={ __( 'Status text', 'smart-blocks' ) } value={ tagText } onChange={ ( v ) => setAttributes( { tagText: v } ) } />
-				</PanelBody>
-
 				<PanelBody title={ __( 'Primary CTA', 'smart-blocks' ) } initialOpen={ false }>
 					<TextControl label={ __( 'Text', 'smart-blocks' ) } value={ ctaText } onChange={ ( v ) => setAttributes( { ctaText: v } ) } />
 					<TextControl label={ __( 'URL', 'smart-blocks' ) }  value={ ctaUrl }  onChange={ ( v ) => setAttributes( { ctaUrl: v } ) } />
@@ -74,14 +66,6 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title={ __( 'Secondary CTA', 'smart-blocks' ) } initialOpen={ false }>
 					<TextControl label={ __( 'Text', 'smart-blocks' ) } value={ ctaSecondaryText } onChange={ ( v ) => setAttributes( { ctaSecondaryText: v } ) } />
 					<TextControl label={ __( 'URL', 'smart-blocks' ) }  value={ ctaSecondaryUrl }  onChange={ ( v ) => setAttributes( { ctaSecondaryUrl: v } ) } />
-				</PanelBody>
-
-				<PanelBody title={ __( 'Badge', 'smart-blocks' ) } initialOpen={ false }>
-					<ToggleControl
-						label={ __( 'Show status dot', 'smart-blocks' ) }
-						checked={ badgeDot }
-						onChange={ ( v ) => setAttributes( { badgeDot: v } ) }
-					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Metrics', 'smart-blocks' ) } initialOpen={ false }>
@@ -101,7 +85,6 @@ export default function Edit( { attributes, setAttributes } ) {
 					<div className="sb-hero__layout">
 						<div className="sb-hero__copy">
 							<span className="sb-hero__badge">
-								{ badgeDot && <span className="dot" aria-hidden="true" /> }
 								<RichText
 									tagName="span"
 									value={ badge }
@@ -152,18 +135,6 @@ export default function Edit( { attributes, setAttributes } ) {
 									<span className="sb-image-slot__label">{ __( 'Image goes here', 'smart-blocks' ) }</span>
 								) }
 							</div>
-							{ ( badgeKicker || badgeTitle ) && (
-								<div className="sb-hero__mark" aria-hidden="true">
-									{ badgeKicker && <span className="sb-hero__mark-kicker">{ badgeKicker }</span> }
-									{ badgeTitle && <span className="sb-hero__mark-title">{ badgeTitle }</span> }
-								</div>
-							) }
-							{ ( tagLabel || tagText ) && (
-								<div className="sb-hero__statustag">
-									{ tagLabel && <div className="sb-hero__statustag-label">{ tagLabel }</div> }
-									{ tagText && <div className="sb-hero__statustag-text">{ tagText }</div> }
-								</div>
-							) }
 						</div>
 					</div>
 
