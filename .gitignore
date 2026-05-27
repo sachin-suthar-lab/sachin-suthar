@@ -8,6 +8,7 @@
 /readme.html
 /xmlrpc.php
 /tools
+/CLAUDE.md
 
 # Local config (contains DB creds + salts)
 /wp-config.php
