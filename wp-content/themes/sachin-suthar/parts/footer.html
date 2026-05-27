@@ -1,47 +1,101 @@
 <!-- wp:group {"tagName":"footer","align":"full","className":"site-footer","layout":{"type":"default"}} -->
 <footer class="wp-block-group alignfull site-footer">
-	<!-- wp:html -->
-	<div class="ss-footer">
-		<div class="ss-footer__inner">
+	<!-- wp:group {"className":"ss-footer","layout":{"type":"default"}} -->
+	<div class="wp-block-group ss-footer">
 
-			<div class="ss-footer__lead">
-				<span class="ss-footer__eyebrow">Sachin Suthar — WordPress Engineer</span>
-				<h2 class="ss-footer__headline">Thanks for<br>stopping by.</h2>
-				<a class="ss-footer__mail" href="mailto:sachin.suthar2493@gmail.com">sachin.suthar2493@gmail.com</a>
+		<!-- wp:group {"className":"ss-footer__inner","layout":{"type":"default"}} -->
+		<div class="wp-block-group ss-footer__inner">
+
+			<!-- wp:group {"className":"ss-footer__lead","layout":{"type":"default"}} -->
+			<div class="wp-block-group ss-footer__lead">
+				<!-- wp:paragraph {"className":"ss-footer__eyebrow"} -->
+				<p class="ss-footer__eyebrow">Sachin Suthar — WordPress Engineer</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:heading {"level":2,"className":"ss-footer__headline"} -->
+				<h2 class="wp-block-heading ss-footer__headline">Thanks for stopping by.</h2>
+				<!-- /wp:heading -->
+
+				<!-- wp:paragraph {"className":"ss-footer__mail"} -->
+				<p class="ss-footer__mail"><a href="mailto:sachin.suthar2493@gmail.com">sachin.suthar2493@gmail.com</a></p>
+				<!-- /wp:paragraph -->
 			</div>
+			<!-- /wp:group -->
 
-			<div class="ss-footer__cols">
-				<nav class="ss-footer__col" aria-label="Sections">
-					<span class="ss-footer__label">Navigate</span>
-					<a href="#about">About</a>
-					<a href="#work">Selected work</a>
-					<a href="#experience">Experience</a>
-					<a href="#stack">Tech stack</a>
-					<a href="#certifications">Certifications</a>
-				</nav>
+			<!-- wp:group {"className":"ss-footer__cols","layout":{"type":"default"}} -->
+			<div class="wp-block-group ss-footer__cols">
 
-				<nav class="ss-footer__col" aria-label="Elsewhere">
-					<span class="ss-footer__label">Connect</span>
-					<a href="https://github.com/sachin5713/" target="_blank" rel="me noopener">GitHub <span aria-hidden="true">↗</span></a>
-					<a href="https://www.linkedin.com/in/sachin-wordpress-developer/" target="_blank" rel="me noopener">LinkedIn <span aria-hidden="true">↗</span></a>
-					<a href="tel:+919726337383">+91 97263 37383</a>
-					<a href="#contact">Contact form</a>
-				</nav>
+				<!-- wp:group {"className":"ss-footer__col","layout":{"type":"default"}} -->
+				<div class="wp-block-group ss-footer__col">
+					<!-- wp:paragraph {"className":"ss-footer__label"} -->
+					<p class="ss-footer__label">Navigate</p>
+					<!-- /wp:paragraph -->
 
-				<div class="ss-footer__col">
-					<span class="ss-footer__label">Currently</span>
-					<p class="ss-footer__note">Senior WordPress Developer &amp; Team Lead at <strong>NineGravity</strong>, Ahmedabad. Building custom themes, Gutenberg blocks, and performance-tuned WooCommerce.</p>
+					<!-- wp:navigation {"overlayMenu":"never","className":"ss-footer__nav","layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
+						<!-- wp:navigation-link {"label":"About","url":"#about","kind":"custom"} /-->
+						<!-- wp:navigation-link {"label":"Selected work","url":"#work","kind":"custom"} /-->
+						<!-- wp:navigation-link {"label":"Experience","url":"#experience","kind":"custom"} /-->
+						<!-- wp:navigation-link {"label":"Tech stack","url":"#stack","kind":"custom"} /-->
+						<!-- wp:navigation-link {"label":"Certifications","url":"#certifications","kind":"custom"} /-->
+					<!-- /wp:navigation -->
 				</div>
+				<!-- /wp:group -->
+
+				<!-- wp:group {"className":"ss-footer__col","layout":{"type":"default"}} -->
+				<div class="wp-block-group ss-footer__col">
+					<!-- wp:paragraph {"className":"ss-footer__label"} -->
+					<p class="ss-footer__label">Connect</p>
+					<!-- /wp:paragraph -->
+
+					<!-- wp:social-links {"iconColor":"base","iconColorValue":"#ffffff","size":"has-small-icon-size","className":"is-style-logos-only ss-footer__social"} -->
+					<ul class="wp-block-social-links has-small-icon-size is-style-logos-only ss-footer__social">
+						<!-- wp:social-link {"url":"https://github.com/sachin5713/","service":"github","label":"GitHub"} /-->
+						<!-- wp:social-link {"url":"https://www.linkedin.com/in/sachin-wordpress-developer/","service":"linkedin","label":"LinkedIn"} /-->
+						<!-- wp:social-link {"url":"mailto:sachin.suthar2493@gmail.com","service":"mail","label":"Email"} /-->
+					</ul>
+					<!-- /wp:social-links -->
+
+					<!-- wp:paragraph {"className":"ss-footer__phone"} -->
+					<p class="ss-footer__phone"><a href="tel:+919726337383">+91 97263 37383</a></p>
+					<!-- /wp:paragraph -->
+				</div>
+				<!-- /wp:group -->
+
+				<!-- wp:group {"className":"ss-footer__col","layout":{"type":"default"}} -->
+				<div class="wp-block-group ss-footer__col">
+					<!-- wp:paragraph {"className":"ss-footer__label"} -->
+					<p class="ss-footer__label">Currently</p>
+					<!-- /wp:paragraph -->
+
+					<!-- wp:paragraph {"className":"ss-footer__note"} -->
+					<p class="ss-footer__note">Senior WordPress Developer &amp; Team Lead at <strong>NineGravity</strong>, Ahmedabad. Building custom themes, Gutenberg blocks, and performance-tuned WooCommerce.</p>
+					<!-- /wp:paragraph -->
+				</div>
+				<!-- /wp:group -->
+
 			</div>
+			<!-- /wp:group -->
 
 		</div>
+		<!-- /wp:group -->
 
-		<div class="ss-footer__bar">
-			<span class="ss-footer__sig">© <span data-sb-year>2026</span> Sachin Suthar — built with WordPress &amp; Gutenberg.</span>
-			<span class="ss-footer__meta">7+ yrs · 70+ projects · Ahmedabad, IN</span>
-			<a class="ss-footer__top" href="#home">Back to top <span aria-hidden="true">↑</span></a>
+		<!-- wp:group {"className":"ss-footer__bar","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"center"}} -->
+		<div class="wp-block-group ss-footer__bar">
+			<!-- wp:paragraph {"className":"ss-footer__sig"} -->
+			<p class="ss-footer__sig">© <span data-sb-year>2026</span> Sachin Suthar — built with WordPress &amp; Gutenberg.</p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"className":"ss-footer__meta"} -->
+			<p class="ss-footer__meta">8 yrs · 70+ projects · Ahmedabad, IN</p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"className":"ss-footer__top"} -->
+			<p class="ss-footer__top"><a href="#home">Back to top ↑</a></p>
+			<!-- /wp:paragraph -->
 		</div>
+		<!-- /wp:group -->
+
 	</div>
-	<!-- /wp:html -->
+	<!-- /wp:group -->
 </footer>
 <!-- /wp:group -->

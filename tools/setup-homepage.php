@@ -22,6 +22,10 @@ if ( ! wp_get_theme( 'sachin-suthar' )->exists() ) WP_CLI::error( 'Theme "sachin
 if ( get_stylesheet() !== 'sachin-suthar' ) { switch_theme( 'sachin-suthar' ); WP_CLI::log( '✓ Activated theme sachin-suthar' ); }
 else WP_CLI::log( '· Theme already active' );
 
+/* Site identity — the header/footer Site Title block renders these dynamically. */
+if ( get_option( 'blogname' ) !== 'Sachin Suthar' ) { update_option( 'blogname', 'Sachin Suthar' ); WP_CLI::log( '✓ Site title → Sachin Suthar' ); }
+if ( get_option( 'blogdescription' ) !== 'Senior WordPress Developer' ) { update_option( 'blogdescription', 'Senior WordPress Developer' ); WP_CLI::log( '✓ Tagline set' ); }
+
 if ( ! function_exists( 'activate_plugin' ) ) require_once ABSPATH . 'wp-admin/includes/plugin.php';
 if ( ! is_plugin_active( 'smart-blocks/smart-blocks.php' ) ) {
 	$r = activate_plugin( 'smart-blocks/smart-blocks.php' );
@@ -227,7 +231,7 @@ function sb_testimonials_parent( array $atts, string $childrenHtml ): string {
 /* ---------- Single-instance blocks ---------- */
 function sb_hero(): string {
 	$metrics = [
-		[ 'value' => '7+',     'label' => 'Years of WordPress engineering' ],
+		[ 'value' => '8',      'label' => 'Years of WordPress engineering' ],
 		[ 'value' => '70+',    'label' => 'Projects shipped end-to-end' ],
 		[ 'value' => '50+',    'label' => 'Custom themes & plugins built' ],
 		[ 'value' => '30–50%', 'label' => 'Median performance gains' ],
@@ -242,9 +246,9 @@ function sb_hero(): string {
 		. '<div class="sb-container">'
 			. '<div class="sb-hero__layout">'
 				. '<div class="sb-hero__copy">'
-					. '<span class="sb-hero__badge"><span>Senior WordPress Developer · 7+ years</span></span>'
+					. '<span class="sb-hero__badge"><span>Senior WordPress Developer · 8 years</span></span>'
 					. '<h1><span>WordPress engineering, built for</span> <span class="sb-gradient">long-term performance.</span></h1>'
-					. '<p class="sb-hero__lede">I\'m Sachin Suthar — a Senior WordPress Developer from Ahmedabad with 7+ years of hands-on experience across 70+ projects. I build custom themes, plugins, ACF and Gutenberg blocks, and performance-tuned WooCommerce stores for agencies, startups, and enterprise clients.</p>'
+					. '<p class="sb-hero__lede">I\'m Sachin Suthar — a Senior WordPress Developer from Ahmedabad with 8 years of hands-on experience across 70+ projects. I build custom themes, plugins, ACF and Gutenberg blocks, and performance-tuned WooCommerce stores for agencies, startups, and enterprise clients.</p>'
 					. '<div class="sb-hero__currently"><span class="bullet" aria-hidden="true"></span><span>Currently leading WP engineering at <strong>NineGravity</strong></span></div>'
 					. '<div class="sb-hero__cta"><a class="sb-btn sb-btn--primary" href="#contact">Start a project</a><a class="sb-btn sb-btn--ghost" href="#work">View selected work</a></div>'
 					. '<div class="sb-hero__chips">' . $c . '</div>'
@@ -286,7 +290,7 @@ function sb_about(): string {
 	// Spec-sheet: label → value (no availability framing).
 	$highlights = [
 		[ 'title' => 'Based in',    'meta' => 'Ahmedabad, India · Remote-friendly' ],
-		[ 'title' => 'Experience',  'meta' => '7+ years · 70+ projects shipped' ],
+		[ 'title' => 'Experience',  'meta' => '8 years · 70+ projects shipped' ],
 		[ 'title' => 'Focus',       'meta' => 'Custom themes, plugins, ACF & Gutenberg' ],
 		[ 'title' => 'Education',   'meta' => 'MCA — Gujarat Technological University' ],
 		[ 'title' => 'Currently',   'meta' => 'Senior WP Developer & Team Lead, NineGravity' ],
@@ -301,7 +305,7 @@ function sb_about(): string {
 				. '<div class="sb-about__copy">'
 					. '<span class="sb-eyebrow">About</span>'
 					. '<h2>Engineer-led WordPress, from <em>planning to deployment.</em></h2>'
-					. '<p>I\'m Sachin Suthar — based in Ahmedabad, India, with 7+ years building custom themes, plugins, and backend systems for eCommerce, LMS, and corporate platforms. I take projects from technical scoping through code review and deployment: clean, maintainable code, fixing performance bottlenecks, and integrating third-party APIs. Familiar with WordPress VIP coding standards through certification, and currently going deeper into React-based Gutenberg development and PHPUnit testing.</p>'
+					. '<p>I\'m Sachin Suthar — based in Ahmedabad, India, with 8 years building custom themes, plugins, and backend systems for eCommerce, LMS, and corporate platforms. I take projects from technical scoping through code review and deployment: clean, maintainable code, fixing performance bottlenecks, and integrating third-party APIs. Familiar with WordPress VIP coding standards through certification, and currently going deeper into React-based Gutenberg development and PHPUnit testing.</p>'
 					. '<div class="sb-about__highlights">' . $h . '</div>'
 				. '</div>'
 			. '</div>'
@@ -427,7 +431,7 @@ $out .= sb_about();
 $services = [
 	[ 'icon' => 'wp',       'title' => 'Custom WordPress Development',  'desc' => 'End-to-end custom themes, plugins, and admin-side tooling, built to WordPress VIP coding standards with clean architecture.' ],
 	[ 'icon' => 'box',      'title' => 'ACF & Gutenberg Block Dev',     'desc' => 'Production-grade ACF blocks and native Gutenberg blocks. Editor UX that lets marketing ship without engineering.' ],
-	[ 'icon' => 'cart',     'title' => 'WooCommerce Engineering',       'desc' => 'Custom checkouts, subscriptions, payment gateways, and ERP integrations for content-heavy stores.' ],
+	[ 'icon' => 'woo',      'title' => 'WooCommerce Engineering',       'desc' => 'Custom checkouts, subscriptions, payment gateways, and ERP integrations for content-heavy stores.' ],
 	[ 'icon' => 'plug',     'title' => 'API Integrations',              'desc' => 'REST and third-party API bridges to CRMs, payment processors, mailers, and back-office systems.' ],
 	[ 'icon' => 'gauge',    'title' => 'Performance Optimisation',      'desc' => 'Core Web Vitals deep-dives, MySQL query optimisation, Redis/Batcache/edge caching. 30–50% measured gains.' ],
 	[ 'icon' => 'layers',   'title' => 'Advanced Custom Fields (ACF)',  'desc' => 'Modular content models with ACF Pro, custom post types, taxonomies, and user-role architectures.' ],
@@ -445,7 +449,7 @@ $out .= sb_parent( 'smart-blocks/services-grid', 'sb-services', [
 $expertise = [
 	[ 'icon' => 'wp',       'name' => 'Custom WordPress',      'meta' => 'Themes, plugins & bespoke admin tooling, VIP standards.' ],
 	[ 'icon' => 'layers',   'name' => 'Gutenberg & ACF',       'meta' => 'Native + ACF blocks with a clean editor experience.' ],
-	[ 'icon' => 'cart',     'name' => 'WooCommerce',           'meta' => 'Checkout, subscriptions, gateways & ERP integrations.' ],
+	[ 'icon' => 'woo',      'name' => 'WooCommerce',           'meta' => 'Checkout, subscriptions, gateways & ERP integrations.' ],
 	[ 'icon' => 'gauge',    'name' => 'Performance',           'meta' => 'Core Web Vitals, caching, and MySQL query tuning.' ],
 	[ 'icon' => 'plug',     'name' => 'Headless & APIs',       'meta' => 'REST, webhooks, and React / Next.js front-ends.' ],
 	[ 'icon' => 'terminal', 'name' => 'Architecture & DevOps', 'meta' => 'Multisite, WP-CLI, CI/CD, and code-review culture.' ],
@@ -465,7 +469,7 @@ $experience = [
 $out .= sb_parent( 'smart-blocks/experience-timeline', 'sb-experience', [
 	'eyebrow' => '03 · Experience',
 	'heading' => 'A practical journey through the <em>WordPress ecosystem.</em>',
-	'dek'     => '7+ years of building WordPress products across agencies, SaaS, eCommerce, LMS, and government platforms.',
+	'dek'     => '8 years of building WordPress products across agencies, SaaS, eCommerce, LMS, and government platforms.',
 ], 'ol', 'sb-timeline', implode( '', array_map( 'sb_timeline_block', $experience ) ), '', 'experience' );
 
 // EDUCATION (placed right after Experience — academic foundation for the career)
@@ -479,25 +483,29 @@ $out .= sb_parent( 'smart-blocks/education', 'sb-education', [
 	'dek'     => 'A CS background that underpins how I architect and reason about WordPress systems.',
 ], 'div', 'sb-education__grid', implode( '', array_map( 'sb_education_block', $education ) ), 'sb-section--cream', 'education' );
 
-// TECH
+// TECH — real day-to-day stack of a senior WordPress engineer (8 years).
 $stack = [
-	[ 'icon' => 'wp',       'name' => 'WordPress',    'meta' => '7+ yrs · Core, FSE, multisite' ],
-	[ 'icon' => 'php',      'name' => 'PHP 7 / 8',    'meta' => '7+ yrs · OOP, Composer' ],
-	[ 'icon' => 'box',      'name' => 'ACF Pro',      'meta' => '6+ yrs · Field groups, blocks' ],
-	[ 'icon' => 'layers',   'name' => 'Gutenberg',    'meta' => 'Block development' ],
-	[ 'icon' => 'cart',     'name' => 'WooCommerce',  'meta' => '6+ yrs · Checkout, gateways' ],
-	[ 'icon' => 'js',       'name' => 'JavaScript',   'meta' => 'ES6+ · DOM, fetch, ESM' ],
-	[ 'icon' => 'react',    'name' => 'React',        'meta' => 'Gutenberg block UI' ],
-	[ 'icon' => 'db',       'name' => 'MySQL',        'meta' => 'Query tuning, indexes' ],
-	[ 'icon' => 'rest',     'name' => 'REST API',     'meta' => 'Custom routes, webhooks' ],
-	[ 'icon' => 'terminal', 'name' => 'WP-CLI',       'meta' => 'Migrations, deploys' ],
-	[ 'icon' => 'git',      'name' => 'Git',          'meta' => 'GitHub · GitLab · CI/CD' ],
-	[ 'icon' => 'linux',    'name' => 'Linux',        'meta' => 'Server ops, deployments' ],
+	[ 'icon' => 'wp',         'name' => 'WordPress',     'meta' => '8 yrs · Core, FSE, multisite' ],
+	[ 'icon' => 'php',        'name' => 'PHP 8',         'meta' => 'OOP, namespaces, Composer' ],
+	[ 'icon' => 'js',         'name' => 'JavaScript',    'meta' => 'ES6+ · async, fetch, ESM' ],
+	[ 'icon' => 'react',      'name' => 'React',         'meta' => 'Gutenberg block UI' ],
+	[ 'icon' => 'layers',     'name' => 'Gutenberg',     'meta' => 'Native blocks · block.json' ],
+	[ 'icon' => 'woo',        'name' => 'WooCommerce',   'meta' => 'Checkout, subscriptions, gateways' ],
+	[ 'icon' => 'box',        'name' => 'ACF Pro',       'meta' => 'Field groups & custom blocks' ],
+	[ 'icon' => 'db',         'name' => 'MySQL',         'meta' => 'Query tuning, indexes' ],
+	[ 'icon' => 'phpmyadmin', 'name' => 'phpMyAdmin',    'meta' => 'DB admin & query debugging' ],
+	[ 'icon' => 'terminal',   'name' => 'WP-CLI',        'meta' => 'Migrations, deploys, scripting' ],
+	[ 'icon' => 'docker',     'name' => 'Docker',        'meta' => 'Local envs · wp-env parity' ],
+	[ 'icon' => 'composer',   'name' => 'Composer',      'meta' => 'Dependencies · PSR-4 autoload' ],
+	[ 'icon' => 'git',        'name' => 'Git',           'meta' => 'GitHub · GitLab · CI/CD' ],
+	[ 'icon' => 'node',       'name' => 'Node & npm',    'meta' => 'wp-scripts · build tooling' ],
+	[ 'icon' => 'rest',       'name' => 'REST API',      'meta' => 'Custom routes · headless' ],
+	[ 'icon' => 'award',      'name' => 'WordPress VIP', 'meta' => 'Coding standards · go/vip' ],
 ];
 $out .= sb_parent( 'smart-blocks/tech-stack', 'sb-tech', [
 	'eyebrow' => '05 · Tech stack',
-	'heading' => 'A focused stack — <em>not a buzzword soup.</em>',
-	'dek'     => 'Tools I use daily, picked for stability, ecosystem health, and team velocity.',
+	'heading' => 'The stack I <em>actually</em> ship with.',
+	'dek'     => 'Eight years deep in the WordPress ecosystem — from React-powered Gutenberg blocks to WP-CLI, Docker, and VIP-grade workflows.',
 ], 'div', 'sb-tech__grid', implode( '', array_map( 'sb_techitem_block', $stack ) ), '', 'stack' );
 
 // CERTIFICATIONS

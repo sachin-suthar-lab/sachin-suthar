@@ -1,6 +1,8 @@
 /* ============================================================
    Sachin Suthar — theme supplemental styles
    Editorial header + footer, reveal, scrollbars, nav.
+   Header/footer are built from core blocks (Site Title, Navigation,
+   Social Links, Buttons) so they are editable from the Site Editor.
    Tokens come from theme.json (--wp--preset--*).
    ============================================================ */
 
@@ -41,13 +43,14 @@ html.sb-anim-ready .sb-reveal.is-visible { opacity: 1; transform: translateY(0);
 body { background: var(--wp--preset--color--base); overflow-x: hidden; }
 
 /* ============================================================
-   HEADER — flat, hairline, monospace wordmark
+   HEADER — flat, hairline, serif wordmark (Site Title block)
    ============================================================ */
 .site-header {
 	background: rgba(255,255,255,0.8);
 	backdrop-filter: saturate(180%) blur(12px);
 	-webkit-backdrop-filter: saturate(180%) blur(12px);
 	border-bottom: 1px solid var(--wp--preset--color--border);
+	padding: 0 !important;
 }
 .ss-headbar {
 	max-width: 1180px;
@@ -60,27 +63,29 @@ body { background: var(--wp--preset--color--base); overflow-x: hidden; }
 	gap: 1.5rem;
 }
 
-/* Wordmark — editorial serif name + accent dot */
+/* Wordmark — Site Title block + accent dot */
 .ss-logo {
-	display: inline-flex; align-items: baseline; gap: .3rem;
-	text-decoration: none;
+	margin: 0;
 	flex-shrink: 0;
-}
-.ss-logo__mark { display: none; }
-.ss-logo__text {
 	font-family: var(--ss-serif);
-	font-size: 1.4rem; font-weight: 500;
-	color: var(--wp--preset--color--contrast);
+	font-size: 1.4rem;
+	font-weight: 500;
+	line-height: 1;
 	letter-spacing: -.01em;
 }
-.ss-logo__dot { color: var(--wp--preset--color--accent); font-weight: 600; }
-
-/* Nav — monospace, muted → contrast */
-.site-header .ss-nav {
-	flex: 1;
-	justify-content: center;
+.ss-logo a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
 }
-.site-header .ss-nav a:where(:not(.wp-element-button)) {
+.ss-logo a::after {
+	content: '.';
+	color: var(--wp--preset--color--accent);
+	font-weight: 600;
+}
+
+/* Nav — Inter, muted → accent with underline-grow */
+.site-header .ss-nav { flex: 1; justify-content: center; }
+.site-header .ss-nav .wp-block-navigation-item__content {
 	position: relative;
 	font-family: var(--wp--preset--font-family--sans, 'Inter', sans-serif);
 	font-size: .9rem;
@@ -90,65 +95,51 @@ body { background: var(--wp--preset--color--base); overflow-x: hidden; }
 	text-decoration: none;
 	transition: color .2s var(--ss-ease);
 }
-.site-header .ss-nav a:where(:not(.wp-element-button))::after {
+.site-header .ss-nav .wp-block-navigation-item__content::after {
 	content: ''; position: absolute; left: 0; bottom: -5px;
 	width: 0; height: 1px; background: var(--wp--preset--color--accent);
 	transition: width .3s var(--ss-ease);
 }
-.site-header .ss-nav a:where(:not(.wp-element-button)):hover { color: var(--wp--preset--color--accent); }
-.site-header .ss-nav a:where(:not(.wp-element-button)):hover::after { width: 100%; }
+.site-header .ss-nav .wp-block-navigation-item:hover .wp-block-navigation-item__content { color: var(--wp--preset--color--accent); }
+.site-header .ss-nav .wp-block-navigation-item:hover .wp-block-navigation-item__content::after { width: 100%; }
 
-/* End cluster: status + CTA */
+/* End cluster: social links + CTA */
 .ss-headend {
 	display: flex; align-items: center; gap: 1rem;
 	flex-shrink: 0;
 }
-.ss-headend__status {
-	display: inline-flex; align-items: center; gap: .45rem;
-	font-family: var(--ss-mono);
-	font-size: .75rem; color: var(--wp--preset--color--muted);
-}
-.ss-headend__status .dot {
-	width: 7px; height: 7px; border-radius: 50%;
-	background: var(--wp--preset--color--success, #16a34a);
-	box-shadow: 0 0 0 3px rgba(22,163,74,.16);
-}
-.ss-headend__ghost {
-	display: inline-grid; place-items: center;
-	width: 38px; height: 38px;
-	border-radius: 999px;
-	border: 1px solid var(--wp--preset--color--border-strong);
+.ss-headend__social { gap: .25rem !important; }
+.ss-headend__social .wp-social-link {
 	color: var(--wp--preset--color--contrast);
-	transition: border-color .2s ease, color .2s ease, transform .2s ease;
+	transition: color .2s ease, transform .2s ease;
 }
-.ss-headend__ghost:hover { border-color: var(--wp--preset--color--accent); color: var(--wp--preset--color--accent); transform: translateY(-1px); }
-.ss-headend__cta {
+.ss-headend__social .wp-social-link:hover { color: var(--wp--preset--color--accent); transform: translateY(-1px); }
+.ss-headend__cta-wrap { margin: 0; }
+.ss-headend__cta .wp-block-button__link {
 	font-family: var(--wp--preset--font-family--sans, 'Inter', sans-serif);
 	font-size: .85rem; font-weight: 600;
-	text-decoration: none;
 	color: #fff;
 	background: var(--wp--preset--color--contrast);
 	padding: .6rem 1.1rem;
 	border-radius: 999px;
+	border: 0;
 	transition: background .25s ease, transform .25s ease;
 }
-.ss-headend__cta:hover { background: var(--wp--preset--color--accent); transform: translateY(-1px); }
+.ss-headend__cta .wp-block-button__link:hover { background: var(--wp--preset--color--accent); transform: translateY(-1px); }
 
-@media (max-width: 980px) {
-	.ss-headend__status { display: none; }
-}
 @media (max-width: 781px) {
 	.site-header .ss-nav { flex: 0; }
 }
 
 /* ============================================================
-   FOOTER — dark editorial close
+   FOOTER — dark editorial close (core blocks)
    ============================================================ */
 .site-footer { padding: 0 !important; background: none !important; border: 0 !important; }
 .ss-footer {
 	background: var(--wp--preset--color--contrast);
 	color: rgba(255,255,255,0.72);
 }
+
 .ss-footer__inner {
 	max-width: 1180px;
 	margin: 0 auto;
@@ -157,21 +148,17 @@ body { background: var(--wp--preset--color--base); overflow-x: hidden; }
 	grid-template-columns: 1fr;
 	gap: clamp(2.5rem, 5vw, 4.5rem);
 }
+.ss-footer__inner > * { margin: 0; }
 @media (min-width: 880px) {
 	.ss-footer__inner { grid-template-columns: 1fr 1.15fr; align-items: start; }
 }
 
+.ss-footer__lead { display: flex; flex-direction: column; }
 .ss-footer__eyebrow {
-	display: inline-flex; align-items: center; gap: .55rem;
 	font-family: var(--ss-mono);
 	font-size: .76rem; letter-spacing: .02em;
 	color: rgba(255,255,255,0.55);
-	margin-bottom: 1.5rem;
-}
-.ss-footer__eyebrow .dot {
-	width: 7px; height: 7px; border-radius: 50%;
-	background: var(--wp--preset--color--success, #16a34a);
-	box-shadow: 0 0 0 3px rgba(22,163,74,.2);
+	margin: 0 0 1.5rem !important;
 }
 .ss-footer__headline {
 	font-family: var(--ss-serif);
@@ -180,9 +167,10 @@ body { background: var(--wp--preset--color--base); overflow-x: hidden; }
 	letter-spacing: -.022em;
 	font-weight: 400;
 	color: #fff;
-	margin: 0 0 1.5rem;
+	margin: 0 0 1.5rem !important;
 }
-.ss-footer__mail {
+.ss-footer__mail { margin: 0 !important; }
+.ss-footer__mail a {
 	display: inline-block;
 	font-family: var(--ss-mono);
 	font-size: clamp(.95rem, .9rem + .3vw, 1.1rem);
@@ -192,56 +180,79 @@ body { background: var(--wp--preset--color--base); overflow-x: hidden; }
 	padding-bottom: 2px;
 	transition: color .2s ease, border-color .2s ease;
 }
-.ss-footer__mail:hover { color: #fff; border-color: #fff; }
+.ss-footer__mail a:hover { color: #fff; border-color: #fff; }
 
 .ss-footer__cols {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 2rem 1.5rem;
 }
+.ss-footer__cols > * { margin: 0; }
 @media (min-width: 620px) {
 	.ss-footer__cols { grid-template-columns: repeat(3, 1fr); }
 }
 .ss-footer__col { display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; }
+.ss-footer__col > * { margin: 0; }
 .ss-footer__label {
 	font-family: var(--ss-mono);
 	font-size: .7rem; text-transform: uppercase; letter-spacing: .14em;
 	color: rgba(255,255,255,0.4);
-	margin-bottom: .35rem;
+	margin: 0 0 .35rem !important;
 }
-.ss-footer__col a {
+
+/* Footer navigation (vertical link list) */
+.ss-footer__nav { font-size: .92rem; }
+.ss-footer__nav .wp-block-navigation__container { gap: .55rem !important; }
+.ss-footer__nav .wp-block-navigation-item__content {
+	color: rgba(255,255,255,0.72);
+	text-decoration: none;
+	transition: color .2s ease;
+}
+.ss-footer__nav .wp-block-navigation-item__content:hover { color: #fff; }
+
+/* Footer social */
+.ss-footer__social { gap: .35rem !important; }
+.ss-footer__social .wp-social-link {
+	color: rgba(255,255,255,0.72);
+	transition: color .2s ease, transform .2s ease;
+}
+.ss-footer__social .wp-social-link:hover { color: #fff; transform: translateY(-1px); }
+
+.ss-footer__phone { margin: 0 !important; }
+.ss-footer__phone a {
 	color: rgba(255,255,255,0.72);
 	text-decoration: none;
 	font-size: .92rem;
 	transition: color .2s ease;
 }
-.ss-footer__col a:hover { color: #fff; }
-.ss-footer__col a span { color: var(--wp--preset--color--accent-3, #a78bfa); font-size: .8em; }
+.ss-footer__phone a:hover { color: #fff; }
+
 .ss-footer__note {
 	color: rgba(255,255,255,0.6);
-	font-size: .9rem; line-height: 1.6; margin: 0; max-width: 34ch;
+	font-size: .9rem; line-height: 1.6; margin: 0 !important; max-width: 34ch;
 }
 .ss-footer__note strong { color: #fff; font-weight: 600; }
 
 .ss-footer__bar {
 	max-width: 1180px;
-	margin: 0 auto;
+	margin: 0 auto !important;
 	padding: 1.5rem clamp(1.25rem, 4vw, 2.75rem) 2.5rem;
 	border-top: 1px solid rgba(255,255,255,0.1);
-	display: flex; flex-wrap: wrap; align-items: center;
-	gap: .75rem 1.5rem;
+	gap: .75rem 1.5rem !important;
 	font-family: var(--ss-mono);
 	font-size: .76rem;
 	color: rgba(255,255,255,0.45);
 }
-.ss-footer__meta { margin-left: auto; }
-.ss-footer__top {
+.ss-footer__bar > * { margin: 0; font-size: .76rem; color: rgba(255,255,255,0.45); }
+.ss-footer__sig { font-family: var(--ss-mono); }
+.ss-footer__meta { margin-left: auto !important; }
+.ss-footer__top a {
 	color: rgba(255,255,255,0.6);
 	text-decoration: none;
 	transition: color .2s ease;
 }
-.ss-footer__top:hover { color: #fff; }
-@media (max-width: 620px) { .ss-footer__meta { margin-left: 0; } }
+.ss-footer__top a:hover { color: #fff; }
+@media (max-width: 620px) { .ss-footer__meta { margin-left: 0 !important; } }
 
 /* Section anchor offset for sticky header */
 [id] { scroll-margin-top: 84px; }

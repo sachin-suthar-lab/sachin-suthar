@@ -31,7 +31,7 @@ add_action( 'after_setup_theme', function () {
 		'flex-height' => true,
 	] );
 
-	add_editor_style( 'assets/css/editor.css' );
+	add_editor_style( [ 'assets/fonts/fonts.css', 'assets/css/editor.css' ] );
 
 	load_theme_textdomain( 'sachin-suthar', get_template_directory() . '/languages' );
 } );
@@ -40,12 +40,15 @@ add_action( 'after_setup_theme', function () {
  * Front-end assets.
  */
 add_action( 'wp_enqueue_scripts', function () {
-	// Fraunces (display serif) + Inter (UI body) + JetBrains Mono (metadata).
+	// Self-hosted Fraunces (display serif) + Inter (UI body) + JetBrains Mono
+	// (metadata). Files + @font-face live in assets/fonts/ — regenerate with
+	// `node tools/fetch-fonts.mjs`.
+	$fonts_path = get_template_directory() . '/assets/fonts/fonts.css';
 	wp_enqueue_style(
 		'sachin-suthar-fonts',
-		'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
+		get_template_directory_uri() . '/assets/fonts/fonts.css',
 		[],
-		null
+		file_exists( $fonts_path ) ? filemtime( $fonts_path ) : SACHIN_SUTHAR_VERSION
 	);
 
 	$style_path = get_template_directory() . '/assets/css/theme.css';
@@ -55,15 +58,22 @@ add_action( 'wp_enqueue_scripts', function () {
 		[ 'sachin-suthar-fonts' ],
 		file_exists( $style_path ) ? filemtime( $style_path ) : SACHIN_SUTHAR_VERSION
 	);
-
-	add_filter( 'wp_resource_hints', function ( $urls, $relation ) {
-		if ( 'preconnect' === $relation ) {
-			$urls[] = [ 'href' => 'https://fonts.gstatic.com', 'crossorigin' ];
-			$urls[] = 'https://fonts.googleapis.com';
-		}
-		return $urls;
-	}, 10, 2 );
 } );
+
+/**
+ * Preload the primary (latin) webfont files so first paint isn't blocked on
+ * the stylesheet → font request chain.
+ */
+add_action( 'wp_head', function () {
+	$base = get_template_directory_uri() . '/assets/fonts/';
+	$preload = [ 'inter-latin.woff2', 'fraunces-latin.woff2' ];
+	foreach ( $preload as $file ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin />' . "\n",
+			esc_url( $base . $file )
+		);
+	}
+}, 2 );
 
 /**
  * SEO basics: meta description from excerpt / tagline.
