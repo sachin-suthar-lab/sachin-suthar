@@ -1,5 +1,5 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+import { useBlockProps, useInnerBlocksProps, RichText } from '@wordpress/block-editor';
 import metadata from './block.json';
 import SectionHead from '../../shared/section-head';
 import './style.scss';
@@ -44,7 +44,7 @@ registerBlockType( metadata.name, {
 				<div className="sb-container">
 					<div className="sb-section-head">
 						{ eyebrow && <span className="sb-eyebrow">{ eyebrow }</span> }
-						{ heading && <h2>{ heading }</h2> }
+						{ heading && <RichText.Content tagName="h2" value={ heading } /> }
 						{ dek && <p>{ dek }</p> }
 					</div>
 					<div { ...innerProps } />
