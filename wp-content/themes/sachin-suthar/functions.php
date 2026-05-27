@@ -40,10 +40,10 @@ add_action( 'after_setup_theme', function () {
  * Front-end assets.
  */
 add_action( 'wp_enqueue_scripts', function () {
-	// Inter (UI) + JetBrains Mono (metadata / developer accent).
+	// Fraunces (display serif) + Inter (UI body) + JetBrains Mono (metadata).
 	wp_enqueue_style(
 		'sachin-suthar-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap',
+		'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
 		[],
 		null
 	);

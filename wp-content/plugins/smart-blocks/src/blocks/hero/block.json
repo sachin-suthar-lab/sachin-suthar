@@ -22,6 +22,10 @@
 		"imageId":    { "type": "number", "default": 0 },
 		"imageUrl":   { "type": "string", "default": "" },
 		"imageAlt":   { "type": "string", "default": "" },
+		"badgeKicker":{ "type": "string", "default": "Certified" },
+		"badgeTitle": { "type": "string", "default": "WP VIP" },
+		"tagLabel":   { "type": "string", "default": "Open to work" },
+		"tagText":    { "type": "string", "default": "Senior WordPress roles, freelance & consulting — 2026." },
 		"currentlyText":   { "type": "string", "default": "Currently leading WP engineering at" },
 		"currentlyTarget": { "type": "string", "default": "NineGravity" },
 		"chips":      {
